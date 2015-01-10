@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var Calendar = require('calendar');
 
 var className = '.CalendarPage';
 
@@ -16,7 +17,7 @@ module.exports = {
 
   init: function (state) {
     this.$el = $(className);
-
-
+    this.cal = new Calendar();
+    this.$el.append(this.cal.el);
   }
 };
