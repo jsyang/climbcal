@@ -1,0 +1,89 @@
+{
+    "__loadNpmTasks__": [
+        "grunt-contrib-jshint",
+        "grunt-browserify",
+        "grunt-contrib-clean",
+        "grunt-contrib-copy",
+        "grunt-contrib-concat",
+        "grunt-contrib-watch",
+        "grunt-extract-sourcemap"
+    ],
+
+    "jshint": {
+        "build": {
+            "src": [
+                "app/**/*.js"
+            ]
+        }
+    },
+
+    "browserify": {
+        "build": {
+            "options": {
+                "alias": [
+                    "./node_modules/jquery/dist/jquery.js:jquery",
+                    "./node_modules/lodash/lodash.js:lodash",
+                    "./node_modules/page/index.js:page",
+                    "./node_modules/virtual-dom/h.js:virtual-dom/h",
+                    "./node_modules/virtual-dom/diff.js:virtual-dom/diff",
+                    "./node_modules/virtual-dom/patch.js:virtual-dom/patch",
+                    "./node_modules/virtual-dom/create-element.js:virtual-dom/create-element"
+                ],
+                "browserifyOptions": {
+                    "debug": true
+                }
+            },
+
+            "src": [
+                "app/app.init.js"
+            ],
+
+            "dest": "dist/app.js"
+        }
+    },
+
+    "clean": {
+        "prebuild": [
+            "dist/*.js",
+            "dist/*.css",
+            "dist/assets"
+        ]
+    },
+
+    "concat": {
+        "css": {
+            "src" : [
+                "app/normalize.css",
+                "app/default.css",
+                "app/view/CalendarPage.css"
+            ],
+            "dest": "dist/app.css"
+        }
+    },
+
+    "copy": {
+        "assets": {
+            "expand": true,
+            "src"   : ["assets/**"],
+            "dest"  : "dist/"
+        }
+    },
+
+    "watch": {
+        "build": {
+            "files": [
+                "app/**/*"
+            ],
+
+            "tasks": [
+                "default"
+            ],
+
+            "debounceDelay": 1000
+        }
+    },
+
+    "extract_sourcemap": {
+        "dist/": "dist/app.js"
+    }
+}
