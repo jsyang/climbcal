@@ -1,6 +1,6 @@
-var $ = require('jquery');
 var page = require('page');
 
+var DOM = require('./Renderer');
 var CalendarPage = require('../view/CalendarPage');
 
 var pageMap = {
@@ -17,7 +17,9 @@ function destroyPage(pageEl) {
 function createPage(page, state) {
   var pageEl = document.body.lastElementChild;
 
-  if (pageEl && pageEl.classList.contains(page.className.substr(1))) {
+  if (pageEl && pageEl.classList.contains(page.className)) {
+    DOM.update(page.render(state));
+
     if(page.update) {
       page.update(state);
     }
@@ -25,14 +27,9 @@ function createPage(page, state) {
     return false;
 
   } else {
-
     destroyPage(pageEl);
 
-    while (document.body.lastElementChild) {
-      document.body.removeChild(document.body.lastElementChild);
-    }
-
-    document.body.appendChild(page.render(state).get(0));
+    DOM.initialize(page.render(state));
     page.init(state);
 
     return true;
@@ -40,22 +37,19 @@ function createPage(page, state) {
 }
 
 module.exports = {
-  page: page,
-
-  createPage: createPage,
-
   _getBoundHandler: function (name) {
     return this[name] ? this[name].bind(this) : undefined;
   },
 
   init: function () {
-    //this.page('/', '/calendar');
-    this.page('/', this._getBoundHandler('onCalendar'));
-
-    this.page();
+    page('/', this._getBoundHandler('onCalendar'));
+    page();
   },
 
   onCalendar: function (ctx) {
-    this.createPage(CalendarPage);
+    var todayDate = (new Date()).toDateString().split(' ');
+    createPage(CalendarPage, {
+      monthYear : todayDate[1] + ' ' + todayDate[3]
+    });
   }
 };

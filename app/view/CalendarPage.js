@@ -1,14 +1,26 @@
 var $ = require('jquery');
 var Calendar = require('calendar');
 
-var className = '.CalendarPage';
+var convertHTML = require('../util/vdom').convertHTML;
+var template = require('./CalendarPage.hbs');
+
+var className = 'CalendarPage';
 
 function render(state) {
-  var selector = className;
+  var html = template(state);
+  return convertHTML(html);
+}
 
-  var $el = $('<div/>').addClass(className.substr(1));
+function addTodayHighlight() {
+  var today = new Date();
+  var dateString = [
+    today.getUTCFullYear(),
+    today.getMonth(),
+    today.getDate()
+  ].join('-');
 
-  return $el;
+  document.querySelector("a[data-date='"+ dateString+"']")
+    .classList.add('today');
 }
 
 module.exports = {
@@ -16,8 +28,10 @@ module.exports = {
   render   : render,
 
   init: function (state) {
-    this.$el = $(className);
+    this.el = document.querySelector('.' + className);
     this.cal = new Calendar();
-    this.$el.append(this.cal.el);
+    this.el.appendChild(this.cal.el);
+
+    addTodayHighlight();
   }
 };

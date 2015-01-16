@@ -1,0 +1,114 @@
+.CalendarPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/** MENU **/
+
+.CalendarPage .menu-bar {
+  position: absolute;
+  background-color: rgba(238,118,0, 1);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}
+
+.CalendarPage .menu-bar .left-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+}
+
+.CalendarPage .menu-bar .left-button .logo {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 5px;
+  left: 5px;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.CalendarPage .menu-bar .month-year {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 60px;
+}
+
+
+
+/** CALENDAR **/
+
+.CalendarPage .calendar {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.CalendarPage .calendar .calendar-table {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  left: 50%;
+  top: 50%;
+  margin-left: -160px;
+  margin-top: -160px;
+}
+
+.CalendarPage .calendar .calendar-table thead tr:first-child {
+  display: none;
+}
+
+.CalendarPage .calendar .calendar-table thead tr.subheading th {
+  height: 20px;
+}
+
+.CalendarPage .calendar .calendar-table tbody tr td {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.CalendarPage .calendar .calendar-table tbody tr td a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(216,216,216);
+  text-decoration: none;
+  color: black;
+  padding-left: 4px;
+  padding-top: 4px;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+.CalendarPage .calendar .calendar-table tbody tr td a.today {
+  background: rgb(0,120,238) !important;
+  color: white;
+}
+
+.CalendarPage .calendar .calendar-table tbody tr td a.prev-day,
+.CalendarPage .calendar .calendar-table tbody tr td a.next-day {
+  opacity: 0.25;
+}
+
+.CalendarPage .calendar .calendar-table tbody tr:nth-child(2n+1) td a {
+  background: rgba(216,216,216, 0.5);
+}
