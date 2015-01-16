@@ -13,7 +13,9 @@
     "url": "https://github.com/jsyang/climbcal.git"
   },
 
-  "scripts": {},
+  "scripts": {
+    "start" : "node server/server.js"
+  },
 
   "dependencies": {
     "express": "~4.10.7",

@@ -6,7 +6,8 @@
     "grunt-contrib-copy",
     "grunt-contrib-concat",
     "grunt-contrib-watch",
-    "grunt-extract-sourcemap"
+    "grunt-extract-sourcemap",
+    "grunt-express-server"
   ],
 
   "jshint": {
@@ -14,6 +15,23 @@
       "src": [
         "app/**/*.js"
       ]
+    }
+  },
+
+  "express"   : {
+    "options": {
+      "port": 3080
+    },
+    "local"  : {
+      "options": {
+        "script": "server/server.js"
+      }
+    },
+    "test" :{
+      "options": {
+        "script": "server/server.js",
+        "node_env": "test"
+      }
     }
   },
 
@@ -71,6 +89,14 @@
       "expand": true,
       "src"   : ["assets/**"],
       "dest"  : "dist/"
+    },
+
+    "index": {
+      "src": ["favicon.ico"],
+      "dest": "dist/",
+      "cwd" : "application",
+      "flatten" : true,
+      "expand" : true
     }
   },
 

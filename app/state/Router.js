@@ -43,7 +43,16 @@ module.exports = {
 
   init: function () {
     page('/', this._getBoundHandler('onCalendar'));
+    page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
     page();
+  },
+
+  onShowDay: function(ctx) {
+    var year = ctx.params.year;
+    var month = ctx.params.month;
+    var day = ctx.params.day;
+
+    console.log(year, month, day);
   },
 
   onCalendar: function (ctx) {
