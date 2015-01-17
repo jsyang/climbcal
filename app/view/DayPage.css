@@ -1,0 +1,98 @@
+.DayPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/** MENU **/
+
+.DayPage .menu-bar {
+  position: absolute;
+  background-color: rgba(238,118,0, 1);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}
+
+.DayPage .menu-bar .left-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+}
+
+.DayPage .menu-bar .left-button .logo {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 5px;
+  left: 5px;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.DayPage .menu-bar .date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 60px;
+}
+
+/** CONTENT **/
+
+.DayPage .content {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: scroll;
+}
+
+.DayPage .button {
+  display: block;
+  position: absolute;
+  width: 320px;
+  height: 40px;
+  left: 50%;
+  margin-left: -160px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background: rgb(0,120,238);
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.DayPage .check-in {
+  top: 10px;
+}
+
+.DayPage .check-out {
+  top: 60px;
+}
+
+.DayPage .log-attempt {
+  top: 110px;
+}
+
+.DayPage .graph {
+  display: block;
+  position: absolute;
+  width: 320px;
+  height: 600px;
+  top: 160px;
+  left: 50%;
+  margin-left: -160px;
+  background: green;
+}

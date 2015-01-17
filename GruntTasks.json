@@ -78,7 +78,11 @@
       "src" : [
         "app/normalize.css",
         "app/default.css",
-        "app/view/CalendarPage.css"
+        "app/view/DayPage.css",
+        "app/view/CalendarPage.css",
+        "app/view/CheckInPage.css",
+        "app/view/CheckOutPage.css",
+        "app/view/LogPage.css"
       ],
       "dest": "dist/app.css"
     }

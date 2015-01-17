@@ -2,10 +2,32 @@ var page = require('page');
 
 var DOM = require('./Renderer');
 var CalendarPage = require('../view/CalendarPage');
+var DayPage = require('../view/DayPage');
+var CheckInPage = require('../view/CheckInPage');
+var CheckOutPage = require('../view/CheckOutPage');
+var LogPage = require('../view/LogPage');
 
 var pageMap = {
-  'CalendarPage' : CalendarPage
+  'CalendarPage' : CalendarPage,
+  'CheckInPage' : CheckInPage,
+  'CheckOutPage' : CheckOutPage,
+  'LogPage' : LogPage
 };
+
+var monthString = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
 
 function destroyPage(pageEl) {
   var pageClass = pageMap[pageEl && pageEl.classList[0]];
@@ -44,19 +66,60 @@ module.exports = {
   init: function () {
     page('/', this._getBoundHandler('onCalendar'));
     page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
+    page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
+    page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
+    page('/y/:year/m/:month/d/:day/log', this._getBoundHandler('onLog'));
+    page('/y/:year/m/:month/d/:day/plan', this._getBoundHandler('onPlan'));
     page();
   },
 
-  onShowDay: function(ctx) {
+  onCheckIn: function(ctx) {
     var year = ctx.params.year;
     var month = ctx.params.month;
     var day = ctx.params.day;
 
-    console.log(year, month, day);
+    createPage(CheckInPage, {
+      dayRoute : ctx.canonicalPath.replace('/in', '')
+    });
+  },
+
+  onCheckOut: function(ctx) {
+    var year = ctx.params.year;
+    var month = ctx.params.month;
+    var day = ctx.params.day;
+
+    createPage(CheckOutPage, {
+      dateString : month + ' ' + day + ', ' + year,
+      route : ctx.canonicalPath
+    });
+  },
+
+  onLog: function(ctx) {
+    var year = ctx.params.year;
+    var month = ctx.params.month;
+    var day = ctx.params.day;
+  },
+
+  onPlan: function(ctx) {
+    var year = ctx.params.year;
+    var month = ctx.params.month;
+    var day = ctx.params.day;
+  },
+
+  onShowDay: function(ctx) {
+    var year = ctx.params.year;
+    var month = monthString[ctx.params.month];
+    var day = ctx.params.day;
+
+    createPage(DayPage, {
+      dateString : month + ' ' + day + ', ' + year,
+      route : ctx.canonicalPath
+    });
   },
 
   onCalendar: function (ctx) {
     var todayDate = (new Date()).toDateString().split(' ');
+
     createPage(CalendarPage, {
       monthYear : todayDate[1] + ' ' + todayDate[3]
     });

@@ -1,4 +1,3 @@
-var $ = require('jquery');
 var Calendar = require('calendar');
 
 var convertHTML = require('../util/vdom').convertHTML;

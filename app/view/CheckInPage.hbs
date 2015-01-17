@@ -1,0 +1,38 @@
+<div class="CheckInPage">
+  <div class="menu-bar">
+    <div class="title">Check In</div>
+    <a href="{{ dayRoute }}" class="left-button"><div class="logo"></div></a>
+  </div>
+  <div class="content">
+    <div class="location">
+      <div class="label"></div>
+      <div class="value"></div>
+      <select>
+        {{#allLocations}}
+          <option value="{{ name }}">{{ name }}</option>
+        {{/allLocations}}
+      </select>
+    </div>
+
+    <div class="time">
+      <div class="label"></div>
+      <div class="value">
+        {{#currentTime}}{{/currentTime}}
+      </div>
+    </div>
+
+    <div class="feeling">
+      <div class="label">Feeling</div>
+      <div class="value"></div>
+    </div>
+
+    <div class="note">
+      <div class="label"></div>
+      <input type="text" class="value"/>
+    </div>
+
+    <div class="check-in button">
+      Check in!
+    </div>
+  </div>
+</div>
