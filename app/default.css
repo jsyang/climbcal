@@ -2,3 +2,60 @@ body {
   background-color: rgba(245,250,237, 1);
   overflow: hidden;
 }
+
+.page .menu-bar {
+  position: absolute;
+  background-color: rgba(238,118,0, 1);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}
+
+.page .menu-bar .left-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}
+
+.page .menu-bar .left-button .logo {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-position: center;
+  background-image: url('/assets/karabiner.svg');
+}
+
+.page .menu-bar .left-button.back .logo {
+  background-image: url('/assets/emoji_u274e.svg');
+}
+
+.page .menu-bar .title {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  right: 60px;
+  height: 60px;
+  font-size: 30px;
+  color: rgb(253,241,229);
+  text-shadow: 2px 2px 4px rgb(119,59,0);
+  text-align: center;
+  line-height: 60px;
+}
+
+.page .menu-bar .right-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}

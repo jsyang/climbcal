@@ -10,13 +10,46 @@ function render(state) {
   return convertHTML(html);
 }
 
+function updateCheckInLink() {
+  var href = this.checkInLink.href.split('?');
+  this.checkInLink.href = href[0] + '?' + [
+    'location=' + this.values.location,
+    'time=' + this.values.time,
+    'feeling=' + this.values.feeling,
+    'note=' + this.values.note
+  ].join('&');
+}
+
 function updateLocationValue() {
-  var selected = this.locationSelect.options[this.locationSelect.selectedIndex];
+  var selected = this.locationSelect.selectedOptions[0];
+
   this.locationValue.textContent = selected.textContent;
+  this.values.location = selected.value;
+
+  updateCheckInLink.call(this);
 }
 
 function updateTimeValue() {
-  this.timeValue.textContent = getTime();
+  var time = getTime();
+  this.timeValue.textContent = time;
+
+  this.values.time = +new Date(time + ' ' + this.dateString);
+
+  updateCheckInLink.call(this);
+}
+
+function updateFeelingValue() {
+  var id = this.feelingValue.getAttribute('data-id');
+  this.values.feeling = id;
+
+  updateCheckInLink.call(this);
+}
+
+function updateNoteValue() {
+  var value = this.noteValue.value;
+  this.values.note = value;
+
+  updateCheckInLink.call(this);
 }
 
 module.exports = {
@@ -24,17 +57,41 @@ module.exports = {
   render   : render,
 
   init: function (state) {
+    this.dateString = state.dateString;
+
+    this.values = {
+      location: undefined,
+      time: undefined,
+      feeling: undefined,
+      note: undefined
+    };
+
     this.el = document.querySelector('.' + className);
+
+    this.checkInLink = this.el.querySelector('.check-in');
+
     this.locationValue = this.el.querySelector('.location .value');
     this.locationSelect = this.el.querySelector('.location select');
+
+    this.feelingValue = this.el.querySelector('.feeling .value');
+
+    this.noteValue = this.el.querySelector('.note .value');
 
     this.time = this.el.querySelector('.time');
     this.timeValue = this.el.querySelector('.time .value');
 
+    // Update values
+
     this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
     updateLocationValue.call(this);
 
-    this.time.addEventListener('touchstart', updateTimeValue.bind(this));
     this.time.addEventListener('mousedown', updateTimeValue.bind(this));
+    updateTimeValue.call(this);
+
+    //this.feelingValue.addEventListener('mousedown', updateFeelingValue.bind(this));
+    updateFeelingValue.call(this);
+
+    this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
+    updateNoteValue.call(this);
   }
 };

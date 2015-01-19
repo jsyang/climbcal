@@ -1,7 +1,7 @@
-<div class="CheckInPage">
+<div class="CheckInPage page">
   <div class="menu-bar">
     <div class="title">Check In</div>
-    <a href="{{ dayRoute }}" class="left-button"><div class="logo"></div></a>
+    <a href="{{ dayRoute }}" class="back left-button"><div class="logo"></div></a>
   </div>
   <div class="content">
     <div class="location">
@@ -14,6 +14,13 @@
       </select>
     </div>
 
+    <div class="date">
+      <div class="label"></div>
+      <div class="value">
+        {{ dateString }}
+      </div>
+    </div>
+
     <div class="time">
       <div class="label"></div>
       <div class="value">
@@ -23,7 +30,7 @@
 
     <div class="feeling">
       <div class="label">Feeling</div>
-      <div class="value"></div>
+      <div class="value" data-id="0"></div>
     </div>
 
     <div class="note">
@@ -31,8 +38,8 @@
       <input type="text" class="value"/>
     </div>
 
-    <div class="check-in button">
+    <a href="{{ dayRoute }}/in" class="check-in button">
       Check in!
-    </div>
+    </a>
   </div>
 </div>

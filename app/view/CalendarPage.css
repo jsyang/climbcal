@@ -6,49 +6,6 @@
   bottom: 0;
 }
 
-/** MENU **/
-
-.CalendarPage .menu-bar {
-  position: absolute;
-  background-color: rgba(238,118,0, 1);
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-}
-
-.CalendarPage .menu-bar .left-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-}
-
-.CalendarPage .menu-bar .left-button .logo {
-  position: absolute;
-  display: block;
-  content: '';
-  top: 5px;
-  left: 5px;
-  width: 50px;
-  height: 50px;
-  background-color: red;
-}
-
-.CalendarPage .menu-bar .month-year {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  font-size: 30px;
-  text-align: center;
-  line-height: 60px;
-}
-
-
-
 /** CALENDAR **/
 
 .CalendarPage .calendar {

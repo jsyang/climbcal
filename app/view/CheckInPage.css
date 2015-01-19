@@ -6,47 +6,6 @@
   bottom: 0;
 }
 
-/** MENU **/
-
-.CheckInPage .menu-bar {
-  position: absolute;
-  background-color: rgba(238,118,0, 1);
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-}
-
-.CheckInPage .menu-bar .left-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-}
-
-.CheckInPage .menu-bar .left-button .logo {
-  position: absolute;
-  display: block;
-  content: '';
-  top: 5px;
-  left: 5px;
-  width: 50px;
-  height: 50px;
-  background-color: red;
-}
-
-.CheckInPage .menu-bar .title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  font-size: 30px;
-  text-align: center;
-  line-height: 60px;
-}
-
 /** CONTENT **/
 
 .CheckInPage .content {
@@ -111,11 +70,44 @@
   z-index: 1;
 }
 
+.CheckInPage .date {
+  position: absolute;
+  top: 80px;
+  width: 320px;
+  height: 40px;
+  left: 50%;
+  margin-left: -160px;
+}
+
+.CheckInPage .date .label {
+  display: block;
+  content: '';
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-image: url('/assets/emoji_u1f4c6.svg');
+  position: absolute;
+  left: 0;
+}
+
+.CheckInPage .date .value {
+  position: absolute;
+  left: 50px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-size: 20px;
+  color: rgb(120,120,120);
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .CheckInPage .time {
   position: absolute;
   width: 320px;
   height: 40px;
-  top: 80px;
+  top: 140px;
   left: 50%;
   margin-left: -160px;
 }
@@ -156,7 +148,7 @@
   position: absolute;
   width: 320px;
   height: 40px;
-  top: 140px;
+  top: 200px;
   left: 50%;
   margin-left: -160px;
 }
@@ -181,7 +173,7 @@
   position: absolute;
   width: 320px;
   height: 40px;
-  top: 200px;
+  top: 260px;
   left: 50%;
   margin-left: -160px;
 }
@@ -199,6 +191,9 @@
   left: 50px;
   width: 270px;
   height: 100%;
+  font-size: 18px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 
@@ -219,5 +214,5 @@
 }
 
 .CheckInPage .check-in {
-  bottom: 20px;
+  top: 320px;
 }

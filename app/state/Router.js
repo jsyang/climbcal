@@ -29,6 +29,26 @@ var monthString = [
   'Dec'
 ];
 
+function queryStringToDict(q) {
+  var strings = q.split('&');
+
+  if(strings[0]) {
+    var obj = {};
+
+    strings.forEach(function(v){
+      var query = v.split('=');
+      var key = query[0];
+      var value = query[1] || '';
+      obj[key] = value;
+    });
+
+    return obj;
+
+  } else {
+    return undefined;
+  }
+}
+
 function destroyPage(pageEl) {
   var pageClass = pageMap[pageEl && pageEl.classList[0]];
   if(pageClass && pageClass.destroy) {
@@ -75,23 +95,32 @@ module.exports = {
 
   onCheckIn: function(ctx) {
     var year = ctx.params.year;
-    var month = ctx.params.month;
+    var month = monthString[ctx.params.month];
     var day = ctx.params.day;
 
-    createPage(CheckInPage, {
-      dayRoute : ctx.canonicalPath.replace('/in', '')
-    });
+    if(ctx.querystring) {
+      console.error(queryStringToDict(ctx.querystring));
+    } else {
+      createPage(CheckInPage, {
+        dayRoute : ctx.canonicalPath.replace('/in', ''),
+        dateString : month + ' ' + day + ', ' + year
+      });
+    }
   },
 
   onCheckOut: function(ctx) {
     var year = ctx.params.year;
-    var month = ctx.params.month;
+    var month = monthString[ctx.params.month];
     var day = ctx.params.day;
 
-    createPage(CheckOutPage, {
-      dateString : month + ' ' + day + ', ' + year,
-      route : ctx.canonicalPath
-    });
+    if(ctx.querystring) {
+      console.error(queryStringToDict(ctx.querystring));
+    } else {
+      createPage(CheckOutPage, {
+        dayRoute : ctx.canonicalPath.replace('/in', ''),
+        dateString : month + ' ' + day + ', ' + year
+      });
+    }
   },
 
   onLog: function(ctx) {
