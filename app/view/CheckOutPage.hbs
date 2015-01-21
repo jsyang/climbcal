@@ -1,6 +1,40 @@
-<div class="CheckOutPage">
-  <div class="menu-bar">
-    <div class="title">Check Out</div>
-    <a class="left-button"><div class="logo"></div></a>
-  </div>
+<div class="CheckOutPage page">
+    <div class="menu-bar">
+        <div class="title">Check Out</div>
+        <a href="{{ dayRoute }}" class="back left-button"><div class="logo"></div></a>
+    </div>
+    <div class="content">
+        <div class="location">
+            <div class="label"></div>
+            <div class="value">{{ locationString }}</div>
+        </div>
+
+        <div class="date">
+            <div class="label"></div>
+            <div class="value">
+                {{ dateString }}
+            </div>
+        </div>
+
+        <div class="time">
+            <div class="label"></div>
+            <div class="value">
+                {{#currentTime}}{{/currentTime}}
+            </div>
+        </div>
+
+        <div class="feeling">
+            <div class="label">Feeling</div>
+            <div class="value" data-id="0"></div>
+        </div>
+
+        <div class="note">
+            <div class="label"></div>
+            <input type="text" class="value"/>
+        </div>
+
+        <a href="{{ dayRoute }}/out" class="check-out button">
+            Check out!
+        </a>
+    </div>
 </div>

@@ -46,7 +46,7 @@
     "hbsfy"                         : "~2.2.1",
     "html-to-vdom"                  : "~0.4.0",
     "dexie"                         : "1.0.2",
-    "papaparse"                     : "4.0.7",
+    "babyparse"                     : "0.4.1",
     "calendar"                      : "git+ssh://git@github.com:jsyang/calendar.git"
   }
 }

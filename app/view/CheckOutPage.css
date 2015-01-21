@@ -1,59 +1,194 @@
 .CheckOutPage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-/** MENU **/
-
-.CheckOutPage .menu-bar {
-  position: absolute;
-  background-color: rgba(238,118,0, 1);
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-}
-
-.CheckOutPage .menu-bar .left-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-}
-
-.CheckOutPage .menu-bar .left-button .logo {
-  position: absolute;
-  display: block;
-  content: '';
-  top: 5px;
-  left: 5px;
-  width: 50px;
-  height: 50px;
-  background-color: red;
-}
-
-.CheckOutPage .menu-bar .date {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  font-size: 30px;
-  text-align: center;
-  line-height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 /** CONTENT **/
 
 .CheckOutPage .content {
-  position: absolute;
-  top: 60px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: scroll;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.CheckOutPage .location {
+    position: absolute;
+    width: 320px;
+    height: 40px;
+    top: 20px;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.CheckOutPage .location .label {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/emoji_u1f30d.svg');
+}
+
+.CheckOutPage .location .value {
+    position: absolute;
+    left: 50px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-size: 20px;
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(120,120,120);
+}
+
+.CheckOutPage .date {
+    position: absolute;
+    top: 80px;
+    width: 320px;
+    height: 40px;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.CheckOutPage .date .label {
+    display: block;
+    content: '';
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/emoji_u1f4c6.svg');
+    position: absolute;
+    left: 0;
+}
+
+.CheckOutPage .date .value {
+    position: absolute;
+    left: 50px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-size: 20px;
+    color: rgb(120,120,120);
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CheckOutPage .time {
+    position: absolute;
+    width: 320px;
+    height: 40px;
+    top: 140px;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.CheckOutPage .time::after {
+    display: block;
+    content: '';
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/emoji_u1f504.svg');
+    position: absolute;
+    right: 0;
+}
+
+.CheckOutPage .time .value {
+    position: absolute;
+    left: 50px;
+    right: 40px;
+    top: 0;
+    bottom: 0;
+    font-size: 20px;
+    color: rgb(0,120,238);
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CheckOutPage .time .label {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/emoji_u1f55c.svg');
+}
+
+.CheckOutPage .feeling {
+    position: absolute;
+    width: 320px;
+    height: 40px;
+    top: 200px;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.CheckOutPage .feeling .label {
+    position: absolute;
+    font-size: 20px;
+    color: black;
+    line-height: 40px;
+}
+
+.CheckOutPage .feeling .value {
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/smiley/emoji_u1f60a.svg');
+}
+
+.CheckOutPage .note {
+    position: absolute;
+    width: 320px;
+    height: 40px;
+    top: 260px;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.CheckOutPage .note .label {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-image: url('/assets/emoji_u1f4dd.svg');
+}
+
+.CheckOutPage .note .value {
+    position: absolute;
+    left: 50px;
+    width: 270px;
+    height: 100%;
+    font-size: 18px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+.CheckOutPage .button {
+    display: block;
+    position: absolute;
+    width: 320px;
+    height: 40px;
+    left: 50%;
+    margin-left: -160px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background: rgb(0,120,238);
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+.CheckOutPage .check-out {
+    top: 320px;
 }

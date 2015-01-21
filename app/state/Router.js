@@ -117,7 +117,9 @@ module.exports = {
       console.error(queryStringToDict(ctx.querystring));
     } else {
       createPage(CheckOutPage, {
-        dayRoute : ctx.canonicalPath.replace('/in', ''),
+        locationString : 'Mile end climbing wall',
+        locationValue : 0,
+        dayRoute : ctx.canonicalPath.replace('/out', ''),
         dateString : month + ' ' + day + ', ' + year
       });
     }

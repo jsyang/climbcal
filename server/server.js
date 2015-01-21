@@ -6,6 +6,6 @@ var express = require('express');
 var app = express();
 require('./express')(app);
 
-var port = process.env.PORT || 3080;
+var port = process.env.PORT || 8080;
 app.listen(port);
 console.log('Express server listening on port ' + port);
