@@ -20,7 +20,7 @@
 
   "express"   : {
     "options": {
-      "port": 3080
+      "port": 8080
     },
     "local"  : {
       "options": {

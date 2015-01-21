@@ -4,3 +4,4 @@ dist/assets/**/*
 dist/*.js
 dist/*.css
 dist/*.map
+.idea/
