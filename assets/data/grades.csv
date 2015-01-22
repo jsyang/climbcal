@@ -1,4 +1,4 @@
-name,system,value
+name,systemName,value
 VB,Hueco,-1
 V0,Hueco,0
 V1,Hueco,1
@@ -13,3 +13,52 @@ V5,Hueco,5
 V6,Hueco,6
 V7,Hueco,7
 V8,Hueco,8
+1,British Tech,1
+2,British Tech,2
+3,British Tech,3
+4a,British Tech,4
+4b,British Tech,4.1
+4c,British Tech,4.2
+5a,British Tech,5
+5b,British Tech,5.1
+5c,British Tech,5.2
+6a,British Tech,6
+6b,British Tech,6.1
+6c,British Tech,6.2
+7a,British Tech,7
+7b,British Tech,7.1
+3,YDS,30
+4,YDS,40
+5,YDS,50
+5.1,YDS,10
+5.2,YDS,20
+5.3,YDS,30
+5.4,YDS,40
+5.5,YDS,50
+5.6,YDS,60
+5.7,YDS,70
+5.8,YDS,80
+5.9,YDS,90
+5.10a,YDS,100
+5.10b,YDS,101
+5.10c,YDS,102
+5.10d,YDS,103
+5.11a,YDS,110
+5.11b,YDS,111
+5.11c,YDS,112
+5.11d,YDS,113
+5.12a,YDS,120
+5.12b,YDS,121
+5.12c,YDS,122
+5.12d,YDS,123
+5.13a,YDS,130
+5.13b,YDS,131
+5.13c,YDS,132
+5.13d,YDS,133
+5.14a,YDS,140
+5.14b,YDS,141
+5.14c,YDS,142
+5.14d,YDS,143
+5.15a,YDS,150
+5.15b,YDS,151
+5.15c,YDS,152

@@ -1,0 +1,28 @@
+Locations: http://www.londonclimbingguide.com/#!where-to-rock-climb-in-london/cn4k
+
+Grades: http://en.wikipedia.org/wiki/Grade_(climbing)#Comparison_tables
+
+
+
+
+
+---
+
+Emojis: http://apps.timwhitlock.info/emoji/tables/unicode
+
+```
+var emojis = [];
+Array.prototype.slice.call(
+    document
+        .querySelectorAll('tbody')[0]
+        .querySelectorAll('tr')
+)
+    .forEach(function(row){
+        emojis.push({
+            url: '/assets/smiley/' + row.id.replace('-','_') + '.csv',
+            name: row.querySelector('.name').innerText
+        });
+    });
+
+JSON.stringify(emojis);
+```

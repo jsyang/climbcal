@@ -6,12 +6,13 @@ var db = new Dexie('crimperdb');
 db.version(1).stores({
     locations: "++id,name",
     emojis   : "++id,&name",
-    feelings : "++id,name,emojiName",
+    feelings : "++id,name,&emojiId",
     weeks    : "++id",
-    days     : "++id,utime,feelingId",
-    attempts : "++id,grade,routeId",
-    routes   : "++id,name,photoUrl,grade",
-    grades   : "++id,name"
+    days     : "++id,year,month,day,checkedIn",
+    sessions : "++id,&dayId",
+    attempts : "++id,gradeId,routeId,dayId",
+    routes   : "++id,name,photoUrl,gradeId",
+    grades   : "++id,name,systemName"
 });
 
 db.open();

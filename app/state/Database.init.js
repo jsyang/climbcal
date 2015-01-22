@@ -3,24 +3,31 @@ var papa = require('babyparse');
 
 var PARSE_OPTIONS = { header: true, delimiter:','};
 
-module.exports = function initDb(db) {
-
-    var locations;
-
-    ajax('/assets/data/locations.csv')
+function getDataAndPopulate(db, tableName) {
+    return ajax('/assets/data/' + tableName + '.csv')
         .then(function(csv){
-            locations = papa.parse(csv, PARSE_OPTIONS).data;
+            var table = db[tableName];
+            var rows = papa.parse(csv, PARSE_OPTIONS).data;
+
+            table.clear();
+
+            function populate() {
+                rows.forEach(function(entry){ table.add(entry); });
+            }
+
+            return db.transaction("rw", table, populate).catch(console.log.bind(console));
+        });
+}
+
+module.exports = function initDb(db) {
+    return getDataAndPopulate(db, 'locations')
+        .then(function(){
+            return getDataAndPopulate(db, 'grades');
         })
         .then(function(){
-            db.transaction("rw", db.locations, function () {
-                db.locations.clear();
-                locations.forEach(function(loc){
-                    db.locations.add(loc);
-                });
-            }).catch(function (e) {
-                console.log(e, "error");
-            });
+            return getDataAndPopulate(db, 'emojis');
+        })
+        .then(function(){
+            return getDataAndPopulate(db, 'feelings');
         });
-
-
 };

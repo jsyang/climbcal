@@ -1,1 +1,5 @@
-name,emojiName
+name,emojiName,value
+strong,face with no good gesture,4
+weak,face with cold sweat,-1
+okay,relieved face,0
+sick,face with medical mask,-4
