@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.app = { //_.extend({
         router: Router,
-        db    : Database
+        db    : Database 
     };//}, window.app);
 
     app.router.init();

@@ -3,20 +3,25 @@ var initDb = require('./Database.init');
 
 var db = new Dexie('crimperdb');
 
-db.version(1).stores({
-    locations: "++id,name",
-    emojis   : "++id,&name",
-    feelings : "++id,name,&emojiId",
-    weeks    : "++id",
-    days     : "++id,year,month,day,checkedIn",
-    sessions : "++id,&dayId",
-    attempts : "++id,gradeId,routeId,dayId",
-    routes   : "++id,name,photoUrl,gradeId",
-    grades   : "++id,name,systemName"
-});
+var schema = {
+  locations: "++id,&name",
+  emojis   : "++id,&name",
+  feelings : "++id,&name,&emojiId",
+  days     : "++id,year,month,day",
+  attempts : "++id,gradeId,routeId,dayId",
+  routes   : "++id,name,gradeId",
+  grades   : "++id,name,systemName"
+};
 
+db.version(1).stores(schema);
 db.open();
 
 initDb(db);
+
+db.clearAllTables = function() {
+  Object.keys(schema).forEach(function(table){
+    db[table].clear();
+  });
+};
 
 module.exports = db;

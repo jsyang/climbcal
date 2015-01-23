@@ -1,6 +1,7 @@
 var page = require('page');
-
 var DOM = require('./Renderer');
+var DbHelper = require('../util/DbHelper');
+
 var CalendarPage = require('../view/CalendarPage');
 var DayPage = require('../view/DayPage');
 var CheckInPage = require('../view/CheckInPage');
@@ -95,33 +96,57 @@ module.exports = {
 
   onCheckIn: function(ctx) {
     var year = ctx.params.year;
-    var month = monthString[ctx.params.month];
+    var month = ctx.params.month;
     var day = ctx.params.day;
 
+    var monthName = monthString[month];
+
     if(ctx.querystring) {
-      console.error(queryStringToDict(ctx.querystring));
+      var args = queryStringToDict(ctx.querystring);
+      DbHelper
+        .checkIn(year, month, day, args.location, args.time, args.feeling, args.note)
+        .then(function(){
+          var dayRoute = ctx.canonicalPath.split('?')[0].replace('/in', '');
+          page(dayRoute);
+        });
     } else {
-      createPage(CheckInPage, {
-        dayRoute : ctx.canonicalPath.replace('/in', ''),
-        dateString : month + ' ' + day + ', ' + year
-      });
+      DbHelper.getRecentLocations()
+        .then(function(locations){
+          createPage(CheckInPage, {
+            locations : locations,
+            dayRoute : ctx.canonicalPath.replace('/in', ''),
+            dateString : monthName + ' ' + day + ', ' + year
+          });
+        });
     }
   },
 
   onCheckOut: function(ctx) {
     var year = ctx.params.year;
-    var month = monthString[ctx.params.month];
+    var month = ctx.params.month;
     var day = ctx.params.day;
 
+    var monthName = monthString[month];
+
     if(ctx.querystring) {
-      console.error(queryStringToDict(ctx.querystring));
+      var args = queryStringToDict(ctx.querystring);
+      DbHelper
+        .checkOut(year, month, day, args.time, args.feeling, args.note)
+        .then(function(){
+          var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
+          page(dayRoute);
+        });
     } else {
-      createPage(CheckOutPage, {
-        locationString : 'Mile end climbing wall',
-        locationValue : 0,
-        dayRoute : ctx.canonicalPath.replace('/out', ''),
-        dateString : month + ' ' + day + ', ' + year
-      });
+      DbHelper.getRecentLocations()
+        .then(function(locations){
+          locations.reverse();
+
+          createPage(CheckOutPage, {
+            lastLocation : locations[0],
+            dayRoute : ctx.canonicalPath.replace('/out', ''),
+            dateString : monthName + ' ' + day + ', ' + year
+          });
+        });
     }
   },
 
@@ -138,14 +163,20 @@ module.exports = {
   },
 
   onShowDay: function(ctx) {
-    var year = ctx.params.year;
-    var month = monthString[ctx.params.month];
-    var day = ctx.params.day;
+    var year = parseInt(ctx.params.year, 10);
+    var month = parseInt(ctx.params.month, 10);
+    var day = parseInt(ctx.params.day, 10);
 
-    createPage(DayPage, {
-      dateString : month + ' ' + day + ', ' + year,
-      route : ctx.canonicalPath
-    });
+    var monthName = monthString[month];
+
+    DbHelper.getDay(year, month, day)
+      .then(function(dayEntry){
+        createPage(DayPage, {
+          day : dayEntry || {},
+          dateString : monthName + ' ' + day + ', ' + year,
+          route : ctx.canonicalPath
+        });
+      });
   },
 
   onCalendar: function (ctx) {

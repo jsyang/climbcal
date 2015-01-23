@@ -1,22 +1,32 @@
 var ajax = require('../util/tinyxhr');
 var papa = require('babyparse');
+var Q = require('kew');
 
-var PARSE_OPTIONS = { header: true, delimiter:','};
+var PARSE_OPTIONS = {
+  header: true,
+  delimiter:',',
+  skipEmptyLines: true
+};
 
 function getDataAndPopulate(db, tableName) {
-    return ajax('/assets/data/' + tableName + '.csv')
-        .then(function(csv){
-            var table = db[tableName];
-            var rows = papa.parse(csv, PARSE_OPTIONS).data;
+    return db[tableName].count()
+      .then(function(count){
+        if(count > 0) {
+          return Q.resolve();
+        } else {
+          return ajax('/assets/data/' + tableName + '.csv');
+        }
+      })
+      .then(function(csv){
+          var table = db[tableName];
+          var rows = papa.parse(csv, PARSE_OPTIONS).data;
 
-            table.clear();
+          function populate() {
+              rows.forEach(function(entry){ table.add(entry); });
+          }
 
-            function populate() {
-                rows.forEach(function(entry){ table.add(entry); });
-            }
-
-            return db.transaction("rw", table, populate).catch(console.log.bind(console));
-        });
+          return db.transaction("rw", table, populate).catch(console.log.bind(console));
+      });
 }
 
 module.exports = function initDb(db) {

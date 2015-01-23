@@ -19,11 +19,7 @@
 
 .DayPage .button {
   display: block;
-  position: absolute;
-  width: 320px;
   height: 40px;
-  left: 50%;
-  margin-left: -160px;
   text-align: center;
   text-decoration: none;
   color: white;
@@ -31,27 +27,41 @@
   border-radius: 10px;
   font-size: 18px;
   line-height: 40px;
+  box-sizing: border-box;
+  margin: 20px;
+  margin-bottom: 0;
 }
 
-.DayPage .check-in {
-  top: 10px;
+.DayPage.checked-in .check-in {
+  display: none;
 }
 
-.DayPage .check-out {
-  top: 60px;
+.DayPage .check-in-tip {
+  padding: 20px;
+  padding-bottom: 0;
+  color: rgb(120,120,120);
 }
 
-.DayPage .log-attempt {
-  top: 110px;
+.DayPage.checked-in .check-in-tip {
+  display: none;
 }
 
-.DayPage .graph {
+.DayPage .check-out,
+.DayPage .log-climbs {
+  display: none;
+}
+
+.DayPage.checked-in .check-out,
+.DayPage.checked-in .log-climbs {
   display: block;
+}
+
+.DayPage .status {
   position: absolute;
-  width: 320px;
-  height: 600px;
+  box-sizing: border-box;
   top: 160px;
-  left: 50%;
-  margin-left: -160px;
-  background: green;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*background: rgba(0,0,0,0.25);*/
 }

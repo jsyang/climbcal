@@ -8,9 +8,9 @@
       <div class="label"></div>
       <div class="value"></div>
       <select>
-        {{#allLocations}}
-          <option value="{{ name }}">{{ name }}</option>
-        {{/allLocations}}
+        {{#each locations}}
+          <option value="{{ id }}">{{ name }}</option>
+        {{/each}}
       </select>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="DayPage page">
+<div class="DayPage page {{#if day.checkInTime }}checked-in{{/if}} {{#if isToday }}today{{/if}}">
   <div class="menu-bar">
     <div class="title">{{dateString}}</div>
     <a href="/" class="back left-button"><div class="logo"></div></a>
@@ -6,9 +6,15 @@
 
   <div class="content">
     <a href="{{ route }}/in" class="check-in button">Check in</a>
+    <div class="check-in-tip">
+      Check into your gym to start your climbing!
+    </div>
+
     <a href="{{ route }}/out" class="check-out button">Check out</a>
-    <a href="{{ route }}/log" class="log-attempt button">Log a route attempt</a>
-    <div class="graph">Insert ATTEMPT GRAPHS here</div>
+    <a href="{{ route }}/log" class="log-climbs button">Log climbs</a>
+
+    <div class="status">
+    </div>
   </div>
 
 </div>
