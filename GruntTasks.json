@@ -68,11 +68,7 @@
   },
 
   "clean": {
-    "prebuild": [
-      "dist/*.js",
-      "dist/*.css",
-      "dist/assets"
-    ]
+    "prebuild": "dist/"
   },
 
   "concat": {
@@ -80,6 +76,8 @@
       "src" : [
         "app/normalize.css",
         "app/default.css",
+        "app/view/widget/EmojiPicker.css",
+
         "app/view/DayPage.css",
         "app/view/CalendarPage.css",
         "app/view/CheckInPage.css",

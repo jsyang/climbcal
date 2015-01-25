@@ -8,9 +8,10 @@ var schema = {
   emojis   : "++id,&name",
   feelings : "++id,&name,&emojiId",
   days     : "++id,year,month,day",
-  attempts : "++id,gradeId,routeId,dayId",
+  climbs   : "++id,gradeId,dayId",
   routes   : "++id,name,gradeId",
-  grades   : "++id,name,systemName"
+  grades   : "++id,name,gradeSystemName",
+  sports   : "++id,name"
 };
 
 db.version(1).stores(schema);

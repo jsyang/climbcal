@@ -32,17 +32,16 @@
   margin-bottom: 0;
 }
 
-.DayPage.checked-in .check-in {
-  display: none;
-}
-
 .DayPage .check-in-tip {
   padding: 20px;
   padding-bottom: 0;
   color: rgb(120,120,120);
 }
 
-.DayPage.checked-in .check-in-tip {
+.DayPage.checked-in .check-in,
+.DayPage.checked-in .check-in-tip,
+.DayPage.checked-out .check-in,
+.DayPage.checked-out .check-in-tip {
   display: none;
 }
 

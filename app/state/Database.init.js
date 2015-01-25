@@ -12,7 +12,7 @@ function getDataAndPopulate(db, tableName) {
     return db[tableName].count()
       .then(function(count){
         if(count > 0) {
-          return Q.resolve();
+          return Q.reject(undefined);
         } else {
           return ajax('/assets/data/' + tableName + '.csv');
         }
@@ -29,6 +29,7 @@ function getDataAndPopulate(db, tableName) {
       });
 }
 
+// todo: wait for the data to be populated before the rest of the app initializes
 module.exports = function initDb(db) {
     return getDataAndPopulate(db, 'locations')
         .then(function(){
@@ -39,5 +40,8 @@ module.exports = function initDb(db) {
         })
         .then(function(){
             return getDataAndPopulate(db, 'feelings');
+        })
+        .then(function(){
+            return getDataAndPopulate(db, 'sports');
         });
 };

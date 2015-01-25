@@ -30,6 +30,13 @@ var monthString = [
   'Dec'
 ];
 
+function isToday(year, month, day) {
+  var now = new Date();
+  return now.getFullYear() === year &&
+    now.getMonth() === month &&
+    now.getDate() === day;
+}
+
 function queryStringToDict(q) {
   var strings = q.split('&');
 
@@ -107,11 +114,14 @@ module.exports = {
         .checkIn(year, month, day, args.location, args.time, args.feeling, args.note)
         .then(function(){
           var dayRoute = ctx.canonicalPath.split('?')[0].replace('/in', '');
-          page(dayRoute);
+          page.redirect(dayRoute);
         });
+
     } else {
       DbHelper.getRecentLocations()
         .then(function(locations){
+          locations.reverse();
+
           createPage(CheckInPage, {
             locations : locations,
             dayRoute : ctx.canonicalPath.replace('/in', ''),
@@ -134,8 +144,9 @@ module.exports = {
         .checkOut(year, month, day, args.time, args.feeling, args.note)
         .then(function(){
           var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
-          page(dayRoute);
+          page.redirect(dayRoute);
         });
+
     } else {
       DbHelper.getRecentLocations()
         .then(function(locations){
@@ -167,12 +178,26 @@ module.exports = {
     var month = parseInt(ctx.params.month, 10);
     var day = parseInt(ctx.params.day, 10);
 
+    var today = isToday(year, month, day)? 'today' : '';
+
     var monthName = monthString[month];
 
     DbHelper.getDay(year, month, day)
       .then(function(dayEntry){
+        dayEntry = dayEntry || {};
+
+        var status = '';
+
+        if(dayEntry.checkInTime && !dayEntry.checkOutTime) {
+          status = 'checked-in';
+        } else if(dayEntry.checkInTime && dayEntry.checkOutTime) {
+          status = 'checked-out';
+        }
+
         createPage(DayPage, {
-          day : dayEntry || {},
+          day : dayEntry,
+          status : status,
+          today : today,
           dateString : monthName + ' ' + day + ', ' + year,
           route : ctx.canonicalPath
         });

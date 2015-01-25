@@ -4,6 +4,7 @@ var template = require('./CheckInPage.hbs');
 var className = 'CheckInPage';
 var getTime = require('../util/time');
 
+var emojiPicker = require('./widget/EmojiPicker');
 
 function render(state) {
   var html = template(state);
@@ -38,10 +39,23 @@ function updateTimeValue() {
   updateCheckInLink.call(this);
 }
 
-function updateFeelingValue() {
-  var id = this.feelingValue.getAttribute('data-id');
-  this.values.feeling = id;
+function openEmojiPicker() {
+  var that = this;
+  var el = document.createElement('div');
+  el.classList.add(emojiPicker.className);
+  emojiPicker.renderAsync()
+    .then(function(html) {
+      el.innerHTML = html;
+      that.el.appendChild(el);
+      emojiPicker.init({
+        cb : updateFeelingValue.bind(that)
+      });
+    });
+}
 
+function updateFeelingValue(id, url) {
+  this.feelingValue.style.backgroundImage = 'url(' + url + ')';
+  this.values.feeling = id;
   updateCheckInLink.call(this);
 }
 
@@ -61,7 +75,7 @@ module.exports = {
 
     this.values = {
       location: undefined,
-      time: undefined,
+      time: +new Date(),
       feeling: undefined,
       note: undefined
     };
@@ -77,19 +91,14 @@ module.exports = {
 
     this.noteValue = this.el.querySelector('.note .value');
 
-    this.time = this.el.querySelector('.time');
-    this.timeValue = this.el.querySelector('.time .value');
-
     // Update values
 
     this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
     updateLocationValue.call(this);
 
-    this.time.addEventListener('mousedown', updateTimeValue.bind(this));
-    updateTimeValue.call(this);
-
-    //this.feelingValue.addEventListener('mousedown', updateFeelingValue.bind(this));
-    updateFeelingValue.call(this);
+    this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
+    // todo: use most recently used feeling
+    //updateFeelingValue.call(this, );
 
     this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
     updateNoteValue.call(this);

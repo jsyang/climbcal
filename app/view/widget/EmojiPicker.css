@@ -1,0 +1,35 @@
+.EmojiPicker {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.EmojiPicker .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(225,225,225, 0.4);
+}
+
+.EmojiPicker .emoji-container {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  overflow-y: scroll;
+  background-color: rgba(0,0,0,0.7);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.EmojiPicker .emoji {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
