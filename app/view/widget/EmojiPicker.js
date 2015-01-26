@@ -1,5 +1,4 @@
-//var convertHTML = require('../../util/vdom').convertHTML;
-var template = require('./emojiPicker.hbs');
+var template = require('./EmojiPicker.hbs');
 
 var db = require('../../state/Database');
 
