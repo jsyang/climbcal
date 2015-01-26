@@ -8,40 +8,48 @@ var PARSE_OPTIONS = {
   skipEmptyLines: true
 };
 
-function getDataAndPopulate(db, tableName) {
-    return db[tableName].count()
+function getDataAndPopulate(db, tableName) { 
+    var table = db[tableName];
+    return table.count()
       .then(function(count){
         if(count > 0) {
-          return Q.reject(undefined);
+          return Q.resolve(undefined);
         } else {
           return ajax('/assets/data/' + tableName + '.csv');
         }
       })
       .then(function(csv){
-          var table = db[tableName];
+        if(csv){
           var rows = papa.parse(csv, PARSE_OPTIONS).data;
-
-          function populate() {
-              rows.forEach(function(entry){ table.add(entry); });
-          }
-
-          return db.transaction("rw", table, populate).catch(console.log.bind(console));
+          return db.transaction("rw", table, function populate() {
+            rows.forEach(function(entry){ table.add(entry); });
+          });
+        } else {
+          return Q.resolve(undefined);
+        }
+      })
+      .catch(function(e){
+        console.log(e);
       });
 }
 
-// todo: wait for the data to be populated before the rest of the app initializes
-module.exports = function initDb(db) {
-    return getDataAndPopulate(db, 'locations')
-        .then(function(){
-            return getDataAndPopulate(db, 'grades');
-        })
-        .then(function(){
-            return getDataAndPopulate(db, 'emojis');
-        })
-        .then(function(){
-            return getDataAndPopulate(db, 'feelings');
-        })
-        .then(function(){
-            return getDataAndPopulate(db, 'sports');
-        });
+module.exports = function init(db) {
+    var deferred = Q.defer();
+
+    db.on('ready', function(){
+      return Q.all([
+        getDataAndPopulate(db, 'locations'),
+        getDataAndPopulate(db, 'grades'),
+        getDataAndPopulate(db, 'emojis'),
+        getDataAndPopulate(db, 'feelings'),
+        getDataAndPopulate(db, 'sports')
+      ])
+      .then(function(){
+        deferred.resolve(undefined);
+      });
+    });
+
+    db.open();
+
+    return deferred;
 };

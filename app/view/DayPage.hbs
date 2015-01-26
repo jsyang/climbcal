@@ -11,9 +11,10 @@
     </div>
 
     <a href="{{ route }}/out" class="check-out button">Check out</a>
-    <a href="{{ route }}/log" class="log-climbs button">Log climbs</a>
+    <a class="log-climbs button">Log climbs</a>
 
     <div class="status">
+      {{#climbEntries climbs}}{{/climbEntries}}
     </div>
   </div>
 

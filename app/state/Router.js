@@ -181,22 +181,30 @@ module.exports = {
     var today = isToday(year, month, day)? 'today' : '';
 
     var monthName = monthString[month];
+    var dayObj;
+    var dayStatus = '';
+    var dayClimbs;
 
     DbHelper.getDay(year, month, day)
       .then(function(dayEntry){
-        dayEntry = dayEntry || {};
+        dayObj = dayEntry || {};
+        if(dayObj.id) {
+          if(dayObj.checkInTime && !dayObj.checkOutTime) {
+            dayStatus = 'checked-in';
+          } else if(dayObj.checkInTime && dayObj.checkOutTime) {
+            dayStatus = 'checked-out';
+          }
 
-        var status = '';
-
-        if(dayEntry.checkInTime && !dayEntry.checkOutTime) {
-          status = 'checked-in';
-        } else if(dayEntry.checkInTime && dayEntry.checkOutTime) {
-          status = 'checked-out';
+          return DbHelper.getClimbsByDayId(dayObj.id);
+        } else {
+          return [];
         }
-
+      })
+      .then(function(climbs){
         createPage(DayPage, {
-          day : dayEntry,
-          status : status,
+          day : dayObj,
+          climbs : climbs,
+          status : dayStatus,
           today : today,
           dateString : monthName + ' ' + day + ', ' + year,
           route : ctx.canonicalPath

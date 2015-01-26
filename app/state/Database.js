@@ -1,5 +1,5 @@
 var Dexie = require('dexie');
-var initDb = require('./Database.init');
+var init = require('./Database.init');
 
 var db = new Dexie('crimperdb');
 
@@ -15,14 +15,7 @@ var schema = {
 };
 
 db.version(1).stores(schema);
-db.open();
 
-initDb(db);
-
-db.clearAllTables = function() {
-  Object.keys(schema).forEach(function(table){
-    db[table].clear();
-  });
-};
+db.init = init.bind(this, db);
 
 module.exports = db;

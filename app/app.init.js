@@ -1,4 +1,3 @@
-var _ = require('lodash');
 require('./util/handlebars');
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -7,10 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var Router = require('./state/Router');
     var Database = require('./state/Database');
 
-    window.app = { //_.extend({
+    var app = {
         router: Router,
-        db    : Database 
-    };//}, window.app);
+        db    : Database
+    };
 
-    app.router.init();
+    app.db.init()
+      .then(function(){
+        app.router.init();
+        window.app = app;
+      });
 });

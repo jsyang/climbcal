@@ -44,7 +44,6 @@ function checkIn(year, month, day, locationId, utime, feelingId, note) {
 }
 
 function checkOut(year, month, day, utime, feelingId, note) {
-  // todo: handle errors
   return getDay(year, month, day)
     .then(function(dayObj){
       return db.days.update(dayObj.id, {
@@ -59,10 +58,18 @@ function getRecentLocations() {
   return db.locations.toCollection().sortBy('lastUsed');
 }
 
+function getClimbsByDayId(id) {
+  return db.climbs
+    .filter(function(climbEntry){
+      return climbEntry.dayId === id;
+    })
+    .sortBy('value');
+}
 
 module.exports = {
   getDay : getDay,
   checkIn : checkIn,
   checkOut : checkOut,
-  getRecentLocations : getRecentLocations
+  getRecentLocations : getRecentLocations,
+  getClimbsByDayId : getClimbsByDayId
 };
