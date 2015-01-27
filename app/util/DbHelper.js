@@ -66,10 +66,18 @@ function getClimbsByDayId(id) {
     .sortBy('value');
 }
 
+function getGradesBySystem(systemName) {
+  return db.grades
+    .where('systemName')
+    .equalsIgnoreCase(systemName)
+    .sortBy('value');
+}
+
 module.exports = {
   getDay : getDay,
   checkIn : checkIn,
   checkOut : checkOut,
   getRecentLocations : getRecentLocations,
-  getClimbsByDayId : getClimbsByDayId
+  getClimbsByDayId : getClimbsByDayId,
+  getGradesBySystem : getGradesBySystem
 };

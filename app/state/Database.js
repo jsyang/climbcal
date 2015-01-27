@@ -10,12 +10,14 @@ var schema = {
   days     : "++id,year,month,day",
   climbs   : "++id,gradeId,dayId",
   routes   : "++id,name,gradeId",
-  grades   : "++id,name,gradeSystemName",
+  grades   : "++id,name,systemName",
   sports   : "++id,name"
 };
 
 db.version(1).stores(schema);
 
 db.init = init.bind(this, db);
+
+//db.delete();
 
 module.exports = db;

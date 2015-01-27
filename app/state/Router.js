@@ -201,9 +201,14 @@ module.exports = {
         }
       })
       .then(function(climbs){
+        dayClimbs = climbs;
+        return DbHelper.getGradesBySystem('Hueco');
+      })
+      .then(function(grades){
         createPage(DayPage, {
           day : dayObj,
-          climbs : climbs,
+          grades : grades,
+          climbs : dayClimbs,
           status : dayStatus,
           today : today,
           dateString : monthName + ' ' + day + ', ' + year,
