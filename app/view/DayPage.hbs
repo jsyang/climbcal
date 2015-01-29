@@ -11,17 +11,17 @@
     </div>
 
     <a href="{{ route }}/out" class="check-out button">Check out</a>
-    <a class="log-climbs button">Log climbs</a>
+    <div class="button add-new-grade">
+      <div class="value">Add a new grade</div>
+      <select>
+        {{#each grades}}
+        <option value="{{ id }}">{{ name }}</option>
+        {{/each}}
+        <option value="cancel" selected="selected">Cancel</option>
+      </select>
+    </div>
 
     <div class="status">
-      <select class="add-new-grade">
-        <option value="ignore">Add a new grade</option>
-        {{#each grades}}
-          <option value="{{ id }}">{{ name }}</option>
-        {{/each}}
-        <option value="ignore"></option>
-        <option value="cancel">Cancel</option>
-      </select>
       {{#climbEntries climbs}}{{/climbEntries}}
     </div>
   </div>

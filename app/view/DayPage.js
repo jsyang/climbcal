@@ -11,37 +11,99 @@ function render(state) {
   return convertHTML(html);
 }
 
+function refresh() {
+  page(window.location.pathname);
+}
+
+function onAddNewGrade(e) {
+  var dayId = this.state.day.id;
+  var gradeId = parseInt(e.target.value, 10);
+  e.target.value = 'cancel';
+
+  db.grades.get(gradeId)
+    .then(function(gradeEntry){
+      return db.climbs.put({
+        dayId : dayId,
+        gradeId : gradeEntry.id,
+        name : gradeEntry.name,
+        value : gradeEntry.value,
+        sequence : []
+      });
+    })
+    .then(refresh);
+}
+
+
+function deleteRecord(id) {
+  db.climbs.get(id)
+  .then(function(climbEntry){
+    climbEntry.sequence.pop();
+    var changes = {
+      sequence : climbEntry.sequence
+    };
+
+    return db.climbs.update(climbEntry.id, changes);
+  })
+  .then(refresh);
+}
+
+
+function recordClimb(id, climbResult) {
+  db.climbs.get(id)
+    .then(function(climbEntry){
+      var changes = {
+        sequence : climbEntry.sequence.concat(climbResult)
+      };
+
+      return db.climbs.update(climbEntry.id, changes);
+    })
+    .then(refresh);
+}
+
+function onClimbClick(e) {
+  var el = e.currentTarget;
+  var name = e.target.className;
+  var id = parseInt(el.id, 10);
+
+  if(name === 'name') {
+    // Delete last record
+    deleteRecord();
+  } else if (name === 'left') {
+    // Record a win
+    recordClimb(id, 1);
+  } else if (name === 'right') {
+    // Record a loss
+    recordClimb(id, 0);
+  }
+}
+
 module.exports = {
   className: className,
   render   : render,
 
   init: function (state) {
+    this.state = state;
     this.el = document.querySelector('.' + className);
 
-    this.el.querySelector('.log-climbs')
-      .addEventListener('click', function(e){
-        var gradeNumber = Math.floor(Math.random() * 7) + 3;
+    if(state.status !== 'checked-out') {
+      this.el.querySelector('.add-new-grade select')
+      .addEventListener('change', onAddNewGrade.bind(this));
 
-        db.grades.where('name')
-          .equalsIgnoreCase('v'+gradeNumber)
-          .first(function(gradeEntry){
-            var sequence = [];
-            while(sequence.length < 8) {
-              sequence.push(Math.round(Math.random()));
-            }
+      this.onClimbClick = onClimbClick.bind(this);
 
-            return db.climbs.put({
-              dayId : state.day.id,
-              gradeId : gradeEntry.id,
-              name : gradeEntry.name,
-              sequence : sequence,
-              value : gradeEntry.value
-            });
+      this.update();
+    }
+  },
 
-          })
-          .then(function(){
-            page(state.route);
-          });
+  update: function() {
+    var that = this;
+
+    // Attach event listeners to any new climb entries.
+    Array.prototype.slice.call(this.el.querySelectorAll('.ClimbEntry'))
+      .forEach(function(el){
+        if(!el.onclick) {
+          el.onclick = that.onClimbClick;
+        }
       });
   }
 };

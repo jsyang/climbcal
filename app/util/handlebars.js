@@ -13,11 +13,13 @@ handlebars.registerHelper('climbEntries', function(entries, options){
         })
         .forEach(function(entry){
             var seqString = entry.sequence.join('');
-            var wins = seqString.match(/1/g).length;
             if(seqString) {
+              var wins = seqString.match(/1/g);
+              wins = wins? wins.length : 0;
               entry.percent = wins / seqString.length * 100;
             } else {
               entry.percent = 100;
+              entry.nodata = true;
             }
 
             html += ClimbEntry.render(entry);

@@ -33,4 +33,37 @@
   left: 0;
   height: 100%;
   background-color: rgba(250, 120, 0, 0.7);
+  transition: width 500ms ease;
+  -webkit-transition: width 500ms ease;
+}
+
+.ClimbEntry .ratio-bar .left {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 50%;
+  bottom: 0;
+}
+
+.ClimbEntry .ratio-bar .right {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+}
+
+.ClimbEntry.no-data .ratio-bar .filled {
+  background-color: rgb(40, 40, 40);
+}
+
+.ClimbEntry.no-data .ratio-bar .filled::before {
+  display: block;
+  color: white;
+  line-height: 40px;
+  text-align: center;
+  height: 40px;
+  content: 'No data logged';
 }
