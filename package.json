@@ -14,7 +14,8 @@
     },
 
     "scripts": {
-        "start": "./node_modules/grunt-cli/bin/grunt; node server/server.js"
+        "start": "node server/server.js",
+        "postinstall" : "./node_modules/grunt-cli/bin/grunt"
     },
 
     "dependencies": {
