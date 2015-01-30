@@ -210,7 +210,7 @@ module.exports = {
                     route     : ctx.canonicalPath
                 });
             })
-            .catch(alertError);
+            .fail(alertError);
     },
 
     onCalendar: function (ctx) {
