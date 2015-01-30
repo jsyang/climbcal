@@ -38,6 +38,8 @@
   color: rgb(120,120,120);
 }
 
+.DayPage:not(.today) .check-in,
+.DayPage:not(.today) .check-in-tip,
 .DayPage.checked-in .check-in,
 .DayPage.checked-in .check-in-tip,
 .DayPage.checked-out .check-in,

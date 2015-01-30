@@ -82,8 +82,7 @@
         "app/view/DayPage.css",
         "app/view/CalendarPage.css",
         "app/view/CheckInPage.css",
-        "app/view/CheckOutPage.css",
-        "app/view/LogPage.css"
+        "app/view/CheckOutPage.css"
       ],
       "dest": "dist/app.css"
     }

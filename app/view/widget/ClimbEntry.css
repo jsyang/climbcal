@@ -13,8 +13,9 @@
   bottom: 0;
   left: 0;
   width: 50px;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 40px;
+  white-space: nowrap;
 }
 
 .ClimbEntry .ratio-bar {
@@ -44,6 +45,9 @@
   left: 0;
   right: 50%;
   bottom: 0;
+    color: white;
+    line-height: 40px;
+    padding-left: 10px;
 }
 
 .ClimbEntry .ratio-bar .right {
@@ -53,6 +57,10 @@
   left: 50%;
   right: 0;
   bottom: 0;
+    color: white;
+    text-align: right;
+    line-height: 40px;
+    padding-right: 10px;
 }
 
 .ClimbEntry.no-data .ratio-bar .filled {

@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     app.db.init()
-      .then(function(){
-        app.router.init();
-        window.app = app;
-      });
+        .then(function(){
+            app.router.init();
+            window.app = app;
+        });
 });

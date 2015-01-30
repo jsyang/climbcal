@@ -1,18 +1,20 @@
 var page = require('page');
 var DOM = require('./Renderer');
 var DbHelper = require('../util/DbHelper');
+var db = require('../state/Database');
 
 var CalendarPage = require('../view/CalendarPage');
 var DayPage = require('../view/DayPage');
 var CheckInPage = require('../view/CheckInPage');
 var CheckOutPage = require('../view/CheckOutPage');
-var LogPage = require('../view/LogPage');
+
+var insertLoaderOverlay = require('../view/widget/LoaderOverlay');
 
 var pageMap = {
   'CalendarPage' : CalendarPage,
   'CheckInPage' : CheckInPage,
   'CheckOutPage' : CheckOutPage,
-  'LogPage' : LogPage
+  'DayPage' : DayPage
 };
 
 var monthString = [
@@ -93,11 +95,10 @@ module.exports = {
 
   init: function () {
     page('/', this._getBoundHandler('onCalendar'));
+    page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
     page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
     page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
     page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
-    page('/y/:year/m/:month/d/:day/log', this._getBoundHandler('onLog'));
-    page('/y/:year/m/:month/d/:day/plan', this._getBoundHandler('onPlan'));
     page();
   },
 
@@ -161,18 +162,6 @@ module.exports = {
     }
   },
 
-  onLog: function(ctx) {
-    var year = ctx.params.year;
-    var month = ctx.params.month;
-    var day = ctx.params.day;
-  },
-
-  onPlan: function(ctx) {
-    var year = ctx.params.year;
-    var month = ctx.params.month;
-    var day = ctx.params.day;
-  },
-
   onShowDay: function(ctx) {
     var year = parseInt(ctx.params.year, 10);
     var month = parseInt(ctx.params.month, 10);
@@ -223,5 +212,16 @@ module.exports = {
     createPage(CalendarPage, {
       monthYear : todayDate[1] + ' ' + todayDate[3]
     });
+  },
+
+  onDeleteDatabase : function(){
+    insertLoaderOverlay('body');
+    db.delete()
+        .then(function(){
+            window.location.href = '/';
+        })
+        .catch(function(e){
+            alert('Error deleting the database: ' + e);
+        });
   }
 };
