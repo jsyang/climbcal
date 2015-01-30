@@ -46,6 +46,6 @@
         "html-to-vdom"           : "~0.5.0",
         "dexie"                  : "1.0.2",
         "babyparse"              : "0.4.1",
-        "calendar"               : "git+ssh://git@github.com:jsyang/calendar.git"
+        "calendar"               : "https://github.com/jsyang/calendar.git"
     }
 }
