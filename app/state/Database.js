@@ -15,9 +15,5 @@ var schema = {
 };
 
 db.version(1).stores(schema);
-
 db.init = init.bind(this, db);
-
-//db.delete();
-
 module.exports = db;

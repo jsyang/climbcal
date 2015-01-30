@@ -3,6 +3,8 @@ var DOM = require('./Renderer');
 var DbHelper = require('../util/DbHelper');
 var db = require('../state/Database');
 
+var alertError = require('../util/alertError');
+
 var CalendarPage = require('../view/CalendarPage');
 var DayPage = require('../view/DayPage');
 var CheckInPage = require('../view/CheckInPage');
@@ -11,217 +13,220 @@ var CheckOutPage = require('../view/CheckOutPage');
 var insertLoaderOverlay = require('../view/widget/LoaderOverlay');
 
 var pageMap = {
-  'CalendarPage' : CalendarPage,
-  'CheckInPage' : CheckInPage,
-  'CheckOutPage' : CheckOutPage,
-  'DayPage' : DayPage
+    'CalendarPage': CalendarPage,
+    'CheckInPage' : CheckInPage,
+    'CheckOutPage': CheckOutPage,
+    'DayPage'     : DayPage
 };
 
 var monthString = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
 ];
 
 function isToday(year, month, day) {
-  var now = new Date();
-  return now.getFullYear() === year &&
-    now.getMonth() === month &&
-    now.getDate() === day;
+    var now = new Date();
+    return now.getFullYear() === year &&
+           now.getMonth() === month &&
+           now.getDate() === day;
 }
 
 function queryStringToDict(q) {
-  var strings = q.split('&');
+    var strings = q.split('&');
 
-  if(strings[0]) {
-    var obj = {};
+    if (strings[0]) {
+        var obj = {};
 
-    strings.forEach(function(v){
-      var query = v.split('=');
-      var key = query[0];
-      var value = query[1] || '';
-      obj[key] = value;
-    });
+        strings.forEach(function (v) {
+            var query = v.split('=');
+            var key = query[0];
+            var value = query[1] || '';
+            obj[key] = value;
+        });
 
-    return obj;
+        return obj;
 
-  } else {
-    return undefined;
-  }
+    } else {
+        return undefined;
+    }
 }
 
 function destroyPage(pageEl) {
-  var pageClass = pageMap[pageEl && pageEl.classList[0]];
-  if(pageClass && pageClass.destroy) {
-    pageClass.destroy();
-  }
+    var pageClass = pageMap[pageEl && pageEl.classList[0]];
+    if (pageClass && pageClass.destroy) {
+        pageClass.destroy();
+    }
 }
 
 function createPage(page, state) {
-  var pageEl = document.body.lastElementChild;
+    var pageEl = document.body.lastElementChild;
 
-  if (pageEl && pageEl.classList.contains(page.className)) {
-    DOM.update(page.render(state));
+    if (pageEl && pageEl.classList.contains(page.className)) {
+        DOM.update(page.render(state));
 
-    if(page.update) {
-      page.update(state);
+        if (page.update) {
+            page.update(state);
+        }
+
+        return false;
+
+    } else {
+        destroyPage(pageEl);
+
+        DOM.initialize(page.render(state));
+        page.init(state);
+
+        return true;
     }
-
-    return false;
-
-  } else {
-    destroyPage(pageEl);
-
-    DOM.initialize(page.render(state));
-    page.init(state);
-
-    return true;
-  }
 }
 
 module.exports = {
-  _getBoundHandler: function (name) {
-    return this[name] ? this[name].bind(this) : undefined;
-  },
+    _getBoundHandler: function (name) {
+        return this[name] ? this[name].bind(this) : undefined;
+    },
 
-  init: function () {
-    page('/', this._getBoundHandler('onCalendar'));
-    page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
-    page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
-    page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
-    page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
-    page();
-  },
+    init: function () {
+        page('/', this._getBoundHandler('onCalendar'));
+        page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
+        page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
+        page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
+        page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
+        page();
+    },
 
-  onCheckIn: function(ctx) {
-    var year = ctx.params.year;
-    var month = ctx.params.month;
-    var day = ctx.params.day;
+    onCheckIn: function (ctx) {
+        var year = ctx.params.year;
+        var month = ctx.params.month;
+        var day = ctx.params.day;
 
-    var monthName = monthString[month];
+        var monthName = monthString[month];
 
-    if(ctx.querystring) {
-      var args = queryStringToDict(ctx.querystring);
-      DbHelper
-        .checkIn(year, month, day, args.location, args.time, args.feeling, args.note)
-        .then(function(){
-          var dayRoute = ctx.canonicalPath.split('?')[0].replace('/in', '');
-          page.redirect(dayRoute);
-        });
+        if (ctx.querystring) {
+            var args = queryStringToDict(ctx.querystring);
+            DbHelper
+                .checkIn(year, month, day, args.location, args.time, args.feeling, args.note)
+                .then(function () {
+                    var dayRoute = ctx.canonicalPath.split('?')[0].replace('/in', '');
+                    page.redirect(dayRoute);
+                })
+                .catch(alertError);
 
-    } else {
-      DbHelper.getRecentLocations()
-        .then(function(locations){
-          locations.reverse();
-
-          createPage(CheckInPage, {
-            locations : locations,
-            dayRoute : ctx.canonicalPath.replace('/in', ''),
-            dateString : monthName + ' ' + day + ', ' + year
-          });
-        });
-    }
-  },
-
-  onCheckOut: function(ctx) {
-    var year = ctx.params.year;
-    var month = ctx.params.month;
-    var day = ctx.params.day;
-
-    var monthName = monthString[month];
-
-    if(ctx.querystring) {
-      var args = queryStringToDict(ctx.querystring);
-      DbHelper
-        .checkOut(year, month, day, args.time, args.feeling, args.note)
-        .then(function(){
-          var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
-          page.redirect(dayRoute);
-        });
-
-    } else {
-      DbHelper.getRecentLocations()
-        .then(function(locations){
-          locations.reverse();
-
-          createPage(CheckOutPage, {
-            lastLocation : locations[0],
-            dayRoute : ctx.canonicalPath.replace('/out', ''),
-            dateString : monthName + ' ' + day + ', ' + year
-          });
-        });
-    }
-  },
-
-  onShowDay: function(ctx) {
-    var year = parseInt(ctx.params.year, 10);
-    var month = parseInt(ctx.params.month, 10);
-    var day = parseInt(ctx.params.day, 10);
-
-    var today = isToday(year, month, day)? 'today' : '';
-
-    var monthName = monthString[month];
-    var dayObj;
-    var dayStatus = '';
-    var dayClimbs;
-
-    DbHelper.getDay(year, month, day)
-      .then(function(dayEntry){
-        dayObj = dayEntry || {};
-        if(dayObj.id) {
-          if(dayObj.checkInTime && !dayObj.checkOutTime) {
-            dayStatus = 'checked-in';
-          } else if(dayObj.checkInTime && dayObj.checkOutTime) {
-            dayStatus = 'checked-out';
-          }
-
-          return DbHelper.getClimbsByDayId(dayObj.id);
         } else {
-          return [];
+            DbHelper.getRecentLocations()
+                .then(function (locations) {
+                    locations.reverse();
+
+                    createPage(CheckInPage, {
+                        locations : locations,
+                        dayRoute  : ctx.canonicalPath.replace('/in', ''),
+                        dateString: monthName + ' ' + day + ', ' + year
+                    });
+                })
+                .catch(alertError);
         }
-      })
-      .then(function(climbs){
-        dayClimbs = climbs;
-        return DbHelper.getGradesBySystem('Hueco');
-      })
-      .then(function(grades){
-        createPage(DayPage, {
-          day : dayObj,
-          grades : grades,
-          climbs : dayClimbs,
-          status : dayStatus,
-          today : today,
-          dateString : monthName + ' ' + day + ', ' + year,
-          route : ctx.canonicalPath
+    },
+
+    onCheckOut: function (ctx) {
+        var year = ctx.params.year;
+        var month = ctx.params.month;
+        var day = ctx.params.day;
+
+        var monthName = monthString[month];
+
+        if (ctx.querystring) {
+            var args = queryStringToDict(ctx.querystring);
+            DbHelper
+                .checkOut(year, month, day, args.time, args.feeling, args.note)
+                .then(function () {
+                    var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
+                    page.redirect(dayRoute);
+                })
+                .catch(alertError);
+
+        } else {
+            DbHelper.getRecentLocations()
+                .then(function (locations) {
+                    locations.reverse();
+
+                    createPage(CheckOutPage, {
+                        lastLocation: locations[0],
+                        dayRoute    : ctx.canonicalPath.replace('/out', ''),
+                        dateString  : monthName + ' ' + day + ', ' + year
+                    });
+                })
+                .catch(alertError);
+        }
+    },
+
+    onShowDay: function (ctx) {
+        var year = parseInt(ctx.params.year, 10);
+        var month = parseInt(ctx.params.month, 10);
+        var day = parseInt(ctx.params.day, 10);
+
+        var today = isToday(year, month, day) ? 'today' : '';
+
+        var monthName = monthString[month];
+        var dayObj;
+        var dayStatus = '';
+        var dayClimbs;
+
+        DbHelper.getDay(year, month, day)
+            .then(function (dayEntry) {
+                dayObj = dayEntry || {};
+                if (dayObj.id) {
+                    if (dayObj.checkInTime && !dayObj.checkOutTime) {
+                        dayStatus = 'checked-in';
+                    } else if (dayObj.checkInTime && dayObj.checkOutTime) {
+                        dayStatus = 'checked-out';
+                    }
+
+                    return DbHelper.getClimbsByDayId(dayObj.id);
+                } else {
+                    return [];
+                }
+            })
+            .then(function (climbs) {
+                dayClimbs = climbs;
+                return DbHelper.getGradesBySystem('Hueco');
+            })
+            .then(function (grades) {
+                createPage(DayPage, {
+                    day       : dayObj,
+                    grades    : grades,
+                    climbs    : dayClimbs,
+                    status    : dayStatus,
+                    today     : today,
+                    dateString: monthName + ' ' + day + ', ' + year,
+                    route     : ctx.canonicalPath
+                });
+            })
+            .catch(alertError);
+    },
+
+    onCalendar: function (ctx) {
+        var todayDate = (new Date()).toDateString().split(' ');
+
+        createPage(CalendarPage, {
+            monthYear: todayDate[1] + ' ' + todayDate[3]
         });
-      });
-  },
+    },
 
-  onCalendar: function (ctx) {
-    var todayDate = (new Date()).toDateString().split(' ');
-
-    createPage(CalendarPage, {
-      monthYear : todayDate[1] + ' ' + todayDate[3]
-    });
-  },
-
-  onDeleteDatabase : function(){
-    insertLoaderOverlay('body');
-    db.delete()
-        .then(function(){
-            window.location.href = '/';
-        })
-        .catch(function(e){
-            alert('Error deleting the database: ' + e);
-        });
-  }
+    onDeleteDatabase: function () {
+        insertLoaderOverlay('body');
+        db.delete()
+            .then(function () {
+                window.location.href = '/';
+            })
+            .catch(alertError);
+    }
 };

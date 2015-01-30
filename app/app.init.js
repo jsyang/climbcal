@@ -1,5 +1,7 @@
 require('./util/handlebars');
 
+var alertError = require('./util/alertError');
+
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
@@ -15,5 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(function(){
             app.router.init();
             window.app = app;
-        });
+        })
+        .fail(alertError);
 });
