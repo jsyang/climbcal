@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 module.exports = function(grunt) {
 	"use strict";
 
@@ -9,6 +7,12 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks(taskName);
     });
 
-	grunt.initConfig(_.extend({ pkg: grunt.file.readJSON( "package.json" ) }, tasksConfig));
+	var config = { pkg: grunt.file.readJSON( "package.json" ) };
+
+	for(var key in tasksConfig) {
+		config[key] = tasksConfig[key];
+	}
+
+	grunt.initConfig(config);
   grunt.registerTask( "default", [ "jshint", "clean", "copy:assets", "browserify", "extract_sourcemap", "concat"] );
 };
