@@ -1,29 +1,28 @@
 <div class="DayPage page {{ status }} {{ today }}">
-  <div class="menu-bar">
-    <div class="title">{{dateString}}</div>
-    <a href="/" class="back left-button"><div class="logo"></div></a>
-  </div>
-
-  <div class="content">
-    <a href="{{ route }}/in" class="check-in button">Check in</a>
-    <div class="check-in-tip">
-      Check into your gym to start your climbing!
+    <div class="menu-bar">
+        <div class="title">{{dateString}}</div>
+        <a href="/" class="back left-button"><div class="logo"></div></a>
     </div>
 
-    <a href="{{ route }}/out" class="check-out button">Check out</a>
-    <div class="button add-new-grade">
-      <div class="value">Add a new grade</div>
-      <select>
-        {{#each grades}}
-        <option value="{{ id }}">{{ name }}</option>
-        {{/each}}
-        <option value="cancel" selected="selected">Cancel</option>
-      </select>
-    </div>
+    <div class="content">
+        <a href="{{ route }}/in" class="check-in button">Check in</a>
+        <div class="check-in-tip">
+            Check into your gym to start your climbing!
+        </div>
 
-    <div class="status">
-      {{#climbEntries climbs}}{{/climbEntries}}
-    </div>
-  </div>
+        <a href="{{ route }}/out" class="check-out button">Check out</a>
+        <div class="button add-new-grade">
+            <div class="value">Add a new grade</div>
+            <select>
+                {{#each grades}}
+                <option value="{{ id }}">{{ name }}</option>
+                {{/each}}
+                <option value="cancel" selected="selected">Cancel</option>
+            </select>
+        </div>
 
+        <div class="status">
+            {{#climbEntries climbs}}{{/climbEntries}}
+        </div>
+    </div>
 </div>

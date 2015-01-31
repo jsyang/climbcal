@@ -1,41 +1,41 @@
 .DayPage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 /** CONTENT **/
 
 .DayPage .content {
-  position: absolute;
-  top: 60px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: scroll;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: scroll;
 }
 
 .DayPage .button {
-  display: block;
-  height: 40px;
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  background: rgb(0,120,238);
-  border-radius: 10px;
-  font-size: 18px;
-  line-height: 40px;
-  box-sizing: border-box;
-  margin: 20px;
-  margin-bottom: 0;
+    display: block;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background: rgb(0,120,238);
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 40px;
+    box-sizing: border-box;
+    margin: 20px;
+    margin-bottom: 0;
 }
 
 .DayPage .check-in-tip {
-  padding: 20px;
-  padding-bottom: 0;
-  color: rgb(120,120,120);
+    padding: 20px;
+    padding-bottom: 0;
+    color: rgb(120,120,120);
 }
 
 .DayPage:not(.today) .check-in,
@@ -44,45 +44,45 @@
 .DayPage.checked-in .check-in-tip,
 .DayPage.checked-out .check-in,
 .DayPage.checked-out .check-in-tip {
-  display: none;
+    display: none;
 }
 
 .DayPage .check-out {
-  display: none;
+    display: none;
 }
 
 .DayPage.checked-in .check-out,
 .DayPage.checked-in .add-new-grade {
-  display: block;
+    display: block;
 }
 
 .DayPage .status {
-  position: absolute;
-  box-sizing: border-box;
-  top: 140px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.1);
-  overflow-y: scroll;
-  padding-top: 10px;
+    position: absolute;
+    box-sizing: border-box;
+    top: 140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.1);
+    overflow-y: scroll;
+    padding-top: 10px;
 }
 
 .DayPage .add-new-grade {
-  position: relative;
-  background: rgb(55,66,111);
-  display: none;
+    position: relative;
+    background: rgb(55,66,111);
+    display: none;
 }
 
 .DayPage .add-new-grade select {
-  display: block;
-  opacity: 0;
-  line-height: 100%;
-  background: white;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    display: block;
+    opacity: 0;
+    line-height: 100%;
+    background: white;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
