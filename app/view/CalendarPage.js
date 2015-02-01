@@ -18,8 +18,30 @@ function addTodayHighlight() {
     today.getDate()
   ].join('-');
 
-  document.querySelector("a[data-date='"+ dateString+"']")
-    .classList.add('today');
+  var todayEl = document.querySelector("a[data-date='"+ dateString+"']");
+  if(todayEl) {
+      todayEl.classList.add('today');
+  }
+}
+
+function getMonthName() {
+    return document.querySelector('.title .month').textContent.substr(0,3);
+}
+
+function getYear() {
+    return document.querySelector('.title .year').textContent;
+}
+
+function onPrev(titleEl){
+    this.emit('prev');
+    titleEl.textContent = getMonthName() + ' ' + getYear();
+    addTodayHighlight();
+}
+
+function onNext(titleEl){
+    this.emit('next');
+    titleEl.textContent = getMonthName() + ' ' + getYear();
+    addTodayHighlight();
 }
 
 module.exports = {
@@ -29,8 +51,12 @@ module.exports = {
   init: function (state) {
     this.el = document.querySelector('.' + className);
     this.cal = new Calendar();
-    this.el.appendChild(this.cal.el);
-
+    this.el.querySelector('.content').appendChild(this.cal.el);
     addTodayHighlight();
+
+    var titleEl = this.el.querySelector('.title');
+
+    this.el.querySelector('.prev').addEventListener('click', onPrev.bind(this.cal.days, titleEl));
+    this.el.querySelector('.next').addEventListener('click', onNext.bind(this.cal.days, titleEl));
   }
 };
