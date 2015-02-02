@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="16" height="16" id="svg2" sodipodi:version="0.32" inkscape:version="0.46" version="1.0" sodipodi:docname="karabiner.svg" inkscape:output_extension="org.inkscape.output.svg.inkscape">
-  <defs id="defs4"/>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="22.627417" inkscape:cx="4.4363583" inkscape:cy="8.4684623" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:snap-guide="true" inkscape:snap-intersection-line-segments="false" inkscape:snap-global="false" showguides="true" inkscape:window-width="1164" inkscape:window-height="779" inkscape:window-x="65" inkscape:window-y="12"/>
-  <metadata id="metadata7">
-    <rdf:RDF>
-      <cc:Work rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
-      </cc:Work>
-      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
-        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
-        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
-        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
-      </cc:License>
-    </rdf:RDF>
-  </metadata>
-  <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
-    <path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke: #EE0001;stroke-width:2.14700007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 4.7737016,8.0906823 L 10.083734,14.075006" id="path3161" sodipodi:nodetypes="cc" inkscape:transform-center-x="3.7190946" inkscape:transform-center-y="-2.3881577"/>
-
-    <path style="fill:none;fill-rule:evenodd;stroke:#960000;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 2.9834546,11.055168 C 1.1455856,8.7529932 0.77713864,7.8214913 1.9168416,5.1975154 C 3.6900336,1.1150351 6.0960601,-0.74913184 8.7760239,3.3916745 L 13.031077,9.9661471 C 15.468906,13.732832 13.95981,14.954514 12.191646,15.027407 C 8.0740218,15.197158 9.8924885,8.3335693 13.658134,11.09159" id="path2385" sodipodi:nodetypes="cszzsc"/>
-
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+  <g id="layer1">
+    <path d="M8.4,10.3C7.9,8.7,7.6,8.9,6.3,9.2c-0.9,0.3-1.5,0.4-1,2.1c0,0,0.7,2.7-1,5C3.8,17,4,18.1,4.7,18.6C4.9,18.9,5.2,19,5.4,19  c0.6,0.1,1.2-0.2,1.5-0.7C9.7,14.3,8.5,10.5,8.4,10.3z M6.5,17.4c-0.1,0.5-0.5,0.9-1,0.8c-0.5-0.1-0.8-0.5-0.7-1  c0.1-0.5,0.5-0.8,1-0.8C6.3,16.5,6.6,16.9,6.5,17.4z M16,5.5v8.2c0,3.4-2.6,6.2-6,6.3c-1,0-2-0.1-3-0.4c0.3-0.1,0.6-0.4,0.8-0.7  c0.6-1,1.1-2,1.4-2.9c0.2,0,0.3,0,0.5,0c1.3,0,2.3-1,2.3-2.3V5.5C12,4.7,11.3,4,10.5,4H9.8C7.4,4,5.3,5.5,4.4,7.5C4.4,7.7,2,8.9,2,9  c0,0,2.1-0.5,2.1-0.3C4,9.4,3.6,10,3,10.4c-1,0.6-3,1-3-0.1V9.8C0,4.4,4.4,0,9.8,0h0.7C13.5,0,16,2.5,16,5.5z"/>
   </g>
 </svg>

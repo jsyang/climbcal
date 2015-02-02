@@ -1,28 +1,52 @@
 <div class="DayPage page {{ status }} {{ today }}">
     <div class="menu-bar">
         <div class="title">{{dateString}}</div>
-        <a href="/" class="back left-button"><div class="logo"></div></a>
+        <a href="/" class="back left-button"><div class="symbol"></div></a>
+        <a class="more right-button"><div class="symbol"></div></a>
     </div>
 
     <div class="content">
-        <a href="{{ route }}/in" class="check-in button">Check in</a>
-        <div class="check-in-tip">
-            Check into your gym to start your climbing!
-        </div>
+        {{#if (equals status "")}}
+            <div class="check-in-tip">
+                Check into your gym to start your climbing!
+            </div>
+        {{/if}}
 
-        <a href="{{ route }}/out" class="check-out button">Check out</a>
-        <div class="button add-new-grade">
-            <div class="value">Add a new grade</div>
-            <select>
-                {{#each grades}}
-                <option value="{{ id }}">{{ name }}</option>
-                {{/each}}
-                <option value="cancel" selected="selected">Cancel</option>
-            </select>
-        </div>
+        {{#if (equals status "checked-in") }}
+            {{#if (equals ../climbs.length 0)}}
+                <div class="add-new-grade-tip">
+                    Add climbs to track your session!
+                </div>
+            {{else}}
+                <div class="climb-header">
+                    <div class="wins">Wins</div>
+                    <div class="losses">Losses</div>
+                </div>
+            {{/if}}
+        {{/if}}
 
-        <div class="status">
-            {{#climbEntries climbs}}{{/climbEntries}}
-        </div>
+        {{#climbEntries climbs}}{{/climbEntries}}
+    </div>
+
+    <div class="menu">
+        <div class="background"></div>
+        {{#if (equals status "")}}
+            <a href="{{ route }}/in" class="check-in button">Check in</a>
+        {{/if}}
+
+        {{#if (equals status "checked-in")}}
+            <a href="{{ ../route }}/out" class="check-out button">Check out</a>
+            <div class="button add-new-grade">
+                <div class="value">Add a new grade</div>
+                <select>
+                    {{#each ../grades}}
+                        <option value="{{ id }}">{{ name }}</option>
+                    {{/each}}
+                    <option value="cancel" selected="selected">Cancel</option>
+                </select>
+            </div>
+
+            <a class="help button">Help</a>
+        {{/if}}
     </div>
 </div>

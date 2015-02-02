@@ -16,16 +16,26 @@ body {
     height: 60px;
 }
 
-.page .menu-bar .left-button {
+.page .menu-bar .left-button,
+.page .menu-bar .right-button {
     position: absolute;
     top: 0;
-    left: 0;
     width: 60px;
     height: 60px;
     z-index: 1;
+    background: rgba(0,0,0,0.1);
 }
 
-.page .menu-bar .left-button .logo {
+.page .menu-bar .left-button {
+    left: 0;
+}
+
+.page .menu-bar .right-button {
+    right: 0;
+}
+
+.page .menu-bar .left-button .symbol,
+.page .menu-bar .right-button .symbol {
     position: absolute;
     display: block;
     content: '';
@@ -38,9 +48,14 @@ body {
     background-image: url('/assets/karabiner.svg');
 }
 
-.page .menu-bar .left-button.back .logo {
-    background-image: url('/assets/emoji_u274e.svg');
+.page .menu-bar .back .symbol {
+    background-image: url('/assets/close.svg');
 }
+
+.page .menu-bar .more .symbol {
+    background-image: url('/assets/three-dots.svg');
+}
+
 
 .page .menu-bar .title {
     position: absolute;
@@ -50,18 +65,9 @@ body {
     height: 60px;
     font-size: 30px;
     color: rgb(253, 241, 229);
-    text-shadow: 2px 2px 4px rgb(119, 59, 0);
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
     text-align: center;
     line-height: 60px;
-}
-
-.page .menu-bar .right-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 60px;
-    z-index: 1;
 }
 
 /* Spinner */

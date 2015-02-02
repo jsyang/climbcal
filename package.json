@@ -21,7 +21,6 @@
     "dependencies": {
         "express"                : "~4.10.7",
         "handlebars"             : "~2.0.0",
-        "deep-extend"            : "0.3.2",
         "mocha"                  : "2.1.0",
         "chai"                   : "1.10.0",
         "chai-as-promised"       : "4.1.1",

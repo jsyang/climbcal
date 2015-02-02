@@ -151,7 +151,7 @@ module.exports = {
                     var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
                     page.redirect(dayRoute);
                 })
-                .catch(alertError);
+                .fail(alertError);
 
         } else {
             DbHelper.getRecentLocations()
@@ -213,7 +213,7 @@ module.exports = {
             .fail(alertError);
     },
 
-    onCalendar: function (ctx) {
+    onCalendar: function () {
         var todayDate = (new Date()).toDateString().split(' ');
 
         createPage(CalendarPage, {

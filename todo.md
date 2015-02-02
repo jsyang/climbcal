@@ -1,16 +1,18 @@
 # Important
 - export data to downloadable CSV / filesystem
-- show header for climbed grades
-- move checkout / add new grades into a menu / status area
-- longpress on climb entry to delete it
+- longpress on climb entry to show win/loss counters and option to delete the climb
 - post-climb day statistics
-- remove added grades from add new grade menu
+    - ex: {{total wins}} and {{total losses}} in 4 hours
+    - longest streak: {{ 7 wins }}
+    - average grade: {{ weighted }}
+    - dot graph, large size = more attempts, x = time, y = grade difficulty
+
 
 # Ongoing
 - add help screen for a checked-in day
 - uglify and package all resources into a single file
 - set up cordova and build an android APK
-- find a better logo
+- find a better logo... that's got a good license
 - add transitions between screens
 - add achievements
 

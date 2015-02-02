@@ -31,3 +31,7 @@ handlebars.registerHelper('climbEntries', function(entries, options){
 
     return html;
 });
+
+handlebars.registerHelper('equals', function (a, b) {
+    return a === b;
+});

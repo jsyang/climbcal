@@ -4,17 +4,48 @@
     left: 0;
     right: 0;
     bottom: 0;
+    -webkit-transition: -webkit-transform 400ms;
+    transition: transform 400ms;
 }
 
-/** CONTENT **/
+/** MENU **/
 
-.DayPage .content {
+.DayPage.show-menu {
+    -webkit-transform: translate(calc(-100vw + 60px), 0px);
+    transform: translate(calc(-100vw + 60px), 0px);
+}
+
+.DayPage .menu {
     position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: scroll;
+    box-sizing: border-box;
+    left: 100%;
+    top: 0;
+    width: 100%;
+    padding-right: 60px;
+    max-height: 100%;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.DayPage.show-menu .menu {
+    overflow: visible;
+}
+
+.DayPage .menu .background {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.5);
+    z-index: 1;
+    opacity: 0;
+    -webkit-transition: opacity 400ms;
+    transition: opacity 400ms;
+}
+
+.DayPage.show-menu .menu .background {
+    opacity: 1;
 }
 
 .DayPage .button {
@@ -23,7 +54,7 @@
     text-align: center;
     text-decoration: none;
     color: white;
-    background: rgb(0,120,238);
+    background: rgb(0, 120, 238);
     border-radius: 10px;
     font-size: 18px;
     line-height: 40px;
@@ -32,46 +63,15 @@
     margin-bottom: 0;
 }
 
-.DayPage .check-in-tip {
-    padding: 20px;
-    padding-bottom: 0;
-    color: rgb(120,120,120);
-}
-
-.DayPage:not(.today) .check-in,
-.DayPage:not(.today) .check-in-tip,
-.DayPage.checked-in .check-in,
-.DayPage.checked-in .check-in-tip,
-.DayPage.checked-out .check-in,
-.DayPage.checked-out .check-in-tip {
-    display: none;
-}
-
-.DayPage .check-out {
-    display: none;
-}
-
-.DayPage.checked-in .check-out,
-.DayPage.checked-in .add-new-grade {
-    display: block;
-}
-
-.DayPage .status {
-    position: absolute;
-    box-sizing: border-box;
-    top: 140px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.1);
-    overflow-y: scroll;
-    padding-top: 10px;
+.DayPage .check-in-tip,
+.DayPage .add-new-grade-tip {
+    color: rgb(120, 120, 120);
 }
 
 .DayPage .add-new-grade {
     position: relative;
-    background: rgb(55,66,111);
-    display: none;
+    background: rgb(55, 66, 111);
+    display: block;
 }
 
 .DayPage .add-new-grade select {
@@ -85,4 +85,38 @@
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+/** CONTENT **/
+
+.DayPage .content {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    padding-bottom: 60px;
+    overflow: scroll;
+}
+
+.DayPage .content .climb-header {
+    line-height: 40px;
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    height: 40px;
+}
+
+.DayPage .content .climb-header .wins {
+    position: absolute;
+    left: 70px;
+    top: 0;
+}
+
+.DayPage .content .climb-header .losses {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    text-align: right;
 }
