@@ -9,6 +9,7 @@
 
 
 # Ongoing
+- quickstart button on calendar page --> go straight to today and check in
 - add help screen for a checked-in day
 - uglify and package all resources into a single file
 - set up cordova and build an android APK
