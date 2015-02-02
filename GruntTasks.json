@@ -1,122 +1,133 @@
 {
-  "__loadNpmTasks__": [
-    "grunt-contrib-jshint",
-    "grunt-browserify",
-    "grunt-contrib-clean",
-    "grunt-contrib-copy",
-    "grunt-contrib-concat",
-    "grunt-contrib-watch",
-    "grunt-extract-sourcemap",
-    "grunt-express-server"
-  ],
+    "__loadNpmTasks__": [
+        "grunt-contrib-jshint",
+        "grunt-browserify",
+        "grunt-contrib-clean",
+        "grunt-contrib-copy",
+        "grunt-contrib-concat",
+        "grunt-contrib-watch",
+        "grunt-extract-sourcemap",
+        "grunt-contrib-uglify",
+        "grunt-express-server"
+    ],
 
-  "jshint": {
-    "build": {
-      "src": [
-        "app/**/*.js"
-      ]
-    }
-  },
-
-  "express"   : {
-    "options": {
-      "port": 8080
+    "jshint": {
+        "build": {
+            "src": [
+                "app/**/*.js"
+            ]
+        }
     },
-    "local"  : {
-      "options": {
-        "script": "server/server.js"
-      }
-    },
-    "test" :{
-      "options": {
-        "script": "server/server.js",
-        "node_env": "test"
-      }
-    }
-  },
 
-  "browserify": {
-    "build": {
-      "options": {
-        "alias": [
-          "./node_modules/page/index.js:page",
-          "./node_modules/calendar/index.js:calendar",
-          "./node_modules/virtual-dom/h.js:virtual-dom/h",
-          "./node_modules/virtual-dom/diff.js:virtual-dom/diff",
-          "./node_modules/virtual-dom/patch.js:virtual-dom/patch",
-          "./node_modules/virtual-dom/create-element.js:virtual-dom/create-element",
-          "./node_modules/html-to-vdom/index.js:html-to-vdom",
-          "./node_modules/dexie/src/Dexie.js:dexie",
-          "./node_modules/kew/kew.js:kew",
-          "./node_modules/babyparse/babyparse.js:babyparse",
-          "./node_modules/hbsfy/runtime.js:hbsfy/runtime"
-        ],
-        "browserifyOptions": {
-          "debug": true
+    "express": {
+        "options": {
+            "port": 8080
         },
-        "transform": [["hbsfy", {}]]
-      },
-
-      "src": [
-        "app/app.init.js"
-      ],
-
-      "dest": "dist/app.js"
-    }
-  },
-
-  "clean": {
-    "prebuild": "dist/"
-  },
-
-  "concat": {
-    "css": {
-      "src" : [
-        "app/normalize.css",
-        "app/default.css",
-        "app/view/widget/EmojiPicker.css",
-        "app/view/widget/ClimbEntry.css",
-
-        "app/view/DayPage.css",
-        "app/view/CalendarPage.css",
-        "app/view/CheckInPage.css",
-        "app/view/CheckOutPage.css"
-      ],
-      "dest": "dist/app.css"
-    }
-  },
-
-  "copy": {
-    "assets": {
-      "expand": true,
-      "src"   : ["assets/**"],
-      "dest"  : "dist/"
+        "local"  : {
+            "options": {
+                "script": "server/server.js"
+            }
+        },
+        "test"   : {
+            "options": {
+                "script"  : "server/server.js",
+                "node_env": "test"
+            }
+        }
     },
 
-    "index": {
-      "src": ["favicon.ico"],
-      "dest": "dist/",
-      "cwd" : "application",
-      "flatten" : true,
-      "expand" : true
+    "browserify": {
+        "build": {
+            "options": {
+                "alias"            : [
+                    "./node_modules/page/index.js:page",
+                    "./node_modules/calendar/index.js:calendar",
+                    "./node_modules/virtual-dom/h.js:virtual-dom/h",
+                    "./node_modules/virtual-dom/diff.js:virtual-dom/diff",
+                    "./node_modules/virtual-dom/patch.js:virtual-dom/patch",
+                    "./node_modules/virtual-dom/create-element.js:virtual-dom/create-element",
+                    "./node_modules/html-to-vdom/index.js:html-to-vdom",
+                    "./node_modules/dexie/src/Dexie.js:dexie",
+                    "./node_modules/kew/kew.js:kew",
+                    "./node_modules/babyparse/babyparse.js:babyparse",
+                    "./node_modules/hbsfy/runtime.js:hbsfy/runtime"
+                ],
+                "browserifyOptions": {
+                    "debug": true
+                },
+                "transform"        : [
+                    ["hbsfy", {}]
+                ]
+            },
+
+            "src": [
+                "app/app.init.js"
+            ],
+
+            "dest": "dist/app.js"
+        }
+    },
+
+    "clean": {
+        "prebuild": "dist/"
+    },
+
+    "concat": {
+        "css": {
+            "src" : [
+                "app/normalize.css",
+                "app/default.css",
+                "app/view/widget/EmojiPicker.css",
+                "app/view/widget/ClimbEntry.css",
+
+                "app/view/DayPage.css",
+                "app/view/CalendarPage.css",
+                "app/view/CheckInPage.css",
+                "app/view/CheckOutPage.css"
+            ],
+            "dest": "dist/app.css"
+        }
+    },
+
+    "copy": {
+        "assets": {
+            "expand": true,
+            "src"   : ["assets/**"],
+            "dest"  : "dist/"
+        },
+
+        "index": {
+            "src"    : ["favicon.ico"],
+            "dest"   : "dist/",
+            "cwd"    : "application",
+            "flatten": true,
+            "expand" : true
+        }
+    },
+
+    "watch": {
+        "build": {
+            "files": [
+                "app/**/*"
+            ],
+
+            "tasks": [
+                "default"
+            ],
+
+            "debounceDelay": 1000
+        }
+    },
+
+    "extract_sourcemap": {
+        "dist/": "dist/app.js"
+    },
+
+    "uglify": {
+        "build": {
+            "files"  : {
+                "dist/app.js": ["dist/app.js"]
+            }
+        }
     }
-  },
-
-  "watch": {
-    "build": {
-      "files": [
-        "app/**/*"
-      ],
-
-      "tasks": [
-        "default"
-      ],
-
-      "debounceDelay": 1000
-    }
-  },
-
-  "extract_sourcemap": {
-    "dist/": "dist/app.js"
-  }
 }
