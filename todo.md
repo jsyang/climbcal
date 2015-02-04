@@ -1,6 +1,10 @@
 # Important
 - export data to downloadable CSV / filesystem
-- longpress on climb entry to show win/loss counters and option to delete the climb
+- longpress on climb entry to show win/loss counters and option to clear the climb entry
+- show all grades on the checked in page
+- change rating system on the menu
+- show days with climbs logged
+- share to facebook / twitter
 - post-climb day statistics
     - ex: {{total wins}} and {{total losses}} in 4 hours
     - longest streak: {{ 7 wins }}
