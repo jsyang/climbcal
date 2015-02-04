@@ -4,6 +4,7 @@
 - show all grades on the checked in page
 - change rating system on the menu
 - show days with climbs logged
+- hotseat mode -- log for your friend and have your friend log for you when you're on the wall
 - share to facebook / twitter
 - post-climb day statistics
     - ex: {{total wins}} and {{total losses}} in 4 hours
