@@ -1,0 +1,55 @@
+$size : 60px;
+
+.menu-bar {
+    position: absolute;
+    background-color: $orange;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+
+
+    .left-button,
+    .right-button {
+        position: absolute;
+        top: 0;
+        width: $size;
+        height: $size;
+        z-index: 1;
+        background: $blackL1;
+
+        .symbol {
+            position: absolute;
+            display: block;
+            content: '';
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background-size: cover;
+            background-position: center;
+            background-image: url('/assets/karabiner.svg');
+        }
+    }
+
+    .right-button {
+        right: 0;
+    }
+
+    .left-button {
+        left: 0;
+    }
+
+    .title {
+        position: absolute;
+        top: 0;
+        left: $size;
+        right: $size;
+        height: $size;
+        font-size: 30px;
+        color: rgb(253, 241, 229);
+        text-shadow: 1px 1px 2px rgb(0, 0, 0);
+        text-align: center;
+        line-height: $size;
+    }
+}

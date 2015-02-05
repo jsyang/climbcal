@@ -15,6 +15,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config);
 
-    grunt.registerTask("build-minified",  [ "jshint", "clean", "copy:assets", "browserify", "uglify", "extract_sourcemap", "concat"]);
-    grunt.registerTask("default", [ "jshint", "clean", "copy:assets", "browserify", "extract_sourcemap", "concat"]);
+    grunt.registerTask("build-minified",  [ "jshint", "clean", "copy:assets", "browserify", "uglify", "extract_sourcemap", "sass:build"]);
+    grunt.registerTask("default", [ "jshint", "clean", "copy:assets", "browserify", "extract_sourcemap", "sass:dev"]);
 };

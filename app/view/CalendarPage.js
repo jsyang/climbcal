@@ -6,22 +6,22 @@ var template = require('./CalendarPage.hbs');
 var className = 'CalendarPage';
 
 function render(state) {
-  var html = template(state);
-  return convertHTML(html);
+    var html = template(state);
+    return convertHTML(html);
 }
 
 function addTodayHighlight() {
-  var today = new Date();
-  var dateString = [
+    var today = new Date();
+    var dateString = [
     today.getUTCFullYear(),
     today.getMonth(),
     today.getDate()
-  ].join('-');
+    ].join('-');
 
-  var todayEl = document.querySelector("a[data-date='"+ dateString+"']");
-  if(todayEl) {
-      todayEl.classList.add('today');
-  }
+    var todayEl = document.querySelector("a[data-date='"+ dateString+"']");
+    if(todayEl) {
+        todayEl.classList.add('today');
+    }
 }
 
 function getMonthName() {
@@ -44,19 +44,28 @@ function onNext(titleEl){
     addTodayHighlight();
 }
 
+function addDaysWithClimbs(){
+    
+}
+
 module.exports = {
-  className: className,
-  render   : render,
+    className: className,
+    render   : render,
 
-  init: function (state) {
-    this.el = document.querySelector('.' + className);
-    this.cal = new Calendar();
-    this.el.querySelector('.content').appendChild(this.cal.el);
-    addTodayHighlight();
+    init: function (state) {
+        this.el = document.querySelector('.' + className);
+        this.cal = new Calendar();
+        this.el.querySelector('.content').appendChild(this.cal.el);
+        addTodayHighlight();
 
-    var titleEl = this.el.querySelector('.title');
+        var titleEl = this.el.querySelector('.title');
 
-    this.el.querySelector('.prev').addEventListener('click', onPrev.bind(this.cal.days, titleEl));
-    this.el.querySelector('.next').addEventListener('click', onNext.bind(this.cal.days, titleEl));
-  }
+        this.el.querySelector('.prev').addEventListener('click', onPrev.bind(this.cal.days, titleEl));
+        this.el.querySelector('.next').addEventListener('click', onNext.bind(this.cal.days, titleEl));
+    },
+
+    update: function(state) {
+        addTodayHighlight();
+        addDaysWithClimbs();
+    }
 };

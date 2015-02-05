@@ -4,12 +4,29 @@
         "grunt-browserify",
         "grunt-contrib-clean",
         "grunt-contrib-copy",
-        "grunt-contrib-concat",
         "grunt-contrib-watch",
         "grunt-extract-sourcemap",
         "grunt-contrib-uglify",
+        "grunt-sass",
         "grunt-express-server"
     ],
+
+    "sass": {
+        "dev": {
+            "options": {
+                "sourceMap": true
+            },
+            "files": {
+                "dist/app.css": "app/app.init.scss"
+            }
+        },
+
+        "build": {
+            "files": {
+                "dist/app.css": "app/app.init.scss"
+            }
+        }
+    },
 
     "jshint": {
         "build": {

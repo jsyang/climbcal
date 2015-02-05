@@ -1,4 +1,6 @@
 # Important
+- change grade system
+- manage locations
 - export data to downloadable CSV / filesystem
 - longpress on climb entry to show win/loss counters and option to clear the climb entry
 - show all grades on the checked in page
@@ -24,3 +26,4 @@
 
 # Less important
 - add activies tangential to climbing
+- remove calendar dependency
