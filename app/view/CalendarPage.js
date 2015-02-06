@@ -45,7 +45,11 @@ function onNext(titleEl){
 }
 
 function addDaysWithClimbs(){
-    
+
+}
+
+function onLogoClick(){
+    this.el.classList.toggle('show-left-menu');
 }
 
 module.exports = {
@@ -54,6 +58,14 @@ module.exports = {
 
     init: function (state) {
         this.el = document.querySelector('.' + className);
+
+        var _onLogoClick = onLogoClick.bind(this);
+        this.logoButton = this.el.querySelector('.logo');
+        this.logoButton.addEventListener('click', _onLogoClick);
+        this.menu = this.el.querySelector('.left-menu');
+        this.menu.querySelector('.background').addEventListener('click', _onLogoClick);
+
+
         this.cal = new Calendar();
         this.el.querySelector('.content').appendChild(this.cal.el);
         addTodayHighlight();

@@ -7,7 +7,6 @@ $spacing : 20px;
     top: 0;
     width: 100%;
     padding: $spacing;
-    padding-right: $spacing + $menuMarginSize;
     max-height: 100%;
     overflow: hidden;
 
@@ -46,18 +45,42 @@ $spacing : 20px;
     .right-menu {
         @include menu();
         left: 100%;
+        padding-right: $spacing + $menuMarginSize;
 
         .background {
             right: 100%;
+        }
+
+        .menu-content {
+            top: 0;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            overflow: scroll;
+            position: absolute;
+            right: 80px;
+            left: 20px;
+            height: 100vh;
         }
     }
 
     .left-menu {
         @include menu();
         right: 100%;
+        padding-left: $spacing + $menuMarginSize;
 
         .background {
             left: 100%;
+        }
+
+        .menu-content {
+            top: 0;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            overflow: scroll;
+            position: absolute;
+            left: 80px;
+            right: 20px;
+            height: 100vh;
         }
     }
 }
@@ -76,8 +99,8 @@ $spacing : 20px;
 }
 
 .page.show-left-menu {
-    -webkit-transform: translate(calc(100vw + 60px), 0px);
-    transform: translate(calc(100vw + 60px), 0px);
+    -webkit-transform: translate(calc(100vw - 60px), 0px);
+    transform: translate(calc(100vw - 60px), 0px);
 
     .left-menu {
         overflow: visible;

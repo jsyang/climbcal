@@ -13,3 +13,8 @@ $button-height : 40px;
     box-sizing: border-box;
     margin-bottom: 20px;
 }
+
+.button.disabled {
+    background-color: $gray;
+    color: $grayL1;
+}

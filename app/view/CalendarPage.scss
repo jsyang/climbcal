@@ -1,3 +1,14 @@
+.CalendarPage {
+    .title {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        color: $grayL1;
+    }
+}
+
 .CalendarPage .prev,
 .CalendarPage .next {
     display: inline-block;
