@@ -2,8 +2,6 @@ var convertHTML = require('../util/vdom').convertHTML;
 var template = require('./CheckInPage.hbs');
 
 var className = 'CheckInPage';
-var getTime = require('../util/time');
-
 var emojiPicker = require('./widget/EmojiPicker');
 
 function render(state) {
@@ -14,10 +12,10 @@ function render(state) {
 function updateCheckInLink() {
     var href = this.checkInLink.href.split('?');
     this.checkInLink.href = href[0] + '?' + [
-            'location=' + this.values.location,
-            'time=' + this.values.time,
-            'feeling=' + this.values.feeling,
-            'note=' + this.values.note
+        'location=' + this.values.location,
+        'time=' + this.values.time,
+        'feeling=' + this.values.feeling,
+        'note=' + this.values.note
     ].join('&');
 }
 
@@ -26,15 +24,6 @@ function updateLocationValue() {
 
     this.locationValue.textContent = selected.textContent;
     this.values.location = selected.value;
-
-    updateCheckInLink.call(this);
-}
-
-function updateTimeValue() {
-    var time = getTime();
-    this.timeValue.textContent = time;
-
-    this.values.time = +new Date(time + ' ' + this.dateString);
 
     updateCheckInLink.call(this);
 }
@@ -55,6 +44,7 @@ function openEmojiPicker() {
 
 function updateFeelingValue(id, url) {
     this.feelingValue.style.backgroundImage = 'url(' + url + ')';
+    this.feelingValue.setAttribute('data-value', id);
     this.values.feeling = id;
     updateCheckInLink.call(this);
 }
@@ -84,13 +74,10 @@ module.exports = {
         this.el = document.querySelector('.' + className);
 
         this.checkInLink = this.el.querySelector('.check-in');
-
         this.locationValue = this.el.querySelector('.location .value');
         this.locationSelect = this.el.querySelector('.location select');
-
-        this.feelingValue = this.el.querySelector('.feeling .value');
-
-        this.noteValue = this.el.querySelector('.note .value');
+        this.feelingValue = this.el.querySelector('.feeling-note .label');
+        this.noteValue = this.el.querySelector('.feeling-note input');
 
         // Update values
 
@@ -98,8 +85,6 @@ module.exports = {
         updateLocationValue.call(this);
 
         this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
-        // todo: use most recently used feeling
-        //updateFeelingValue.call(this, );
 
         this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
         this.noteValue.addEventListener('keypress', function (e) {

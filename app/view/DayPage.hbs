@@ -28,7 +28,7 @@
         {{#climbEntries climbs}}{{/climbEntries}}
     </div>
 
-    <div class="menu">
+    <div class="right-menu">
         <div class="background"></div>
         {{#if (equals status "")}}
             <a href="{{ route }}/in" class="check-in button">Check in</a>
@@ -36,7 +36,7 @@
 
         {{#if (equals status "checked-in")}}
             <a href="{{ ../route }}/out" class="check-out button">Check out</a>
-            <div class="button add-new-grade">
+            <div class="select-button add-new-grade">
                 <div class="value">Add a new grade</div>
                 <select>
                     {{#each ../grades}}

@@ -1,29 +1,7 @@
-.CalendarPage {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-.CalendarPage .button {
-    display: block;
-    height: 40px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    background: rgb(0,120,238);
-    border-radius: 10px;
-    font-size: 18px;
-    line-height: 40px;
-}
-
-
 .CalendarPage .prev,
 .CalendarPage .next {
     display: inline-block;
     width: 50%;
-
 }
 
 .CalendarPage .prev {
@@ -39,20 +17,6 @@
 }
 
 /** CALENDAR **/
-
-.CalendarPage .content {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    overflow: scroll;
-}
-
-.CalendarPage .calendar {
-    margin-top: 20px;
-}
 
 .CalendarPage .calendar .calendar-table {
     margin: auto;
@@ -79,7 +43,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgb(216, 216, 216);
+    background: $gray;
     text-decoration: none;
     color: black;
     padding-left: 4px;

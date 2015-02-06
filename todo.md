@@ -1,4 +1,5 @@
 # Important
+- left side main menu
 - change grade system
 - manage locations
 - export data to downloadable CSV / filesystem

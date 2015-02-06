@@ -1,0 +1,36 @@
+.CheckOutPage .location {
+    .label {
+        background-image: url('/assets/emoji_u1f30d.svg');
+    }
+}
+
+.CheckOutPage .time {
+    .label {
+        background-image: url('/assets/emoji_u1f55c.svg');
+    }
+}
+
+.CheckOutPage .feeling-note {
+    .label {
+        background-color: transparent;
+        background-size: cover;
+    }
+
+    .label[data-value=""] {
+        outline: 2px dashed $blue;
+    }
+
+    .label[data-value=""]::after {
+        color: $blue;
+        content: "+";
+    }
+
+    input {
+        position: absolute;
+        display: block;
+        font-size: 18px;
+        padding-left: 5px;
+        padding-right: 5px;
+        width: calc(100% - 50px);
+    }
+}

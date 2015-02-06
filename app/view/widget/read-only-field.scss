@@ -1,0 +1,32 @@
+$size : 40px;
+
+.read-only-field {
+    display: block;
+    position: relative;
+    height: $size;
+    margin-bottom: $size / 2;
+
+    .label {
+        display: block;
+        content: '';
+        width: $size;
+        height: $size;
+        background-size: cover;
+        position: absolute;
+        left: 0;
+    }
+
+    .value {
+        position: absolute;
+        left: 50px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        font-size: 20px;
+        color: $grayL1;
+        line-height: $size;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

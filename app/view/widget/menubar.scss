@@ -40,6 +40,14 @@ $size : 60px;
         left: 0;
     }
 
+    .back .symbol {
+        background-image: url('/assets/close.svg');
+    }
+
+    .more .symbol {
+        background-image: url('/assets/three-dots.svg');
+    }
+
     .title {
         position: absolute;
         top: 0;
@@ -47,8 +55,7 @@ $size : 60px;
         right: $size;
         height: $size;
         font-size: 30px;
-        color: rgb(253, 241, 229);
-        text-shadow: 1px 1px 2px rgb(0, 0, 0);
+        color: white;
         text-align: center;
         line-height: $size;
     }

@@ -1,0 +1,89 @@
+$menuMarginSize : 60px;
+$spacing : 20px;
+
+@mixin menu() {
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    width: 100%;
+    padding: $spacing;
+    padding-right: $spacing + $menuMarginSize;
+    max-height: 100%;
+    overflow: hidden;
+
+    .background {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(255,255,255,0.5);
+        z-index: 1;
+        opacity: 0;
+        -webkit-transition: opacity 400ms;
+        transition: opacity 400ms;
+    }
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: -webkit-transform 400ms;
+    transition: transform 400ms;
+
+    .content {
+        position: absolute;
+        top: 60px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        overflow: scroll;
+    }
+
+    .right-menu {
+        @include menu();
+        left: 100%;
+
+        .background {
+            right: 100%;
+        }
+    }
+
+    .left-menu {
+        @include menu();
+        right: 100%;
+
+        .background {
+            left: 100%;
+        }
+    }
+}
+
+.page.show-right-menu {
+    -webkit-transform: translate(calc(-100vw + 60px), 0px);
+    transform: translate(calc(-100vw + 60px), 0px);
+
+    .right-menu {
+        overflow: visible;
+
+        .background {
+            opacity: 1;
+        }
+    }
+}
+
+.page.show-left-menu {
+    -webkit-transform: translate(calc(100vw + 60px), 0px);
+    transform: translate(calc(100vw + 60px), 0px);
+
+    .left-menu {
+        overflow: visible;
+
+        .background {
+            opacity: 1;
+        }
+    }
+}

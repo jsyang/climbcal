@@ -79,7 +79,7 @@ function onClimbClick(e) {
 }
 
 function onMoreClick(){
-    this.el.classList.toggle('show-menu');
+    this.el.classList.toggle('show-right-menu');
 }
 
 module.exports = {
@@ -90,7 +90,7 @@ module.exports = {
         this.el = document.querySelector('.' + className);
 
         this.onMoreClick = onMoreClick.bind(this);
-        this.menu = this.el.querySelector('.menu');
+        this.menu = this.el.querySelector('.right-menu');
         this.menu.querySelector('.background').addEventListener('click', this.onMoreClick);
 
         this.moreButton = this.el.querySelector('.more');

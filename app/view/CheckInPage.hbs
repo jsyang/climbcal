@@ -1,45 +1,32 @@
 <div class="CheckInPage page">
-  <div class="menu-bar">
-    <div class="title">Check In</div>
-    <a href="{{ dayRoute }}" class="back left-button"><div class="symbol"></div></a>
-  </div>
-  <div class="content">
-    <div class="location">
-      <div class="label"></div>
-      <div class="value"></div>
-      <select>
-        {{#each locations}}
-          <option value="{{ id }}">{{ name }}</option>
-        {{/each}}
-      </select>
+    <div class="menu-bar">
+        <div class="title">{{ dateString }}</div>
+        <a href="{{ dayRoute }}" class="back left-button"><div class="symbol"></div></a>
     </div>
+    <div class="content">
 
-    <div class="date">
-      <div class="label"></div>
-      <div class="value">
-        {{ dateString }}
-      </div>
+        <div class="location select-dropdown">
+            <div class="label"></div>
+            <div class="value"></div>
+            <select>
+                {{#each locations}}
+                <option value="{{ id }}">{{ name }}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="time read-only-field">
+            <div class="label"></div>
+            <div class="value">{{currentTime}}</div>
+        </div>
+
+        <div class="feeling-note read-only-field">
+            <div class="label button" data-value=""></div>
+            <input type="text" class="value" placeholder="Status / feeling"/>
+        </div>
+
+        <a href="{{ dayRoute }}/in" class="check-in button">
+            Check in!
+        </a>
     </div>
-
-    <div class="time">
-      <div class="label"></div>
-      <div class="value">
-        {{#currentTime}}{{/currentTime}}
-      </div>
-    </div>
-
-    <div class="feeling">
-      <div class="label">Feeling</div>
-      <div class="value"></div>
-    </div>
-
-    <div class="note">
-      <div class="label"></div>
-      <input type="text" class="value"/>
-    </div>
-
-    <a href="{{ dayRoute }}/in" class="check-in button">
-      Check in!
-    </a>
-  </div>
 </div>

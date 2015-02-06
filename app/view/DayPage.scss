@@ -1,0 +1,33 @@
+.DayPage .check-in-tip,
+.DayPage .add-new-grade-tip {
+    color: $grayL1;
+}
+
+.DayPage .add-new-grade {
+    @extend .select-button;
+    background: rgb(55, 66, 111);
+}
+
+.DayPage .content {
+
+    .climb-header {
+        line-height: 40px;
+        margin-top: -20px;
+        margin-left: -20px;
+        margin-right: -20px;
+        height: 40px;
+
+        .wins {
+            position: absolute;
+            left: 70px;
+            top: 0;
+        }
+
+        .losses {
+            position: absolute;
+            right: 20px;
+            top: 0;
+            text-align: right;
+        }
+    }
+}
