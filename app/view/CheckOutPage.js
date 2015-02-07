@@ -1,5 +1,5 @@
 var convertHTML = require('../util/vdom').convertHTML;
-var template = require('./CheckOutPage.hbs');
+var template = require('./CheckOutPage.dot');
 
 var className = 'CheckOutPage';
 var emojiPicker = require('./widget/EmojiPicker');

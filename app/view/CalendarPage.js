@@ -1,7 +1,7 @@
 var Calendar = require('calendar');
 
 var convertHTML = require('../util/vdom').convertHTML;
-var template = require('./CalendarPage.hbs');
+var template = require('./CalendarPage.dot');
 
 var className = 'CalendarPage';
 

@@ -1,36 +1,36 @@
-<div class="DayPage page {{ status }} {{ today }}">
+<div class="DayPage page {{= it.status }} {{= it.today }}">
     <div class="menu-bar">
-        <div class="title">{{dateString}}</div>
+        <div class="title">{{= it.dateString}}</div>
         <a href="/" class="back left-button"><div class="symbol"></div></a>
 
-        {{#if (equals status "checked-in") }}
+        {{? it.status === "checked-in" }}
             <a class="help right-button"><div class="symbol"></div></a>
-        {{/if}}
+        {{?}}
     </div>
 
     <div class="content">
-        {{#if (equals status "")}}
-            <a href="{{ route }}/in" class="check-in button">Check in</a>
+        {{? it.status === ""}}
+            <a href="{{= it.route }}/in" class="check-in button">Check in</a>
             <div class="check-in-tip">
                 Check into your gym to start logging your climbs!
             </div>
-        {{/if}}
+        {{?}}
 
-        {{#if (equals status "checked-in") }}
-            <a href="{{ ../route }}/out" class="check-out button">Check out</a>
+        {{? it.status === "checked-in"}}
+            <a href="{{= it.route }}/out" class="check-out button">Check out</a>
 
             <div class="climb-header">
                 <div class="wins">Wins</div>
                 <div class="losses">Losses</div>
             </div>
-        {{/if}}
+        {{?}}
 
-        {{#climbEntries climbs}}{{/climbEntries}}
+        {{= it.climbsHTML}}
     </div>
 
     <div class="right-menu">
         <div class="background"></div>
-        {{#if (equals status "checked-in")}}
+        {{? it.status === "checked-in"}}
             <div class="left-hint">
                 <div class="bar"></div>
             </div>
@@ -45,6 +45,6 @@
                 <div class="bar"></div>
             </div>
             Tap the grade name (e.g. V5) to delete your most recent climb entry for that grade.
-        {{/if}}
+        {{?}}
     </div>
 </div>

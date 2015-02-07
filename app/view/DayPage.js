@@ -1,12 +1,42 @@
 var convertHTML = require('../util/vdom').convertHTML;
-var template = require('./DayPage.hbs');
+var template = require('./DayPage.dot');
 var page = require('page');
+var ClimbEntryTemplate = require('./widget/ClimbEntry.dot');
 
 var db = require('../state/Database');
 
 var className = 'DayPage';
 
+function climbEntries(entries) {
+    var html = "";
+
+    entries
+    .sort(function(a, b){
+        return b.value - a.value;
+    })
+    .forEach(function(entry){
+        var seqString = entry.sequence.join('');
+        if(seqString) {
+            var wins = seqString.match(/1/g);
+            wins = wins? wins.length : 0;
+            entry.percent = wins / seqString.length * 100;
+            entry.wins = wins;
+            entry.losses = seqString.length - wins;
+        } else {
+            entry.wins = '';
+            entry.losses = '';
+            entry.percent = 100;
+            entry.nodata = true;
+        }
+
+        html += ClimbEntryTemplate(entry);
+    });
+
+    return html;
+}
+
 function render(state) {
+    state.climbsHTML = climbEntries(state.climbs);
     var html = template(state);
     return convertHTML(html);
 }

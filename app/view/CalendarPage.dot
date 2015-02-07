@@ -1,8 +1,8 @@
 <div class="CalendarPage page">
   <div class="menu-bar">
-    <div class="title">{{monthYear}}</div>
+    <div class="title">{{= it.monthYear}}</div>
     <div class="left-button logo"><div class="symbol"></div></div>
-    <a href="{{quickstartRoute}}/in" class="right-button shortcut"><div class="symbol"></div></a>
+    <a href="{{= it.quickstartRoute}}/in" class="right-button shortcut"><div class="symbol"></div></a>
   </div>
   <div class="content">
       <div class="prev button">Prev</div><div class="next button">Next</div>
@@ -17,13 +17,13 @@
           <div class="select-button set-grade-system">
               <div class="value">Select grade system</div>
               <select>
-                  {{#each gradesystems}}
-                    {{#if (equals name ../preferredSystemName)}}
-                        <option value="{{ name }}" selected="true">{{ name }} (ex: {{example}})</option>
-                    {{else}}
-                        <option value="{{ name }}">{{ name }} (ex: {{example}})</option>
-                    {{/if}}
-                  {{/each}}
+                  {{~ it.gradesystems :grade}}
+                    {{? grade.name === it.preferredSystemName}}
+                        <option value="{{= grade.name }}" selected="true">{{= grade.name }} (ex: {{= grade.example}})</option>
+                    {{??}}
+                        <option value="{{= grade.name }}">{{= grade.name }} (ex: {{= grade.example}})</option>
+                    {{?}}
+                  {{~}}
               </select>
           </div>
 

@@ -4,6 +4,7 @@ var DbHelper = require('../util/DbHelper');
 var db = require('../state/Database');
 
 var alertError = require('../util/alertError');
+var getTimeString = require('../util/time');
 
 var CalendarPage = require('../view/CalendarPage');
 var DayPage = require('../view/DayPage');
@@ -127,9 +128,10 @@ module.exports = {
                     locations.reverse();
 
                     createPage(CheckInPage, {
-                        locations : locations,
-                        dayRoute  : ctx.canonicalPath.replace('/in', ''),
-                        dateString: monthName + ' ' + day + ', ' + year
+                        timeString : getTimeString(),
+                        locations  : locations,
+                        dayRoute   : ctx.canonicalPath.replace('/in', ''),
+                        dateString : monthName + ' ' + day + ', ' + year
                     });
                 })
                 .catch(alertError);
@@ -159,6 +161,7 @@ module.exports = {
                     locations.reverse();
 
                     createPage(CheckOutPage, {
+                        timeString  : getTimeString(),
                         lastLocation: locations[0],
                         dayRoute    : ctx.canonicalPath.replace('/out', ''),
                         dateString  : monthName + ' ' + day + ', ' + year

@@ -1,4 +1,4 @@
-var template = require('./EmojiPicker.hbs');
+var template = require('./EmojiPicker.dot');
 
 var db = require('../../state/Database');
 

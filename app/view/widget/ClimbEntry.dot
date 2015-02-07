@@ -1,0 +1,8 @@
+<div class="ClimbEntry {{? it.nodata}}no-data{{?}}" id="{{= it.id }}">
+  <div class="name">{{= it.name }}</div>
+  <div class="ratio-bar">
+    <div class="filled" style="width: {{= it.percent }}%; "></div>
+    <div class="left">{{= it.wins }}</div>
+    <div class="right">{{= it.losses }}</div>
+  </div>
+</div>

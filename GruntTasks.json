@@ -4,12 +4,25 @@
         "grunt-browserify",
         "grunt-contrib-clean",
         "grunt-contrib-copy",
+        "grunt-contrib-cssmin",
         "grunt-contrib-watch",
         "grunt-extract-sourcemap",
         "grunt-contrib-uglify",
         "grunt-sass",
         "grunt-express-server"
     ],
+
+    "cssmin" : {
+        "build" : {
+            "options" : {
+                "keepSpecialComments" : 0
+            },
+
+            "files": {
+                "dist/app.css": "dist/app.css"
+            }
+        }
+    },
 
     "sass": {
         "dev": {
@@ -66,14 +79,13 @@
                     "./node_modules/html-to-vdom/index.js:html-to-vdom",
                     "./node_modules/dexie/src/Dexie.js:dexie",
                     "./node_modules/kew/kew.js:kew",
-                    "./node_modules/babyparse/babyparse.js:babyparse",
-                    "./node_modules/hbsfy/runtime.js:hbsfy/runtime"
+                    "./node_modules/babyparse/babyparse.js:babyparse"
                 ],
                 "browserifyOptions": {
                     "debug": true
                 },
                 "transform"        : [
-                    ["hbsfy", {}]
+                    ["dotify", {}]
                 ]
             },
 

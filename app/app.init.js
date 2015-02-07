@@ -1,5 +1,3 @@
-require('./util/handlebars');
-
 var alertError = require('./util/alertError');
 
 document.addEventListener('DOMContentLoaded', function () {

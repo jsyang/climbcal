@@ -1,18 +1,18 @@
 <div class="CheckOutPage page">
     <div class="menu-bar">
-        <div class="title">{{ dateString }}</div>
-        <a href="{{ dayRoute }}" class="back left-button"><div class="symbol"></div></a>
+        <div class="title">{{= it.dateString }}</div>
+        <a href="{{= it.dayRoute }}" class="back left-button"><div class="symbol"></div></a>
     </div>
 
     <div class="content">
         <div class="location read-only-field">
             <div class="label"></div>
-            <div class="value">{{ lastLocation.name }}</div>
+            <div class="value">{{= it.lastLocation.name }}</div>
         </div>
 
         <div class="time read-only-field">
             <div class="label"></div>
-            <div class="value">{{currentTime}}</div>
+            <div class="value">{{= it.timeString}}</div>
         </div>
 
         <div class="feeling-note read-only-field">
@@ -20,7 +20,7 @@
             <input type="text" class="value" placeholder="Status / feeling"/>
         </div>
 
-        <a href="{{ dayRoute }}/out" class="check-out button">
+        <a href="{{= it.dayRoute }}/out" class="check-out button">
             Check out!
         </a>
     </div>

@@ -1,7 +1,7 @@
 <div class="CheckInPage page">
     <div class="menu-bar">
-        <div class="title">{{ dateString }}</div>
-        <a href="{{ dayRoute }}" class="back left-button"><div class="symbol"></div></a>
+        <div class="title">{{= it.dateString }}</div>
+        <a href="{{= it.dayRoute }}" class="back left-button"><div class="symbol"></div></a>
     </div>
     <div class="content">
 
@@ -9,15 +9,15 @@
             <div class="label"></div>
             <div class="value"></div>
             <select>
-                {{#each locations}}
-                <option value="{{ id }}">{{ name }}</option>
-                {{/each}}
+                {{~ it.locations :loc}}
+                <option value="{{= loc.id }}">{{= loc.name }}</option>
+                {{~}}
             </select>
         </div>
 
         <div class="time read-only-field">
             <div class="label"></div>
-            <div class="value">{{currentTime}}</div>
+            <div class="value">{{= it.timeString}}</div>
         </div>
 
         <div class="feeling-note read-only-field">
@@ -25,7 +25,7 @@
             <input type="text" class="value" placeholder="Status / feeling"/>
         </div>
 
-        <a href="{{ dayRoute }}/in" class="check-in button">
+        <a href="{{= it.dayRoute }}/in" class="check-in button">
             Check in!
         </a>
     </div>
