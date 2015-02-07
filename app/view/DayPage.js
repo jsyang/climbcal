@@ -19,11 +19,9 @@ function deleteRecord(id) {
     db.climbs.get(id)
         .then(function (climbEntry) {
             climbEntry.sequence.pop();
-            var changes = {
+            return db.climbs.update(climbEntry.id, {
                 sequence: climbEntry.sequence
-            };
-
-            return db.climbs.update(climbEntry.id, changes);
+            });
         })
         .then(refresh);
 }
