@@ -1,6 +1,7 @@
 # Important
-- manage locations
+- add transitions between screens
 - export data to downloadable CSV / filesystem
+- manage locations
 - show days with climbs logged
 - hotseat mode -- log for your friend and have your friend log for you when you're on the wall
 - share to facebook / twitter
@@ -15,7 +16,6 @@
 - uglify and package all resources into a single file
 - set up cordova and build an android APK
 - find a better logo... that's got a good license
-- add transitions between screens
 - add achievements
 
 # Less important
