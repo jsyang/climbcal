@@ -52,6 +52,10 @@ function onLogoClick(){
     this.el.classList.toggle('show-left-menu');
 }
 
+function onGradeSystemChange(e) {
+    localStorage.setItem('preferredSystemName', e.target.selectedOptions[0].value);
+}
+
 module.exports = {
     className: className,
     render   : render,
@@ -74,6 +78,8 @@ module.exports = {
 
         this.el.querySelector('.prev').addEventListener('click', onPrev.bind(this.cal.days, titleEl));
         this.el.querySelector('.next').addEventListener('click', onNext.bind(this.cal.days, titleEl));
+
+        this.el.querySelector('.set-grade-system select').addEventListener('change', onGradeSystemChange);
     },
 
     update: function(state) {

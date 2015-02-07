@@ -2,27 +2,27 @@
     <div class="menu-bar">
         <div class="title">{{dateString}}</div>
         <a href="/" class="back left-button"><div class="symbol"></div></a>
-        <a class="more right-button"><div class="symbol"></div></a>
+
+        {{#if (equals status "checked-in") }}
+            <a class="more right-button"><div class="symbol"></div></a>
+        {{/if}}
     </div>
 
     <div class="content">
         {{#if (equals status "")}}
+            <a href="{{ route }}/in" class="check-in button">Check in</a>
             <div class="check-in-tip">
-                Check into your gym to start your climbing!
+                Check into your gym to start logging your climbs!
             </div>
         {{/if}}
 
         {{#if (equals status "checked-in") }}
-            {{#if (equals ../climbs.length 0)}}
-                <div class="add-new-grade-tip">
-                    Add climbs to track your session!
-                </div>
-            {{else}}
-                <div class="climb-header">
-                    <div class="wins">Wins</div>
-                    <div class="losses">Losses</div>
-                </div>
-            {{/if}}
+            <a href="{{ ../route }}/out" class="check-out button">Check out</a>
+
+            <div class="climb-header">
+                <div class="wins">Wins</div>
+                <div class="losses">Losses</div>
+            </div>
         {{/if}}
 
         {{#climbEntries climbs}}{{/climbEntries}}
@@ -30,23 +30,21 @@
 
     <div class="right-menu">
         <div class="background"></div>
-        {{#if (equals status "")}}
-            <a href="{{ route }}/in" class="check-in button">Check in</a>
-        {{/if}}
-
         {{#if (equals status "checked-in")}}
-            <a href="{{ ../route }}/out" class="check-out button">Check out</a>
-            <div class="select-button add-new-grade">
-                <div class="value">Add a new grade</div>
-                <select>
-                    {{#each ../grades}}
-                        <option value="{{ id }}">{{ name }}</option>
-                    {{/each}}
-                    <option value="cancel" selected="selected">Cancel</option>
-                </select>
+            <div class="left-hint">
+                <div class="bar"></div>
             </div>
+            Tap the <b>left</b> side of the bar to log a successful graded climb.
 
-            <a class="help button">Help</a>
+            <div class="right-hint">
+                <div class="bar"></div>
+            </div>
+            Tap the <b>right</b> side of the bar to log an unsuccessful graded climb.
+
+            <div class="name-hint">
+                <div class="bar"></div>
+            </div>
+            Tap the grade name (e.g. V5) to delete your most recent climb entry for that grade.
         {{/if}}
     </div>
 </div>

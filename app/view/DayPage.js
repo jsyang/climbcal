@@ -15,27 +15,6 @@ function refresh() {
     page(window.location.pathname);
 }
 
-function onAddNewGrade(e) {
-    var dayId = this.state.day.id;
-    var gradeId = parseInt(e.target.value, 10);
-    var existingClimbs = this.state.climbs.map(function(obj){ return obj.gradeId; });
-    e.target.value = 'cancel';
-
-    if(existingClimbs.indexOf(gradeId) === -1) {
-        db.grades.get(gradeId)
-            .then(function (gradeEntry) {
-                return db.climbs.put({
-                    dayId   : dayId,
-                    gradeId : gradeEntry.id,
-                    name    : gradeEntry.name,
-                    value   : gradeEntry.value,
-                    sequence: []
-                });
-            })
-            .then(refresh);
-    }
-}
-
 function deleteRecord(id) {
     db.climbs.get(id)
         .then(function (climbEntry) {
@@ -99,11 +78,7 @@ module.exports = {
         }
 
         if (state.status === 'checked-in') {
-            this.el.querySelector('.add-new-grade select')
-                .addEventListener('change', onAddNewGrade.bind(this));
-
             this.onClimbClick = onClimbClick.bind(this);
-
             this.update(state);
         }
 

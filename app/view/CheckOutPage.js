@@ -72,6 +72,12 @@ module.exports = {
         this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
 
         this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
+        this.noteValue.addEventListener('keypress', function (e) {
+            if (e.which === 13) {
+                e.target.blur();
+                that.checkInLink.click();
+            }
+        });
         updateNoteValue.call(this);
     }
 };

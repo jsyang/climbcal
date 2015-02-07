@@ -8,7 +8,7 @@ var PARSE_OPTIONS = {
   skipEmptyLines: true
 };
 
-function getDataAndPopulate(db, tableName) { 
+function getDataAndPopulate(db, tableName) {
     var table = db[tableName];
     return table.count()
       .then(function(count){
@@ -33,6 +33,17 @@ function getDataAndPopulate(db, tableName) {
       });
 }
 
+function fillWithDefault(key, defaultValue) {
+    var value = localStorage.getItem(key);
+    if(value === null || value === undefined) {
+        localStorage.setItem(key, defaultValue);
+    }
+}
+
+function populateLocalStorage(){
+    fillWithDefault('preferredSystemName', 'Hueco');
+}
+
 module.exports = function init(db) {
     var deferred = Q.defer();
 
@@ -42,8 +53,10 @@ module.exports = function init(db) {
         getDataAndPopulate(db, 'grades'),
         getDataAndPopulate(db, 'emojis'),
         getDataAndPopulate(db, 'feelings'),
+        getDataAndPopulate(db, 'gradesystems'),
         getDataAndPopulate(db, 'sports')
       ])
+      .then(populateLocalStorage)
       .then(function(){
         deferred.resolve(undefined);
       });

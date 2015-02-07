@@ -1,11 +1,6 @@
 # Important
-- left side main menu
-- change grade system
 - manage locations
 - export data to downloadable CSV / filesystem
-- longpress on climb entry to show win/loss counters and option to clear the climb entry
-- show all grades on the checked in page
-- change rating system on the menu
 - show days with climbs logged
 - hotseat mode -- log for your friend and have your friend log for you when you're on the wall
 - share to facebook / twitter
@@ -26,5 +21,6 @@
 - add achievements
 
 # Less important
+- change grade system for today?
 - add activies tangential to climbing
 - remove calendar dependency

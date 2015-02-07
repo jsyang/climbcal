@@ -13,7 +13,20 @@
           <div class="title">Crimper v0.1.2</div>
           <div class="description read-only-field">Data entry app for tracking indoor climbing sessions</div>
 
-          <div class="button disabled">Set grade system</div>
+          <div class="select-button set-grade-system">
+              <div class="value">Select grade system</div>
+              <select>
+                  {{#each gradesystems}}
+                    {{#if (equals name ../preferredSystemName)}}
+                        <option value="{{ name }}" selected="true">{{ name }} (ex: {{example}})</option>
+                    {{else}}
+                        <option value="{{ name }}">{{ name }} (ex: {{example}})</option>
+                    {{/if}}
+                  {{/each}}
+              </select>
+          </div>
+
+
           <div class="button disabled">Edit gym locations</div>
           <div class="button disabled">Export data to CSV</div>
           <a href="/deletedb" class="button">Delete all your data</a>

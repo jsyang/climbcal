@@ -22,7 +22,6 @@ function getDay(year, month, day) {
 }
 
 function checkIn(year, month, day, locationId, utime, feelingId, note) {
-  // todo: handle errors, missing data
   var dayObj = {
     year : parseInt(year, 10),
     month : parseInt(month, 10),
@@ -34,12 +33,29 @@ function checkIn(year, month, day, locationId, utime, feelingId, note) {
     checkInNote : note
   };
 
+  var dayId;
+  var preferredSystemName = localStorage.getItem('preferredSystemName');
+
   return db.days
     .put(dayObj)
-    .then(function(){
+    .then(function(id){
+      dayId = id;
+
       return db.locations.update(dayObj.locationId, {
         lastUsed : dayObj.checkInTime
       });
+    })
+    .then(function(){
+        return db.grades.where('systemName').equals(preferredSystemName)
+            .each(function(grade){
+                db.climbs.put({
+                    dayId : dayId,
+                    gradeId : grade.id,
+                    name : grade.name,
+                    value : grade.value,
+                    sequence : []
+                });
+            });
     });
 }
 

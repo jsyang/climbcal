@@ -196,14 +196,9 @@ module.exports = {
                 }
             })
             .then(function (climbs) {
-                dayClimbs = climbs;
-                return DbHelper.getGradesBySystem('Hueco');
-            })
-            .then(function (grades) {
                 createPage(DayPage, {
                     day       : dayObj,
-                    grades    : grades,
-                    climbs    : dayClimbs,
+                    climbs    : climbs,
                     status    : dayStatus,
                     today     : today,
                     dateString: monthName + ' ' + day + ', ' + year,
@@ -215,18 +210,27 @@ module.exports = {
 
     onCalendar: function () {
         var todayDate = (new Date()).toDateString().split(' ');
+        var state = {
+            monthYear: todayDate[1] + ' ' + todayDate[3],
+            preferredSystemName : localStorage.getItem('preferredSystemName')
+        };
 
-        createPage(CalendarPage, {
-            monthYear: todayDate[1] + ' ' + todayDate[3]
+        db.gradesystems.toArray().then(function(gradesystems){
+            state.gradesystems = gradesystems;
+            createPage(CalendarPage, state);
         });
     },
 
     onDeleteDatabase: function () {
-        insertLoaderOverlay('body');
-        db.delete()
-            .then(function () {
-                window.location.href = '/';
-            })
-            .catch(alertError);
+        if(confirm('Deleted data cannot be recovered!\nAre you sure you want to do this?')){
+            insertLoaderOverlay('body');
+            db.delete()
+                .then(function () {
+                    window.location.href = '/';
+                })
+                .catch(alertError);
+        } else {
+            page.redirect('/');
+        }
     }
 };

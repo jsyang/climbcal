@@ -1,33 +1,142 @@
-.DayPage .check-in-tip,
-.DayPage .add-new-grade-tip {
-    color: $grayL1;
-}
+.DayPage {
+    .check-in-tip {
+        color: $grayL1;
+    }
 
-.DayPage .add-new-grade {
-    @extend .select-button;
-    background: rgb(55, 66, 111);
-}
+    .content {
+        .climb-header {
+            line-height: 40px;
+            height: 40px;
 
-.DayPage .content {
+            .wins {
+                position: absolute;
+                left: 70px;
+            }
 
-    .climb-header {
-        line-height: 40px;
-        margin-top: -20px;
-        margin-left: -20px;
-        margin-right: -20px;
-        height: 40px;
+            .losses {
+                position: absolute;
+                right: 20px;
+                text-align: right;
+            }
+        }
+    }
 
-        .wins {
-            position: absolute;
-            left: 70px;
-            top: 0;
+    .right-menu {
+        .left-hint {
+            height: 20px;
+            line-height: 20px;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: white;
+            padding: 5px;
+
+            .bar {
+                position: absolute;
+                left: 40px;
+                right: 5px;
+                height: 20px;
+                top: 5px;
+                background-color: black;
+            }
+
+            .bar::before {
+                display: block;
+                content: 'Tap here';
+                font-size: 10px;
+                color: white;
+                position: absolute;
+                left: 0;
+                text-align: center;
+                right: 50%;
+                height: 20px;
+                top: 0;
+                background-color: $blue;
+                -webkit-animation: opacityFlash 2s infinite ease;
+                animation: opacityFlash 2s infinite ease;
+            }
         }
 
-        .losses {
-            position: absolute;
-            right: 20px;
-            top: 0;
-            text-align: right;
+        .left-hint::before {
+            content: '5.11b';
+            font-size: 10px;
         }
+
+        .right-hint {
+            @extend .left-hint;
+            margin-top: 20px;
+
+            .bar::before {
+                right: 0;
+                left: 50%;
+            }
+        }
+
+        .right-hint::before {
+            content: '5.11b';
+            font-size: 10px;
+        }
+
+        .name-hint {
+            @extend .left-hint;
+            margin-top: 20px;
+
+            .bar::before {
+                display: block;
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 20%;
+                height: 20px;
+                top: 0;
+                background-color: $orange;
+                -webkit-animation: none;
+                animation: none;
+            }
+        }
+
+        .name-hint::before {
+            content: 'V5';
+            font-size: 10px;
+            color: white;
+            background-color: $blue;
+            -webkit-animation: opacityFlash 2s infinite ease;
+            animation: opacityFlash 2s infinite ease;
+        }
+    }
+}
+
+@-webkit-keyframes opacityFlash {
+    0% {
+        opacity: 0.1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes opacityFlash {
+    0% {
+        opacity: 0.1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.1;
     }
 }

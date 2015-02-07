@@ -13,6 +13,11 @@ $grayL1 : rgb(120, 120, 120);
 body {
     background-color: $offWhite;
     overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 * {
@@ -27,6 +32,7 @@ body {
 @import "view/widget/read-only-field";
 @import "view/widget/menubar";
 @import "view/widget/EmojiPicker";
+@import "view/widget/ClimbEntry";
 
 @import "view/CalendarPage";
 @import "view/CheckInPage";
