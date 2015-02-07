@@ -48,6 +48,14 @@ $size : 60px;
         background-image: url('/assets/three-dots.svg');
     }
 
+    .help .symbol {
+        background-image: url('/assets/help.svg');
+    }
+
+    .shortcut .symbol {
+        background-image: url('/assets/quick.svg');
+    }
+
     .title {
         position: absolute;
         top: 0;

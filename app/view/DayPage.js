@@ -72,9 +72,9 @@ module.exports = {
         this.menu = this.el.querySelector('.right-menu');
         this.menu.querySelector('.background').addEventListener('click', this.onMoreClick);
 
-        this.moreButton = this.el.querySelector('.more');
-        if(this.moreButton) {
-            this.moreButton.addEventListener('click', this.onMoreClick);
+        this.helpButton = this.el.querySelector('.help');
+        if(this.helpButton) {
+            this.helpButton.addEventListener('click', this.onMoreClick);
         }
 
         if (state.status === 'checked-in') {

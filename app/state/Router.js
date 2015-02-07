@@ -209,10 +209,14 @@ module.exports = {
     },
 
     onCalendar: function () {
-        var todayDate = (new Date()).toDateString().split(' ');
+        var today = new Date();
+        var monthYear = today.toDateString().split(' ');
+        monthYear = monthYear[1] + ' ' + monthYear[3];
+
         var state = {
-            monthYear: todayDate[1] + ' ' + todayDate[3],
-            preferredSystemName : localStorage.getItem('preferredSystemName')
+            monthYear: monthYear,
+            preferredSystemName : localStorage.getItem('preferredSystemName'),
+            quickstartRoute : '/y/' + today.getFullYear() + '/m/' + today.getMonth() + '/d/' + today.getDate()
         };
 
         db.gradesystems.toArray().then(function(gradesystems){
