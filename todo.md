@@ -19,8 +19,8 @@
 - find a better logo... that's got a good license
 - add achievements
 - remove large dependencies
+- fix memory leak on calendar page?
 
 # Less important
 - change grade system for today?
 - add activies tangential to climbing
-- remove calendar dependency
