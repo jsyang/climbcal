@@ -97,8 +97,10 @@ module.exports = {
     },
 
     init: function () {
-        page('/', this._getBoundHandler('onCalendar'));
+        page('/', 'today');
+        page('/today', this._getBoundHandler('onToday'));
         page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
+        page('/y/:year/m/:month', this._getBoundHandler('onShowMonth'));
         page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
         page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
         page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
@@ -211,12 +213,25 @@ module.exports = {
             .fail(alertError);
     },
 
-    onCalendar: function () {
+    onToday: function() {
         var today = new Date();
-        var monthYear = today.toDateString().split(' ');
+        page.redirect('/y/' + today.getFullYear() + '/m/' + today.getMonth());
+    },
+
+    onShowMonth: function (ctx) {
+        var year = parseInt(ctx.params.year, 10);
+        var month = parseInt(ctx.params.month, 10);
+
+        var today = new Date();
+        var theDate = new Date();
+        theDate.setFullYear(year);
+        theDate.setMonth(month);
+
+        var monthYear = theDate.toDateString().split(' ');
         monthYear = monthYear[1] + ' ' + monthYear[3];
 
         var state = {
+            date : theDate,
             monthYear: monthYear,
             preferredSystemName : localStorage.getItem('preferredSystemName'),
             quickstartRoute : '/y/' + today.getFullYear() + '/m/' + today.getMonth() + '/d/' + today.getDate()

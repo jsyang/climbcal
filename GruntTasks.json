@@ -71,7 +71,6 @@
             "options": {
                 "alias"            : [
                     "./node_modules/page/index.js:page",
-                    "./node_modules/calendar/index.js:calendar",
                     "./node_modules/virtual-dom/h.js:virtual-dom/h",
                     "./node_modules/virtual-dom/diff.js:virtual-dom/diff",
                     "./node_modules/virtual-dom/patch.js:virtual-dom/patch",

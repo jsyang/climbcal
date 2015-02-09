@@ -5,7 +5,8 @@
     <a href="{{= it.quickstartRoute}}/in" class="right-button shortcut"><div class="symbol"></div></a>
   </div>
   <div class="content">
-      <div class="prev button">Prev</div><div class="next button">Next</div>
+      {{= it.monthHTML }}
+      <a href="{{= it.prevRoute}}" class="prev-button button">Prev</a><a href="{{= it.nextRoute}}" class="next-button button">Next</a>
   </div>
 
   <div class="left-menu">

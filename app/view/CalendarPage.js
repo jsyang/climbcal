@@ -1,35 +1,42 @@
-var Calendar = require('calendar');
-
 var convertHTML = require('../util/vdom').convertHTML;
 var template = require('./CalendarPage.dot');
-
+var monthWeeks = require('./widget/Month.js');
+var monthTemplate = require('./widget/Month.dot');
 var className = 'CalendarPage';
 
+function getPrevRoute(date) {
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    if(month === 0) {
+        year--;
+        month = 11;
+    } else {
+        month--;
+    }
+    return '/y/' + year + '/m/' + month;
+}
+
+function getNextRoute(date) {
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    if(month === 11) {
+        year++;
+        month = 0;
+    } else {
+        month++;
+    }
+    return '/y/' + year + '/m/' + month;
+}
+
 function render(state) {
+    var weeks = monthWeeks(state.date);
+    state.monthHTML = monthTemplate(weeks);
+
+    state.prevRoute = getPrevRoute(state.date);
+    state.nextRoute = getNextRoute(state.date);
+
     var html = template(state);
     return convertHTML(html);
-}
-
-function addTodayHighlight() {
-    var today = new Date();
-    var dateString = [
-    today.getUTCFullYear(),
-    today.getMonth(),
-    today.getDate()
-    ].join('-');
-
-    var todayEl = document.querySelector("a[data-date='"+ dateString+"']");
-    if(todayEl) {
-        todayEl.classList.add('today');
-    }
-}
-
-function getMonthName() {
-    return document.querySelector('.title .month').textContent.substr(0,3);
-}
-
-function getYear() {
-    return document.querySelector('.title .year').textContent;
 }
 
 function onPrev(titleEl){
@@ -68,22 +75,11 @@ module.exports = {
         this.logoButton.addEventListener('click', _onLogoClick);
         this.menu = this.el.querySelector('.left-menu');
         this.menu.querySelector('.background').addEventListener('click', _onLogoClick);
-
-
-        this.cal = new Calendar();
-        this.el.querySelector('.content').appendChild(this.cal.el);
-        addTodayHighlight();
-
-        var titleEl = this.el.querySelector('.title');
-
-        this.el.querySelector('.prev').addEventListener('click', onPrev.bind(this.cal.days, titleEl));
-        this.el.querySelector('.next').addEventListener('click', onNext.bind(this.cal.days, titleEl));
-
         this.el.querySelector('.set-grade-system select').addEventListener('change', onGradeSystemChange);
     },
 
     update: function(state) {
-        addTodayHighlight();
-        addDaysWithClimbs();
+        //addTodayHighlight();
+        //addDaysWithClimbs();
     }
 };

@@ -1,0 +1,27 @@
+<table class="month">
+    <thead class="heading">
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {{~ it :w}}
+        <tr>
+        {{~ w :day}}
+            <td><a href="/y/{{= day.year}}/m/{{= day.month }}/d/{{= day.day}}"
+                   class="day {{= day.className}}">
+                   {{= day.day}}
+            </a></td>
+
+        {{~}}
+        </tr>
+    {{~}}
+    </tbody>
+</table>
