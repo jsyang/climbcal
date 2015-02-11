@@ -42,6 +42,32 @@ function isToday(year, month, day) {
            now.getDate() === day;
 }
 
+function isPast(year, month, day) {
+    var givenDate = new Date();
+    givenDate.setFullYear(year);
+    givenDate.setMonth(month);
+    givenDate.setDate(day);
+
+    givenDate = +givenDate;
+
+    var now = +new Date();
+
+    return givenDate < now;
+}
+
+function isFuture(year, month, day) {
+    var givenDate = new Date();
+    givenDate.setFullYear(year);
+    givenDate.setMonth(month);
+    givenDate.setDate(day);
+
+    givenDate = +givenDate;
+
+    var now = +new Date();
+
+    return givenDate > now;
+}
+
 function queryStringToDict(q) {
     var strings = q.split('&');
 
@@ -97,7 +123,7 @@ module.exports = {
     },
 
     init: function () {
-        page('/', 'today');
+        page('/', this._getBoundHandler('onToday'));
         page('/today', this._getBoundHandler('onToday'));
         page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
         page('/y/:year/m/:month', this._getBoundHandler('onShowMonth'));
@@ -185,6 +211,9 @@ module.exports = {
         var dayStatus = '';
         var dayClimbs;
 
+        var isPastDate = isPast(year, month, day);
+        var isFutureDate = isFuture(year, month, day);
+
         DbHelper.getDay(year, month, day)
             .then(function (dayEntry) {
                 dayObj = dayEntry || {};
@@ -202,19 +231,23 @@ module.exports = {
             })
             .then(function (climbs) {
                 createPage(DayPage, {
+                    isPast    : isPastDate,
+                    isFuture  : isFutureDate,
                     day       : dayObj,
                     climbs    : climbs,
                     status    : dayStatus,
                     today     : today,
                     dateString: monthName + ' ' + day + ', ' + year,
+                    backRoute : '/y/' + year + '/m/' + month,
                     route     : ctx.canonicalPath
                 });
             })
             .fail(alertError);
     },
 
-    onToday: function() {
+    onToday: function(ctx) {
         var today = new Date();
+        ctx.handled = true;
         page.redirect('/y/' + today.getFullYear() + '/m/' + today.getMonth());
     },
 

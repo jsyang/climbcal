@@ -105,6 +105,12 @@
     }
 }
 
+.DayPage:not(.today) {
+    .ClimbEntry * {
+        pointer-events: none;
+    }
+}
+
 @-webkit-keyframes opacityFlash {
     0% {
         opacity: 0.1;

@@ -98,7 +98,9 @@ module.exports = {
 
         this.onMoreClick = onMoreClick.bind(this);
         this.menu = this.el.querySelector('.right-menu');
-        this.menu.querySelector('.background').addEventListener('click', this.onMoreClick);
+        if(this.menu) {
+            this.menu.querySelector('.background').addEventListener('click', this.onMoreClick);
+        }
 
         this.helpButton = this.el.querySelector('.help');
         if(this.helpButton) {
@@ -115,13 +117,15 @@ module.exports = {
     update: function (state) {
         var that = this;
 
-        // Attach event listeners to any new climb entries.
-        Array.prototype.slice.call(this.el.querySelectorAll('.ClimbEntry'))
+        if(state.today) {
+            // Attach event listeners to any new climb entries.
+            Array.prototype.slice.call(this.el.querySelectorAll('.ClimbEntry'))
             .forEach(function (el) {
                 if (!el.onclick) {
                     el.onclick = that.onClimbClick;
                 }
             });
+        }
 
         this.state = state;
     }

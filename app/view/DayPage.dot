@@ -1,7 +1,7 @@
 <div class="DayPage page {{= it.status }} {{= it.today }}">
     <div class="menu-bar">
         <div class="title">{{= it.dateString}}</div>
-        <a href="/" class="back left-button"><div class="symbol"></div></a>
+        <a href="{{= it.backRoute }}" class="back left-button"><div class="symbol"></div></a>
 
         {{? it.status === "checked-in" }}
             <a class="help right-button"><div class="symbol"></div></a>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="content">
-        {{? it.status === ""}}
+        {{? it.status === "" && it.today}}
             <a href="{{= it.route }}/in" class="check-in button">Check in</a>
             <div class="check-in-tip">
                 Check into your gym to start logging your climbs!
@@ -28,23 +28,25 @@
         {{= it.climbsHTML}}
     </div>
 
-    <div class="right-menu">
-        <div class="background"></div>
-        {{? it.status === "checked-in"}}
-            <div class="left-hint">
-                <div class="bar"></div>
-            </div>
-            Tap the <b>left</b> side of the bar to log a successful graded climb.
+    {{? it.today }}
+        <div class="right-menu">
+            <div class="background"></div>
+            {{? it.status === "checked-in"}}
+                <div class="left-hint">
+                    <div class="bar"></div>
+                </div>
+                Tap the <b>left</b> side of the bar to log a successful graded climb.
 
-            <div class="right-hint">
-                <div class="bar"></div>
-            </div>
-            Tap the <b>right</b> side of the bar to log an unsuccessful graded climb.
+                <div class="right-hint">
+                    <div class="bar"></div>
+                </div>
+                Tap the <b>right</b> side of the bar to log an unsuccessful graded climb.
 
-            <div class="name-hint">
-                <div class="bar"></div>
-            </div>
-            Tap the grade name (e.g. V5) to delete your most recent climb entry for that grade.
-        {{?}}
-    </div>
+                <div class="name-hint">
+                    <div class="bar"></div>
+                </div>
+                Tap the grade name (e.g. V5) to delete your most recent climb entry for that grade.
+            {{?}}
+        </div>
+    {{?}}
 </div>
