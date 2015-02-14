@@ -1,3 +1,4 @@
+require('./util/tracking.js')();
 var alertError = require('./util/alertError');
 
 document.addEventListener('DOMContentLoaded', function () {
