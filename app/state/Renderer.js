@@ -20,10 +20,8 @@ module.exports = {
   },
 
   update: function (newTree) {
-
     var patches = diff(this.lastVTree, newTree);
     this.rootNode = patch(this.rootNode, patches);
     this.lastVTree = newTree;
-
   }
 };

@@ -3,7 +3,7 @@
 - export data to downloadable CSV / filesystem
 - stacked bar graphs of wins losses
 - cut down empty grades post climb
-- manage locations
+- edit locations
 - show days with climbs logged
 - hotseat mode -- log for your friend and have your friend log for you when you're on the wall
 - share to facebook / twitter
@@ -14,13 +14,12 @@
     - dot graph, large size = more attempts, x = time, y = grade difficulty
 
 # Ongoing
-- uglify and package all resources into a single file
+- package all resources into a single file
 - set up cordova and build an android APK
 - find a better logo... that's got a good license
 - add achievements
-- remove large dependencies
 - fix memory leak on calendar page?
 
 # Less important
 - change grade system for today?
-- add activies tangential to climbing
+- add activities tangential to climbing

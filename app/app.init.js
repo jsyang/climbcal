@@ -1,5 +1,6 @@
 require('./util/tracking.js')();
 var alertError = require('./util/alertError');
+var fullscreen = require('./util/fullscreen');
 
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";

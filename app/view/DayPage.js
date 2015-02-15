@@ -1,4 +1,4 @@
-var convertHTML = require('../util/vdom').convertHTML;
+var convertHTML = require('../util/vdom');
 var template = require('./DayPage.dot');
 var page = require('page');
 var ClimbEntryTemplate = require('./widget/ClimbEntry.dot');

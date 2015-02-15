@@ -1,5 +1,10 @@
-var convertHTML = require('../util/vdom').convertHTML;
+var page = require('page');
+var convertHTML = require('../util/vdom');
 var template = require('./CheckInPage.dot');
+var insertLoaderOverlay = require('./widget/LoaderOverlay');
+var alertError = require('../util/alertError');
+var db = require('../state/Database');
+
 
 var className = 'CheckInPage';
 var emojiPicker = require('./widget/EmojiPicker');
@@ -19,13 +24,40 @@ function updateCheckInLink() {
     ].join('&');
 }
 
+function addNewGym(){
+    var newGymName = prompt('Gym name');
+    insertLoaderOverlay('.CheckInPage');
+
+    if(newGymName) {
+        return db.locations.put({
+            lastUsed : +new Date(),
+            name : newGymName
+        })
+        .then(refreshPage)
+        .catch(refreshPage);
+    } else {
+        refreshPage();
+    }
+}
+
+function refreshPage() {
+    page(window.location.pathname);
+}
+
 function updateLocationValue() {
+    var that = this;
     var selected = this.locationSelect.selectedOptions[0];
 
-    this.locationValue.textContent = selected.textContent;
-    this.values.location = selected.value;
+    if(selected.value === 'add-new-gym') {
+        this.locationSelect.selectedIndex = undefined;
+        addNewGym();
 
-    updateCheckInLink.call(this);
+    } else {
+        this.locationValue.textContent = selected.textContent;
+        this.values.location = selected.value;
+
+        updateCheckInLink.call(this);
+    }
 }
 
 function openEmojiPicker() {
@@ -56,14 +88,38 @@ function updateNoteValue() {
     updateCheckInLink.call(this);
 }
 
+function initEl() {
+    var that = this;
+
+    this.el = document.querySelector('.' + className);
+
+    this.checkInLink = this.el.querySelector('.check-in');
+    this.locationValue = this.el.querySelector('.location .value');
+    this.locationSelect = this.el.querySelector('.location select');
+    this.feelingValue = this.el.querySelector('.feeling-note .label');
+    this.noteValue = this.el.querySelector('.feeling-note input');
+
+    this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
+    updateLocationValue.call(this);
+
+    this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
+
+    this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
+    this.noteValue.addEventListener('keypress', function (e) {
+        if (e.which === 13) {
+            e.target.blur();
+            that.checkInLink.click();
+        }
+    });
+    updateNoteValue.call(this);
+}
+
 module.exports = {
     className: className,
     render   : render,
 
     init: function (state) {
-        var that = this;
         this.dateString = state.dateString;
-
         this.values = {
             location: undefined,
             time    : +new Date(),
@@ -71,28 +127,10 @@ module.exports = {
             note    : undefined
         };
 
-        this.el = document.querySelector('.' + className);
+        initEl.call(this);
+    },
 
-        this.checkInLink = this.el.querySelector('.check-in');
-        this.locationValue = this.el.querySelector('.location .value');
-        this.locationSelect = this.el.querySelector('.location select');
-        this.feelingValue = this.el.querySelector('.feeling-note .label');
-        this.noteValue = this.el.querySelector('.feeling-note input');
-
-        // Update values
-
-        this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
-        updateLocationValue.call(this);
-
-        this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
-
-        this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
-        this.noteValue.addEventListener('keypress', function (e) {
-            if (e.which === 13) {
-                e.target.blur();
-                that.checkInLink.click();
-            }
-        });
-        updateNoteValue.call(this);
+    update: function(state) {
+        initEl.call(this);
     }
 };

@@ -62,7 +62,10 @@ module.exports = function init(db) {
       });
     });
 
-    db.open();
+    db.open()
+        .catch(function(err){
+            alert(err);
+        });
 
     return deferred;
 };

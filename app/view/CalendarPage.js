@@ -1,4 +1,4 @@
-var convertHTML = require('../util/vdom').convertHTML;
+var convertHTML = require('../util/vdom');
 var template = require('./CalendarPage.dot');
 var monthWeeks = require('./widget/Month.js');
 var monthTemplate = require('./widget/Month.dot');

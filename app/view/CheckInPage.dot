@@ -1,4 +1,4 @@
-<div class="CheckInPage page">
+<div class="CheckInPage page" id="{{= +new Date() }}">
     <div class="menu-bar">
         <div class="title">{{= it.dateString }}</div>
         <a href="{{= it.dayRoute }}" class="back left-button"><div class="symbol"></div></a>
@@ -12,6 +12,7 @@
                 {{~ it.locations :loc}}
                 <option value="{{= loc.id }}">{{= loc.name }}</option>
                 {{~}}
+                <option value="add-new-gym">- Add a new gym -</option>
             </select>
         </div>
 

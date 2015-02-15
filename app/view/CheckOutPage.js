@@ -1,4 +1,4 @@
-var convertHTML = require('../util/vdom').convertHTML;
+var convertHTML = require('../util/vdom');
 var template = require('./CheckOutPage.dot');
 
 var className = 'CheckOutPage';
