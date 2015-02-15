@@ -7,12 +7,19 @@ var db = require('../state/Database');
 
 var className = 'DayPage';
 
-function climbEntries(entries) {
+function climbEntries(entries, collapseEmpty) {
     var html = "";
 
     entries
     .sort(function(a, b){
         return b.value - a.value;
+    })
+    .filter(function(entry){
+        if(collapseEmpty) {
+            return entry.sequence.length;
+        } else {
+            return true;
+        }
     })
     .forEach(function(entry){
         var seqString = entry.sequence.join('');
@@ -36,7 +43,7 @@ function climbEntries(entries) {
 }
 
 function render(state) {
-    state.climbsHTML = climbEntries(state.climbs);
+    state.climbsHTML = climbEntries(state.climbs, state.status === 'checked-out');
     var html = template(state);
     return convertHTML(html);
 }

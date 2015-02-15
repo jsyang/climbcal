@@ -1,10 +1,10 @@
 # Important
-- add transitions between screens
 - export data to downloadable CSV / filesystem
-- stacked bar graphs of wins losses
-- cut down empty grades post climb
-- edit locations
 - show days with climbs logged
+- PastDayPage
+- graph plugins
+- stacked bar graphs of wins losses
+- edit locations
 - hotseat mode -- log for your friend and have your friend log for you when you're on the wall
 - share to facebook / twitter
 - post-climb day statistics
@@ -21,5 +21,6 @@
 - fix memory leak on calendar page?
 
 # Less important
+- add transitions between screens
 - change grade system for today?
 - add activities tangential to climbing

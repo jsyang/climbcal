@@ -6,6 +6,10 @@
         {{? it.status === "checked-in" }}
             <a class="help right-button"><div class="symbol"></div></a>
         {{?}}
+
+        {{? it.isPast && it.climbs.length !== 0 }}
+            <a class="filter-view right-button"><div class="symbol"></div></a>
+        {{?}}
     </div>
 
     <div class="content">
@@ -25,7 +29,16 @@
             </div>
         {{?}}
 
-        {{= it.climbsHTML}}
+        {{? it.isPast && it.climbs.length === 0}}
+            There weren't any climbs logged on this day.
+        {{??}}
+            {{? it.today && it.status === 'checked-out' }}
+                <div class="short-summary">You climbed a total of {{= it.elapsedTimeString }} at {{= it.locName}}.</div>
+            {{?}}
+
+            {{= it.climbsHTML}}
+        {{?}}
+
     </div>
 
     {{? it.today }}

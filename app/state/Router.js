@@ -4,7 +4,12 @@ var DbHelper = require('../util/DbHelper');
 var db = require('../state/Database');
 
 var alertError = require('../util/alertError');
-var getTimeString = require('../util/time');
+var monthString = require('../util/time').monthString;
+var getCurrentTimeString = require('../util/time').getCurrentTimeString;
+var getElapsedTimeString = require('../util/time').getElapsedTimeString;
+var isToday = require('../util/time').isToday;
+var isPast = require('../util/time').isPast;
+var isFuture = require('../util/time').isFuture;
 
 var CalendarPage = require('../view/CalendarPage');
 var DayPage = require('../view/DayPage');
@@ -19,54 +24,6 @@ var pageMap = {
     'CheckOutPage': CheckOutPage,
     'DayPage'     : DayPage
 };
-
-var monthString = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-];
-
-function isToday(year, month, day) {
-    var now = new Date();
-    return now.getFullYear() === year &&
-           now.getMonth() === month &&
-           now.getDate() === day;
-}
-
-function isPast(year, month, day) {
-    var givenDate = new Date();
-    givenDate.setFullYear(year);
-    givenDate.setMonth(month);
-    givenDate.setDate(day);
-
-    givenDate = +givenDate;
-
-    var now = +new Date();
-
-    return givenDate < now;
-}
-
-function isFuture(year, month, day) {
-    var givenDate = new Date();
-    givenDate.setFullYear(year);
-    givenDate.setMonth(month);
-    givenDate.setDate(day);
-
-    givenDate = +givenDate;
-
-    var now = +new Date();
-
-    return givenDate > now;
-}
 
 function queryStringToDict(q) {
     var strings = q.split('&');
@@ -156,7 +113,7 @@ module.exports = {
                     locations.reverse();
 
                     createPage(CheckInPage, {
-                        timeString : getTimeString(),
+                        timeString : getCurrentTimeString(),
                         locations  : locations,
                         dayRoute   : ctx.canonicalPath.replace('/in', ''),
                         dateString : monthName + ' ' + day + ', ' + year
@@ -189,7 +146,7 @@ module.exports = {
                     locations.reverse();
 
                     createPage(CheckOutPage, {
-                        timeString  : getTimeString(),
+                        timeString  : getCurrentTimeString(),
                         lastLocation: locations[0],
                         dayRoute    : ctx.canonicalPath.replace('/out', ''),
                         dateString  : monthName + ' ' + day + ', ' + year
@@ -214,6 +171,8 @@ module.exports = {
         var isPastDate = isPast(year, month, day);
         var isFutureDate = isFuture(year, month, day);
 
+        var elapsedTimeString = '';
+
         DbHelper.getDay(year, month, day)
             .then(function (dayEntry) {
                 dayObj = dayEntry || {};
@@ -222,6 +181,7 @@ module.exports = {
                         dayStatus = 'checked-in';
                     } else if (dayObj.checkInTime && dayObj.checkOutTime) {
                         dayStatus = 'checked-out';
+                        elapsedTimeString = getElapsedTimeString(dayObj.checkInTime, dayObj.checkOutTime);
                     }
 
                     return DbHelper.getClimbsByDayId(dayObj.id);
@@ -229,12 +189,22 @@ module.exports = {
                     return [];
                 }
             })
-            .then(function (climbs) {
+            .then(function(climbs){
+                dayClimbs = climbs;
+                if(typeof dayObj.locationId !== 'undefined') {
+                    return db.locations.get(dayObj.locationId);
+                }
+            })
+            .then(function (locObj) {
+                locObj = locObj || {};
+
                 createPage(DayPage, {
                     isPast    : isPastDate,
                     isFuture  : isFutureDate,
                     day       : dayObj,
-                    climbs    : climbs,
+                    locName   : locObj.name,
+                    elapsedTimeString : elapsedTimeString,
+                    climbs    : dayClimbs,
                     status    : dayStatus,
                     today     : today,
                     dateString: monthName + ' ' + day + ', ' + year,
