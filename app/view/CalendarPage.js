@@ -51,8 +51,11 @@ function onNext(titleEl){
     addTodayHighlight();
 }
 
-function addDaysWithClimbs(){
-
+function addDaysWithClimbs(state){
+    var path = window.location.pathname + '/d/';
+    state.days.forEach(function(day){
+        document.querySelector('a[href="'+ path + day.day +'"]').classList.add('climbed');
+    });
 }
 
 function onLogoClick(){
@@ -63,23 +66,29 @@ function onGradeSystemChange(e) {
     localStorage.setItem('preferredSystemName', e.target.selectedOptions[0].value);
 }
 
+function initEl() {
+    var that = this;
+
+    this.el = document.querySelector('.' + className);
+
+    var _onLogoClick = onLogoClick.bind(this);
+    this.logoButton = this.el.querySelector('.logo');
+    this.logoButton.addEventListener('click', _onLogoClick);
+    this.menu = this.el.querySelector('.left-menu');
+    this.menu.querySelector('.background').addEventListener('click', _onLogoClick);
+    this.el.querySelector('.set-grade-system select').addEventListener('change', onGradeSystemChange);
+}
+
 module.exports = {
     className: className,
     render   : render,
 
     init: function (state) {
-        this.el = document.querySelector('.' + className);
-
-        var _onLogoClick = onLogoClick.bind(this);
-        this.logoButton = this.el.querySelector('.logo');
-        this.logoButton.addEventListener('click', _onLogoClick);
-        this.menu = this.el.querySelector('.left-menu');
-        this.menu.querySelector('.background').addEventListener('click', _onLogoClick);
-        this.el.querySelector('.set-grade-system select').addEventListener('change', onGradeSystemChange);
+        initEl.call(this);
+        addDaysWithClimbs(state);
     },
 
     update: function(state) {
-        //addTodayHighlight();
-        //addDaysWithClimbs();
+        addDaysWithClimbs(state);
     }
 };

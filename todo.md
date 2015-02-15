@@ -1,6 +1,5 @@
 # Important
 - export data to downloadable CSV / filesystem
-- show days with climbs logged
 - PastDayPage
 - graph plugins
 - stacked bar graphs of wins losses

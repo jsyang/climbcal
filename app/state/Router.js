@@ -240,10 +240,20 @@ module.exports = {
             quickstartRoute : '/y/' + today.getFullYear() + '/m/' + today.getMonth() + '/d/' + today.getDate()
         };
 
-        db.gradesystems.toArray().then(function(gradesystems){
-            state.gradesystems = gradesystems;
-            createPage(CalendarPage, state);
-        });
+        db.gradesystems.toArray()
+            .then(function(gradesystems){
+                state.gradesystems = gradesystems;
+                return db.days.where('month')
+                    .equals(month)
+                    .and(function(day){
+                        return day.year === year;
+                    })
+                    .toArray();
+            })
+            .then(function(days){
+                state.days = days || [];
+                createPage(CalendarPage, state);
+            });
     },
 
     onDeleteDatabase: function () {

@@ -64,6 +64,11 @@
                 color: white;
             }
 
+            a.climbed {
+                background: repeating-linear-gradient(90deg, #46008E, #7600ee 3px) !important;
+                opacity: 0.75;
+            }
+
             a.prev,
             a.next {
                 opacity: 0.25;
