@@ -7,7 +7,7 @@
             <a class="help right-button"><div class="symbol"></div></a>
         {{?}}
 
-        {{? it.isPast && it.climbs.length !== 0 }}
+        {{? it.status === "checked-out" && it.isPast && it.climbs.length !== 0 }}
             <a class="filter-view right-button"><div class="symbol"></div></a>
         {{?}}
     </div>
