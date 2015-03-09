@@ -4,7 +4,7 @@
     <div class="left-button logo"><div class="symbol"></div></div>
     <a href="{{= it.quickstartRoute}}/in" class="right-button shortcut"><div class="symbol"></div></a>
   </div>
-  <div class="content">
+  <div class="content" id="{{= it.date }}">
       {{= it.monthHTML }}
       <a href="{{= it.prevRoute}}" class="prev-button button">Prev</a><a href="{{= it.nextRoute}}" class="next-button button">Next</a>
   </div>

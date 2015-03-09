@@ -83,6 +83,9 @@
                     "./node_modules/kew/kew.js:kew",
                     "./node_modules/babyparse/babyparse.js:babyparse"
                 ],
+                "browserifyOptions": {
+                    "debug": false
+                },
                 "transform"        : [
                     ["dotify", {}]
                 ]
