@@ -71,16 +71,17 @@ function onGradeSystemChange(e) {
 }
 
 function initEl() {
-    var that = this;
-
     this.el = document.querySelector('.' + className);
-
-    var _onLogoClick = onLogoClick.bind(this);
-    this.logoButton = this.el.querySelector('.logo');
-    this.logoButton.addEventListener('click', onLogoClick.bind(this));
     this.menu = this.el.querySelector('.left-menu');
-    this.menu.querySelector('.background').addEventListener('click', onMenuBackgroundClick.bind(this));
-    this.el.querySelector('.set-grade-system select').addEventListener('change', onGradeSystemChange);
+    this.logoButton = this.el.querySelector('.logo');
+    this.gradeSystemSelect = this.el.querySelector('.set-grade-system select');
+    this.menuBackground = this.menu.querySelector('.background');
+}
+
+function bindEvents() { 
+    this.logoButton.addEventListener('click', onLogoClick.bind(this));
+    this.menuBackground.addEventListener('click', onMenuBackgroundClick.bind(this));
+    this.gradeSystemSelect.addEventListener('change', onGradeSystemChange);
 }
 
 module.exports = {
@@ -88,11 +89,12 @@ module.exports = {
     render   : render,
 
     init: function (state) {
+        initEl.call(this);
+        bindEvents.call(this);
         this.update(state);
     },
 
     update: function(state) {
-        initEl.call(this);
         addDaysWithClimbs(state);
         this.el.classList.remove('show-left-menu');
     }
