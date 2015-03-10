@@ -8,9 +8,10 @@ $spacing : 20px;
     width: 100%;
     padding: $spacing;
     max-height: 100%;
-    overflow: hidden;
+    overflow: visible;
 
     .background {
+        display: none;
         position: absolute;
         top: 0;
         width: 100%;
@@ -45,6 +46,7 @@ $spacing : 20px;
     .right-menu {
         @include menu();
         left: 100%;
+        overflow: visible;
         padding-right: $spacing + $menuMarginSize;
 
         .background {
@@ -88,10 +90,9 @@ $spacing : 20px;
     transform: translate(calc(-100vw + 60px), 0px);
 
     .right-menu {
-        overflow: visible;
-
         .background {
             opacity: 1;
+            display: block;
         }
     }
 }
@@ -101,10 +102,9 @@ $spacing : 20px;
     transform: translate(calc(100vw - 60px), 0px);
 
     .left-menu {
-        overflow: visible;
-
         .background {
             opacity: 1;
+            display: block;
         }
     }
 }
