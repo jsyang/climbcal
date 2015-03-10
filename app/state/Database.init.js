@@ -52,9 +52,7 @@ module.exports = function init(db) {
         getDataAndPopulate(db, 'locations'),
         getDataAndPopulate(db, 'grades'),
         getDataAndPopulate(db, 'emojis'),
-        getDataAndPopulate(db, 'feelings'),
-        getDataAndPopulate(db, 'gradesystems'),
-        getDataAndPopulate(db, 'sports')
+        getDataAndPopulate(db, 'gradesystems')
       ])
       .then(populateLocalStorage)
       .then(function(){
