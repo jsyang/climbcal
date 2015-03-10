@@ -47,6 +47,29 @@ function updateNoteValue() {
     updateCheckOutLink.call(this);
 }
 
+function initEl() {
+    this.el = document.querySelector('.' + className);
+
+    this.checkOutLink = this.el.querySelector('.check-out');
+    this.feelingValue = this.el.querySelector('.feeling-note .label');
+    this.noteValue = this.el.querySelector('.feeling-note input');
+
+    updateNoteValue.call(this);
+}
+
+function bindEvents() {
+    this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
+
+    this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
+    var that = this;
+    this.noteValue.addEventListener('keypress', function (e) {
+        if (e.which === 13) {
+            e.target.blur();
+            that.checkInLink.click();
+        }
+    });
+}
+
 module.exports = {
     className: className,
     render   : render,
@@ -61,24 +84,11 @@ module.exports = {
             note: undefined
         };
 
-        this.el = document.querySelector('.' + className);
+        initEl.call(this);
+        bindEvents.call(this);
+    },
 
-        this.checkOutLink = this.el.querySelector('.check-out');
-        this.feelingValue = this.el.querySelector('.feeling-note .label');
-        this.noteValue = this.el.querySelector('.feeling-note input');
-
-        // Update values
-
-        this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
-
-        this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
-        var that = this;
-        this.noteValue.addEventListener('keypress', function (e) {
-            if (e.which === 13) {
-                e.target.blur();
-                that.checkInLink.click();
-            }
-        });
-        updateNoteValue.call(this);
+    update: function() {
+        initEl.call(this);
     }
 };

@@ -99,9 +99,12 @@ function initEl() {
     this.feelingValue = this.el.querySelector('.feeling-note .label');
     this.noteValue = this.el.querySelector('.feeling-note input');
 
-    this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
     updateLocationValue.call(this);
+    updateNoteValue.call(this);
+}
 
+function bindEvents() {
+    this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
     this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
 
     this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
@@ -111,7 +114,6 @@ function initEl() {
             that.checkInLink.click();
         }
     });
-    updateNoteValue.call(this);
 }
 
 module.exports = {
@@ -128,6 +130,7 @@ module.exports = {
         };
 
         initEl.call(this);
+        bindEvents.call(this);
     },
 
     update: function(state) {
