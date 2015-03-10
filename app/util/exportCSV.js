@@ -26,7 +26,7 @@ module.exports = function exportDays() {
         var emojis = data[4];
 
         zipfile.file('days.csv', papa.unparse(days));
-        zipfile.file('climbs.csv', papa.unparse(climbs));
+        zipfile.file('climbs.csv', papa.unparse(climbs)); 
         zipfile.file('grades.csv', papa.unparse(grades));
         zipfile.file('locations.csv', papa.unparse(locations));
         zipfile.file('emojis.csv', papa.unparse(emojis));

@@ -262,7 +262,7 @@ module.exports = {
     onExportCSV: function() {
         exportCSV()
             .then(function(){
-                page.back();
+                page.redirect('/');
             });
     },
 
