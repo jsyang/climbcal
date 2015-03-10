@@ -9,26 +9,15 @@ var PARSE_OPTIONS = {
 };
 
 function getDataAndPopulate(db, tableName) {
-    var table = db[tableName];
-    return table.count()
-      .then(function(count){
-        if(count > 0) {
-          return Q.resolve(undefined);
-        } else {
-          return ajax('/assets/data/' + tableName + '.csv');
-        }
-      })
-      .then(function(csv){
+    return ajax('/assets/data/' + tableName + '.csv')
+        .then(function(csv){
         if(csv){
           var rows = papa.parse(csv, PARSE_OPTIONS).data;
-          return db.transaction("rw", table, function populate() {
-            rows.forEach(function(entry){ table.add(entry); });
-          });
-        } else {
+          db.createTableWithData(tableName, rows);
           return Q.resolve(undefined);
         }
       })
-      .catch(function(e){
+      .fail(function(e){
         console.log(e);
       });
 }
@@ -40,30 +29,36 @@ function fillWithDefault(key, defaultValue) {
     }
 }
 
-function populateLocalStorage(){
+function populateUserSettings(){
     fillWithDefault('preferredSystemName', 'Hueco');
+}
+
+function createEmptyTables(db) {
+    db.createTable('days', []);
+    db.createTable('climbs', []);
 }
 
 module.exports = function init(db) {
     var deferred = Q.defer();
 
-    db.on('ready', function(){
-      return Q.all([
-        getDataAndPopulate(db, 'locations'),
-        getDataAndPopulate(db, 'grades'),
-        getDataAndPopulate(db, 'emojis'),
-        getDataAndPopulate(db, 'gradesystems')
-      ])
-      .then(populateLocalStorage)
-      .then(function(){
+    if(db.isNew()) {
+        Q.all([
+            getDataAndPopulate(db, 'locations'),
+            getDataAndPopulate(db, 'grades'),
+            getDataAndPopulate(db, 'emojis'),
+            getDataAndPopulate(db, 'gradesystems')
+        ])
+            .then(function(){
+                createEmptyTables(db);
+            })
+            .then(populateUserSettings)
+            .then(function(){
+                db.commit();
+                deferred.resolve(undefined);
+            });
+    } else {
         deferred.resolve(undefined);
-      });
-    });
-
-    db.open()
-        .catch(function(err){
-            alert(err);
-        });
+    }
 
     return deferred;
 };

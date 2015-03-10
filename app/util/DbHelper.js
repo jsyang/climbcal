@@ -89,11 +89,36 @@ function getGradesBySystem(systemName) {
     .sortBy('value');
 }
 
+function getLocation(name) {
+    return db.query('locations', function caseInsensitive(row) {
+        return row.name.toLowerCase() === name.toLowerCase();
+    });
+}
+
+function getGradeSystems() {
+    return Q.resolve(db.queryAll('gradesystems', {}));
+}
+
+function getClimbedDays(month, year) {
+    if(typeof month !== 'undefined' && typeof year !== 'undefined' ) {
+        return Q.resolve(db.queryAll('days', {
+            month : month,
+            year : year
+        }));
+    } else {
+        return Q.reject(new Error('No month or year given to find climbed days!'));
+    }
+}
+
 module.exports = {
-  getDay : getDay,
-  checkIn : checkIn,
-  checkOut : checkOut,
-  getRecentLocations : getRecentLocations,
-  getClimbsByDayId : getClimbsByDayId,
-  getGradesBySystem : getGradesBySystem
+    getLocation : getLocation,
+    getGradeSystems : getGradeSystems,
+    getClimbedDays : getClimbedDays,
+
+    getDay : getDay,
+    checkIn : checkIn,
+    checkOut : checkOut,
+    getRecentLocations : getRecentLocations,
+    getClimbsByDayId : getClimbsByDayId,
+    getGradesBySystem : getGradesBySystem
 };

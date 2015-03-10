@@ -42,7 +42,6 @@
         "kew"                    : "0.5.0-alpha.1",
         "dotify"                 : "^1.1.0",
         "html-to-vdom"           : "^0.5.5",
-        "dexie"                  : "1.0.2",
         "babyparse"              : "0.4.1",
         "jszip"                  : "~2.4.0",
         "localstorageDB"         : "git://github.com/jsyang/localstorageDB.git"

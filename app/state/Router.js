@@ -195,7 +195,7 @@ module.exports = {
             .then(function(climbs){
                 dayClimbs = climbs;
                 if(typeof dayObj.locationId !== 'undefined') {
-                    return db.locations.get(dayObj.locationId);
+                    return DbHelper.getLocation(dayObj.location);
                 }
             })
             .then(function (locObj) {
@@ -243,15 +243,10 @@ module.exports = {
             quickstartRoute : '/y/' + today.getFullYear() + '/m/' + today.getMonth() + '/d/' + today.getDate()
         };
 
-        db.gradesystems.toArray()
+        DbHelper.getGradeSystems()
             .then(function(gradesystems){
                 state.gradesystems = gradesystems;
-                return db.days.where('month')
-                    .equals(month)
-                    .and(function(day){
-                        return day.year === year;
-                    })
-                    .toArray();
+                return DbHelper.getClimbedDays(month, year);
             })
             .then(function(days){
                 state.days = days || [];
