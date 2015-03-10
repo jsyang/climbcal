@@ -2,6 +2,7 @@ var page = require('page');
 var DOM = require('./Renderer');
 var DbHelper = require('../util/DbHelper');
 var db = require('../state/Database');
+var exportCSV = require('../util/exportCSV');
 
 var alertError = require('../util/alertError');
 var monthString = require('../util/time').monthString;
@@ -75,18 +76,20 @@ function createPage(page, state) {
 }
 
 module.exports = {
-    _getBoundHandler: function (name) {
-        return this[name] ? this[name].bind(this) : undefined;
-    },
-
     init: function () {
-        page('/', this._getBoundHandler('onToday'));
-        page('/today', this._getBoundHandler('onToday'));
-        page('/deletedb', this._getBoundHandler('onDeleteDatabase'));
-        page('/y/:year/m/:month', this._getBoundHandler('onShowMonth'));
-        page('/y/:year/m/:month/d/:day', this._getBoundHandler('onShowDay'));
-        page('/y/:year/m/:month/d/:day/in', this._getBoundHandler('onCheckIn'));
-        page('/y/:year/m/:month/d/:day/out', this._getBoundHandler('onCheckOut'));
+        var that = this;
+        var getHandler = function (name) {
+            return that[name] ? that[name].bind(that) : undefined;
+        };
+
+        page('/', getHandler('onToday'));
+        page('/today', getHandler('onToday'));
+        page('/exportcsv', getHandler('onExportCSV'));
+        page('/deletedb', getHandler('onDeleteDatabase'));
+        page('/y/:year/m/:month', getHandler('onShowMonth'));
+        page('/y/:year/m/:month/d/:day', getHandler('onShowDay'));
+        page('/y/:year/m/:month/d/:day/in', getHandler('onCheckIn'));
+        page('/y/:year/m/:month/d/:day/out', getHandler('onCheckOut'));
         page();
     },
 
@@ -253,6 +256,13 @@ module.exports = {
             .then(function(days){
                 state.days = days || [];
                 createPage(CalendarPage, state);
+            });
+    },
+
+    onExportCSV: function() {
+        exportCSV()
+            .then(function(){
+                page.back();
             });
     },
 

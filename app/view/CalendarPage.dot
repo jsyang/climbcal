@@ -27,7 +27,7 @@
                   {{~}}
               </select>
           </div>
-          <div class="button disabled">Export data to CSV</div>
+          <a href="/exportcsv" class="button">Export data to CSV</a>
 
           <div class="button disabled">More settings</div>
           <a href="/deletedb" class="button">Delete all your data</a>
