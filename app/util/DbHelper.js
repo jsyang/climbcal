@@ -65,6 +65,10 @@ function checkOut(year, month, day, utime, emojiId, note) {
                 return day;
             });
 
+            db.deleteRows('climbs', function (climb) {
+                return climb.sequence.length === 0;
+            });
+
             db.commit();
             return true;
         });
