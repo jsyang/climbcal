@@ -56,15 +56,17 @@ function checkIn(year, month, day, locationName, utime, emojiId, note) {
 }
 
 function checkOut(year, month, day, utime, emojiId, note) {
-
     return getDay(year, month, day)
         .then(function (dayObj) {
-            return db.update('days', dayObj.ID, function (day) {
+            db.update('days', {ID: dayObj.ID}, function (day) {
                 day.checkOutTime = parseInt(utime, 10);
                 day.checkOutEmojiId = parseInt(emojiId, 10);
                 day.checkOutNote = note;
                 return day;
             });
+
+            db.commit();
+            return true;
         });
 }
 
@@ -98,7 +100,7 @@ function getGradeSystems() {
 
 function getClimbedDays(month, year) {
     if (typeof month !== 'undefined' && typeof year !== 'undefined') {
-        return Q.resolve(db.queryAll('days', {
+        return Q.resolve(db.query('days', {
             month: month,
             year: year
         }));

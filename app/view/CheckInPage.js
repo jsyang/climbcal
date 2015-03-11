@@ -19,7 +19,7 @@ function updateCheckInLink() {
     this.checkInLink.href = href[0] + '?' + [
         'locationName=' + escape(this.values.locationName),
         'time=' + this.values.time,
-        'emoji=' + this.values.emojiId,
+        'emojiId=' + this.values.emojiId,
         'note=' + this.values.note
     ].join('&');
 }
@@ -68,15 +68,15 @@ function openEmojiPicker() {
             el.innerHTML = html;
             that.el.appendChild(el);
             emojiPicker.init({
-                cb: updateFeelingValue.bind(that)
+                cb: updateEmojiId.bind(that)
             });
         });
 }
 
-function updateFeelingValue(id, url) {
-    this.feelingValue.style.backgroundImage = 'url(' + url + ')';
-    this.feelingValue.setAttribute('data-value', id);
-    this.values.feeling = id;
+function updateEmojiId(id, url) {
+    this.emojiId.style.backgroundImage = 'url(' + url + ')';
+    this.emojiId.setAttribute('data-value', id);
+    this.values.emojiId = id;
     updateCheckInLink.call(this);
 }
 
@@ -93,7 +93,7 @@ function initEl() {
     this.checkInLink = this.el.querySelector('.check-in');
     this.locationValue = this.el.querySelector('.location .value');
     this.locationSelect = this.el.querySelector('.location select');
-    this.feelingValue = this.el.querySelector('.feeling-note .label');
+    this.emojiId = this.el.querySelector('.feeling-note .label');
     this.noteValue = this.el.querySelector('.feeling-note input');
 
     updateLocationValue.call(this);
@@ -103,7 +103,7 @@ function initEl() {
 function bindEvents() {
     var that = this;
     this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
-    this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
+    this.emojiId.addEventListener('mousedown', openEmojiPicker.bind(this));
 
     this.noteValue.addEventListener('blur', updateNoteValue.bind(this));
     this.noteValue.addEventListener('keypress', function (e) {
