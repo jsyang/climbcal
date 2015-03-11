@@ -1,4 +1,4 @@
-<div class="ClimbEntry {{? it.nodata}}no-data{{?}}" id="{{= it.id }}">
+<div class="ClimbEntry {{? it.nodata}}no-data{{?}}" id="{{= it.ID }}">
   <div class="name">{{= it.name }}</div>
   <div class="ratio-bar">
     <div class="filled" style="width: {{= it.percent }}%; "></div>

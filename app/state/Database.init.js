@@ -34,8 +34,29 @@ function populateUserSettings(){
 }
 
 function createEmptyTables(db) {
-    db.createTable('days', []);
-    db.createTable('climbs', []);
+    var daySchema = [
+        "year",
+        "month",
+        "day",
+        "dateString",
+        "locationName",
+        "checkInTime",
+        "checkInEmojiId",
+        "checkInNote",
+        "checkOutTime",
+        "checkOutEmojiId",
+        "checkOutNote"
+    ];
+
+    var climbSchema = [
+        "dateString",
+        "gradeId",
+        "name",
+        "value",
+        "sequence"
+    ];
+    db.createTable('days', daySchema);
+    db.createTable('climbs', climbSchema);
 }
 
 module.exports = function init(db) {

@@ -3,7 +3,7 @@ var convertHTML = require('../util/vdom');
 var template = require('./CheckInPage.dot');
 var insertLoaderOverlay = require('./widget/LoaderOverlay');
 var alertError = require('../util/alertError');
-var db = require('../state/Database');
+var DbHelper = require('../util/DbHelper');
 
 
 var className = 'CheckInPage';
@@ -17,9 +17,9 @@ function render(state) {
 function updateCheckInLink() {
     var href = this.checkInLink.href.split('?');
     this.checkInLink.href = href[0] + '?' + [
-        'location=' + this.values.location,
+        'locationName=' + escape(this.values.locationName),
         'time=' + this.values.time,
-        'feeling=' + this.values.feeling,
+        'emoji=' + this.values.emojiId,
         'note=' + this.values.note
     ].join('&');
 }
@@ -29,12 +29,12 @@ function addNewGym(){
     insertLoaderOverlay('.CheckInPage');
 
     if(newGymName) {
-        return db.locations.put({
+        return DbHelper.createNewLocation({
             lastUsed : +new Date(),
             name : newGymName
         })
         .then(refreshPage)
-        .catch(refreshPage);
+        .fail(alertError);
     } else {
         refreshPage();
     }
@@ -45,16 +45,15 @@ function refreshPage() {
 }
 
 function updateLocationValue() {
-    var that = this;
     var selected = this.locationSelect.selectedOptions[0];
 
     if(selected.value === 'add-new-gym') {
-        this.locationSelect.selectedIndex = undefined;
+        this.locationSelect.selectedIndex = 0;
         addNewGym();
 
     } else {
         this.locationValue.textContent = selected.textContent;
-        this.values.location = selected.value;
+        this.values.locationName = selected.textContent;
 
         updateCheckInLink.call(this);
     }
@@ -89,8 +88,6 @@ function updateNoteValue() {
 }
 
 function initEl() {
-    var that = this;
-
     this.el = document.querySelector('.' + className);
 
     this.checkInLink = this.el.querySelector('.check-in');
@@ -104,6 +101,7 @@ function initEl() {
 }
 
 function bindEvents() {
+    var that = this;
     this.locationSelect.addEventListener('change', updateLocationValue.bind(this));
     this.feelingValue.addEventListener('mousedown', openEmojiPicker.bind(this));
 
@@ -123,9 +121,9 @@ module.exports = {
     init: function (state) {
         this.dateString = state.dateString;
         this.values = {
-            location: undefined,
+            locationName: undefined,
             time    : +new Date(),
-            feeling : undefined,
+            emojiId : -1,
             note    : undefined
         };
 
@@ -133,7 +131,8 @@ module.exports = {
         bindEvents.call(this);
     },
 
-    update: function(state) {
+    update: function() {
         initEl.call(this);
+        bindEvents.call(this);
     }
 };

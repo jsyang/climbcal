@@ -10,7 +10,7 @@
             <div class="value"></div>
             <select>
                 {{~ it.locations :loc}}
-                <option value="{{= loc.id }}">{{= loc.name }}</option>
+                <option value="{{= loc.ID }}">{{= loc.name }}</option>
                 {{~}}
                 <option value="add-new-gym">- Add a new gym -</option>
             </select>

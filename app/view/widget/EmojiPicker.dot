@@ -1,6 +1,6 @@
 <div class="background"></div>
 <div class="emoji-container">
   {{~ it.emojis :emo}}
-    <img class="emoji" src="{{= emo.url}}" alt="{{= emo.name}}" data-id="{{= emo.id }}">
+    <img class="emoji" src="{{= emo.url}}" alt="{{= emo.name}}" data-id="{{= emo.ID }}">
   {{~}}
 </div>

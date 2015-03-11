@@ -1,4 +1,6 @@
 var page = require('page');
+var Q = require('kew');
+
 var DOM = require('./Renderer');
 var DbHelper = require('../util/DbHelper');
 var db = require('../state/Database');
@@ -103,18 +105,16 @@ module.exports = {
         if (ctx.querystring) {
             var args = queryStringToDict(ctx.querystring);
             DbHelper
-                .checkIn(year, month, day, args.location, args.time, args.feeling, args.note)
+                .checkIn(year, month, day, args.locationName, args.time, args.emojiId, args.note)
                 .then(function () {
                     var dayRoute = ctx.canonicalPath.split('?')[0].replace('/in', '');
                     page.redirect(dayRoute);
                 })
-                .catch(alertError);
+                .fail(alertError);
 
         } else {
             DbHelper.getRecentLocations()
                 .then(function (locations) {
-                    locations.reverse();
-
                     createPage(CheckInPage, {
                         timeString : getCurrentTimeString(),
                         locations  : locations,
@@ -122,7 +122,7 @@ module.exports = {
                         dateString : monthName + ' ' + day + ', ' + year
                     });
                 })
-                .catch(alertError);
+                .fail(alertError);
         }
     },
 
@@ -136,7 +136,7 @@ module.exports = {
         if (ctx.querystring) {
             var args = queryStringToDict(ctx.querystring);
             DbHelper
-                .checkOut(year, month, day, args.time, args.feeling, args.note)
+                .checkOut(year, month, day, args.time, args.emojiId, args.note)
                 .then(function () {
                     var dayRoute = ctx.canonicalPath.split('?')[0].replace('/out', '');
                     page.redirect(dayRoute);
@@ -146,8 +146,6 @@ module.exports = {
         } else {
             DbHelper.getRecentLocations()
                 .then(function (locations) {
-                    locations.reverse();
-
                     createPage(CheckOutPage, {
                         timeString  : getCurrentTimeString(),
                         lastLocation: locations[0],
@@ -155,7 +153,7 @@ module.exports = {
                         dateString  : monthName + ' ' + day + ', ' + year
                     });
                 })
-                .catch(alertError);
+                .fail(alertError);
         }
     },
 
@@ -176,38 +174,31 @@ module.exports = {
 
         var elapsedTimeString = '';
 
-        DbHelper.getDay(year, month, day)
-            .then(function (dayEntry) {
-                dayObj = dayEntry || {};
-                if (dayObj.id) {
+        Q.all([
+            DbHelper.getDay(year, month, day),
+            DbHelper.getClimbsByDate(year, month, day),
+            DbHelper.getLocationNameByDate(year, month, day)
+        ])
+            .then(function(results){
+                var dayObj = results[0];
+                var climbs = results[1];
+                var locationName = results[2];
+                if(dayObj){
                     if (dayObj.checkInTime && !dayObj.checkOutTime) {
                         dayStatus = 'checked-in';
                     } else if (dayObj.checkInTime && dayObj.checkOutTime) {
                         dayStatus = 'checked-out';
                         elapsedTimeString = getElapsedTimeString(dayObj.checkInTime, dayObj.checkOutTime);
                     }
-
-                    return DbHelper.getClimbsByDayId(dayObj.id);
-                } else {
-                    return [];
                 }
-            })
-            .then(function(climbs){
-                dayClimbs = climbs;
-                if(typeof dayObj.locationId !== 'undefined') {
-                    return DbHelper.getLocation(dayObj.location);
-                }
-            })
-            .then(function (locObj) {
-                locObj = locObj || {};
 
                 createPage(DayPage, {
                     isPast    : isPastDate,
                     isFuture  : isFutureDate,
                     day       : dayObj,
-                    locName   : locObj.name,
+                    locName   : locationName,
                     elapsedTimeString : elapsedTimeString,
-                    climbs    : dayClimbs,
+                    climbs    : climbs,
                     status    : dayStatus,
                     today     : today,
                     dateString: monthName + ' ' + day + ', ' + year,
@@ -237,38 +228,35 @@ module.exports = {
         monthYear = monthYear[1] + ' ' + monthYear[3];
 
         var state = {
+            days : [],
             date : theDate,
             monthYear: monthYear,
             preferredSystemName : localStorage.getItem('preferredSystemName'),
             quickstartRoute : '/y/' + today.getFullYear() + '/m/' + today.getMonth() + '/d/' + today.getDate()
         };
 
-        DbHelper.getGradeSystems()
-            .then(function(gradesystems){
-                state.gradesystems = gradesystems;
-                return DbHelper.getClimbedDays(month, year);
-            })
-            .then(function(days){
-                state.days = days || [];
+        Q.all([
+            DbHelper.getGradeSystems(),
+            DbHelper.getClimbedDays(month, year)
+        ])
+            .then(function(result){
+                state.gradesystems = result[0];
+                state.days = result[1];
                 createPage(CalendarPage, state);
-            });
+            })
+            .fail(alertError);
     },
 
     onExportCSV: function() {
-        exportCSV()
-            .then(function(){
-                page.redirect('/');
-            });
+        exportCSV();
+        page.redirect('/');
     },
 
     onDeleteDatabase: function () {
         if(confirm('Deleted data cannot be recovered!\nAre you sure you want to do this?')){
             insertLoaderOverlay('body');
-            db.delete()
-                .then(function () {
-                    window.location.href = '/';
-                })
-                .catch(alertError);
+            db.drop();
+            window.location.href = '/';
         } else {
             page.redirect('/');
         }

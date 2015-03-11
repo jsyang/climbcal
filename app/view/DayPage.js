@@ -2,8 +2,7 @@ var convertHTML = require('../util/vdom');
 var template = require('./DayPage.dot');
 var page = require('page');
 var ClimbEntryTemplate = require('./widget/ClimbEntry.dot');
-
-var db = require('../state/Database');
+var DbHelper = require('../util/DbHelper');
 
 var className = 'DayPage';
 
@@ -52,29 +51,6 @@ function refresh() {
     page(window.location.pathname);
 }
 
-function deleteRecord(id) {
-    db.climbs.get(id)
-        .then(function (climbEntry) {
-            climbEntry.sequence.pop();
-            return db.climbs.update(climbEntry.id, {
-                sequence: climbEntry.sequence
-            });
-        })
-        .then(refresh);
-}
-
-function recordClimb(id, climbResult) {
-    db.climbs.get(id)
-        .then(function (climbEntry) {
-            var changes = {
-                sequence: climbEntry.sequence.concat(climbResult)
-            };
-
-            return db.climbs.update(climbEntry.id, changes);
-        })
-        .then(refresh);
-}
-
 function onClimbClick(e) {
     var el = e.currentTarget;
     var name = e.target.className;
@@ -82,13 +58,16 @@ function onClimbClick(e) {
 
     if (name === 'name') {
         // Delete last record
-        deleteRecord(id);
+        DbHelper.deleteRecord(id)
+            .then(refresh);
     } else if (name === 'left') {
         // Record a win
-        recordClimb(id, 1);
+        DbHelper.recordClimb(id, 1)
+            .then(refresh);
     } else if (name === 'right') {
         // Record a loss
-        recordClimb(id, 0);
+        DbHelper.recordClimb(id, 0)
+            .then(refresh);
     }
 }
 

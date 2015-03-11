@@ -79,7 +79,6 @@
                     "./node_modules/virtual-dom/patch.js:virtual-dom/patch",
                     "./node_modules/virtual-dom/create-element.js:virtual-dom/create-element",
                     "./node_modules/html-to-vdom/index.js:html-to-vdom",
-                    "./node_modules/kew/kew.js:kew",
                     "./node_modules/babyparse/babyparse.js:babyparse",
                     "./node_modules/jszip/lib/index.js:jszip",
                     "./node_modules/jszip/vendor/FileSaver.js:filesaver"
@@ -108,7 +107,6 @@
                     "./node_modules/virtual-dom/patch.js:virtual-dom/patch",
                     "./node_modules/virtual-dom/create-element.js:virtual-dom/create-element",
                     "./node_modules/html-to-vdom/index.js:html-to-vdom",
-                    "./node_modules/kew/kew.js:kew",
                     "./node_modules/babyparse/babyparse.js:babyparse",
                     "./node_modules/jszip/lib/index.js:jszip",
                     "./node_modules/jszip/vendor/FileSaver.js:filesaver"

@@ -2,91 +2,88 @@ var db = require('../state/Database');
 var Q = require('kew');
 
 function getDay(year, month, day) {
-  var deferred = Q.defer();
+    year = parseInt(year, 10);
+    month = parseInt(month, 10);
+    day = parseInt(day, 10);
 
-  year = parseInt(year, 10);
-  month = parseInt(month, 10);
-  day = parseInt(day, 10);
-
-  db.days
-  .filter(function(dayEntry){
-    return dayEntry.year === year &&
-      dayEntry.month === month &&
-      dayEntry.day === day;
-  })
-  .first(function(day){
-    return deferred.resolve(day);
-  });
-
-  return deferred;
+    return Q.resolve(db.query('days', {
+        year: year,
+        month: month,
+        day: day
+    })[0]);
 }
 
-function checkIn(year, month, day, locationId, utime, feelingId, note) {
-  var dayObj = {
-    year : parseInt(year, 10),
-    month : parseInt(month, 10),
-    day : parseInt(day, 10),
-    locationId : parseInt(locationId, 10),
+function checkIn(year, month, day, locationName, utime, emojiId, note) {
+    var dayObj = {
+        year: parseInt(year, 10),
+        month: parseInt(month, 10),
+        day: parseInt(day, 10),
+        locationName: locationName,
 
-    checkInTime : parseInt(utime, 10),
-    checkInFeelingId : parseInt(feelingId, 10),
-    checkInNote : note
-  };
+        checkInTime: parseInt(utime, 10),
+        checkInEmojiId: parseInt(emojiId, 10),
+        checkInNote: note
+    };
 
-  var dayId;
-  var preferredSystemName = localStorage.getItem('preferredSystemName');
+    dayObj.dateString = dayObj.day + '/' + dayObj.month + '/' + dayObj.year;
 
-  return db.days
-    .put(dayObj)
-    .then(function(id){
-      dayId = id;
+    var preferredSystemName = localStorage.getItem('preferredSystemName');
 
-      return db.locations.update(dayObj.locationId, {
-        lastUsed : dayObj.checkInTime
-      });
-    })
-    .then(function(){
-        return db.grades.where('systemName').equals(preferredSystemName)
-            .each(function(grade){
-                db.climbs.put({
-                    dayId : dayId,
-                    gradeId : grade.id,
-                    name : grade.name,
-                    value : grade.value,
-                    sequence : []
-                });
+    db.insert('days', dayObj);
+    db.update('locations', {name: locationName}, function (loc) {
+        loc.lastUsed = dayObj.checkInTime.toString();
+        return loc;
+    });
+
+    var grades = db.queryAll('grades', {
+        query: {systemName: preferredSystemName},
+        sort: [['value', 'DESC']]
+    });
+
+    grades.forEach(function (grade) {
+        db.insert('climbs', {
+            dateString: dayObj.dateString,
+            gradeId: grade.ID,
+            name: grade.name,
+            value: grade.value,
+            sequence: []
+        });
+    });
+
+    db.commit();
+
+    return Q.resolve(dayObj);
+}
+
+function checkOut(year, month, day, utime, emojiId, note) {
+
+    return getDay(year, month, day)
+        .then(function (dayObj) {
+            return db.update('days', dayObj.ID, function (day) {
+                day.checkOutTime = parseInt(utime, 10);
+                day.checkOutEmojiId = parseInt(emojiId, 10);
+                day.checkOutNote = note;
+                return day;
             });
-    });
-}
-
-function checkOut(year, month, day, utime, feelingId, note) {
-  return getDay(year, month, day)
-    .then(function(dayObj){
-      return db.days.update(dayObj.id, {
-        checkOutTime : parseInt(utime, 10),
-        checkOutFeelingId : parseInt(feelingId, 10),
-        checkOutNote : note
-      });
-    });
+        });
 }
 
 function getRecentLocations() {
-  return db.locations.toCollection().sortBy('lastUsed');
+    return Q.resolve(db.queryAll(
+        'locations',
+        {sort: [['lastUsed', 'DESC']]}
+    ));
 }
 
-function getClimbsByDayId(id) {
-  return db.climbs
-    .filter(function(climbEntry){
-      return climbEntry.dayId === id;
-    })
-    .sortBy('value');
-}
-
-function getGradesBySystem(systemName) {
-  return db.grades
-    .where('systemName')
-    .equalsIgnoreCase(systemName)
-    .sortBy('value');
+function getClimbsByDate(year, month, day) {
+    return Q.resolve(db.queryAll('climbs', {
+        query: {
+            dateString: day + '/' + month + '/' + year
+        },
+        sort: [
+            ['value', 'DESC']
+        ]
+    }));
 }
 
 function getLocation(name) {
@@ -96,29 +93,74 @@ function getLocation(name) {
 }
 
 function getGradeSystems() {
-    return Q.resolve(db.queryAll('gradesystems', {}));
+    return Q.resolve(db.query('gradesystems'));
 }
 
 function getClimbedDays(month, year) {
-    if(typeof month !== 'undefined' && typeof year !== 'undefined' ) {
+    if (typeof month !== 'undefined' && typeof year !== 'undefined') {
         return Q.resolve(db.queryAll('days', {
-            month : month,
-            year : year
+            month: month,
+            year: year
         }));
     } else {
         return Q.reject(new Error('No month or year given to find climbed days!'));
     }
 }
 
-module.exports = {
-    getLocation : getLocation,
-    getGradeSystems : getGradeSystems,
-    getClimbedDays : getClimbedDays,
+function createNewLocation(locationObj) {
+    db.insertOrUpdate('locations', {name: locationObj.name}, locationObj);
+    db.commit();
+    return Q.resolve(true);
+}
 
-    getDay : getDay,
-    checkIn : checkIn,
-    checkOut : checkOut,
-    getRecentLocations : getRecentLocations,
-    getClimbsByDayId : getClimbsByDayId,
-    getGradesBySystem : getGradesBySystem
+function getEmojis() {
+    return Q.resolve(db.query('emojis'));
+}
+
+function getLocationNameByDate(year, month, day) {
+    return getDay(year, month, day)
+        .then(function (day) {
+            return day && day.locationName;
+        });
+}
+
+function deleteRecord(id) {
+    id = parseInt(id, 10);
+    var sequence = db.query("climbs", {ID: id})[0].sequence;
+    sequence.pop();
+    db.update("climbs", {ID: id}, function (climb) {
+        climb.sequence = sequence;
+        return climb;
+    });
+    db.commit();
+    return Q.resolve(true);
+}
+
+function recordClimb(id, climbResult) {
+    id = parseInt(id, 10);
+    var sequence = db.query("climbs", {ID: id})[0].sequence;
+    sequence.push(climbResult);
+    db.update("climbs", {ID: id}, function (climb) {
+        climb.sequence = sequence;
+        return climb;
+    });
+    db.commit();
+    return Q.resolve(true);
+}
+
+module.exports = {
+    getLocation: getLocation,
+    getGradeSystems: getGradeSystems,
+    getClimbedDays: getClimbedDays,
+    createNewLocation: createNewLocation,
+    getEmojis: getEmojis,
+    getLocationNameByDate: getLocationNameByDate,
+    recordClimb: recordClimb,
+    deleteRecord: deleteRecord,
+
+    getDay: getDay,
+    checkIn: checkIn,
+    checkOut: checkOut,
+    getRecentLocations: getRecentLocations,
+    getClimbsByDate: getClimbsByDate
 };

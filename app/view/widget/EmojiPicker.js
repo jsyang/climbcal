@@ -1,12 +1,11 @@
 var template = require('./EmojiPicker.dot');
-
-var db = require('../../state/Database');
+var DbHelper = require('../../util/DbHelper');
 
 var className = 'EmojiPicker';
 
 function renderAsync(state) {
   state = state || {};
-  return db.emojis.toArray().then(function(emojis){
+  return DbHelper.getEmojis().then(function(emojis){
     state.emojis = emojis;
     return template(state);
   });

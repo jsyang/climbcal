@@ -12,7 +12,7 @@ function render(state) {
 function updateCheckOutLink() {
     var href = this.checkOutLink.href.split('?');
     this.checkOutLink.href = href[0] + '?' + [
-        'location=' + this.values.location,
+        'locationName=' + this.values.locationName,
         'time=' + this.values.time,
         'feeling=' + this.values.feeling,
         'note=' + this.values.note
@@ -78,9 +78,9 @@ module.exports = {
         this.dateString = state.dateString;
 
         this.values = {
-            location: state.locationValue,
+            locationName: state.locationName,
             time: +new Date(),
-            feeling: undefined,
+            emojiId: undefined,
             note: undefined
         };
 
@@ -90,5 +90,6 @@ module.exports = {
 
     update: function() {
         initEl.call(this);
+        bindEvents.call(this);
     }
 };
